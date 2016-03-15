@@ -1,2 +1,1 @@
 # SimplePoint
-1
