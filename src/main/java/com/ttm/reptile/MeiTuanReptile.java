@@ -16,6 +16,7 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 public class MeiTuanReptile implements PageProcessor {
+	
 	private Site site = Site.me().setRetrySleepTime(3).setSleepTime(5000);
 	
 	//http://waimai.meituan.com/restaurant/506239?pos=3
@@ -25,10 +26,15 @@ public class MeiTuanReptile implements PageProcessor {
 	private static final String GET_LIST = "http://waimai\\.meituan\\.com/home/\\w+";
 	
 	private static final String GET_HOME = "http://waimai\\.meituan\\.com";
+	
+	/**
+	 * è·å–çœŸå®çš„url
+	 */
+	private String real;
 
 	public void process(Page page) {
 		if (page.getUrl().regex(GET_LIST).match()) {
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ÕâÊÇÁĞ±íÒ³!");
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^è¿™æ˜¯åˆ—è¡¨é¡µ!");
 //			System.out.println(page.getHtml());
 //			System.out.println(page.getHtml().xpath("//div[@class=\"rest-list\"]").links().all());
 			List<String> newList = new ArrayList<>();
@@ -43,9 +49,9 @@ public class MeiTuanReptile implements PageProcessor {
 		} else if (page.getUrl().regex(GET).match()) {
 			parseHtml(page.getHtml().getDocument(), page.getUrl().toString());
 		} else {
-			System.out.println("ÕâÊÇÖ÷Ò³!");
+			System.out.println("è¿™æ˜¯ä¸»é¡µ!");
 			List<String> urlList = new ArrayList<>();
-			urlList.add("http://waimai.meituan.com/home/wsb0uqe32sz6");
+			urlList.add(real);
 			page.addTargetRequests(urlList);
 		}
 		
@@ -54,7 +60,7 @@ public class MeiTuanReptile implements PageProcessor {
 	public Map<String, Object> parseHtml(Document document, String url) {
 		Map<String, Object> sortDetail = new LinkedHashMap<>();
 		
-		//»ñÈ¡µêÃû
+		//è·å–åº—å
 		Element titleA = document.getElementsByClass("shopping-cart").first();
 		Map<String, String> tempA = titleA.dataset();
 		for (String key : tempA.keySet()) {
@@ -71,7 +77,7 @@ public class MeiTuanReptile implements PageProcessor {
 			}
 		}
 		
-		//»ñÈ¡µê¼ÒÆÀ·Ö
+		//è·å–åº—å®¶è¯„åˆ†
 		Element rankA = document.getElementsByClass("nu").first();
 		List<Node> rankList = rankA.childNodes();
 		for (int y = 0; y < rankList.size(); y++) {
@@ -81,7 +87,7 @@ public class MeiTuanReptile implements PageProcessor {
 			}
 		}
 		
-		//ÆğËÍ¼Û¸ñ,ÅäËÍ·Ñ
+		//èµ·é€ä»·æ ¼,é…é€è´¹
 		Element startMoneyA = document.getElementsByClass("rest-info-thirdpart").first();
 //		System.out.println(startMoneyA.html());
 		Element startMoneyB = startMoneyA.after(startMoneyA.html());
@@ -90,11 +96,11 @@ public class MeiTuanReptile implements PageProcessor {
 		String startUp = null;
 		String distributionUp = null;
 		for (int x = 0; x < startMoneyCStrArr.length; x++) {
-			if (StringUtils.endsWith(startMoneyCStrArr[x], "ÔªÆğËÍ")) {
-				startUp = StringUtils.removeEnd(startMoneyCStrArr[x], "ÔªÆğËÍ");
+			if (StringUtils.endsWith(startMoneyCStrArr[x], "å…ƒèµ·é€")) {
+				startUp = StringUtils.removeEnd(startMoneyCStrArr[x], "å…ƒèµ·é€");
 			} else {
-				if (StringUtils.endsWith(startMoneyCStrArr[x], "ÔªÅäËÍ·Ñ")) {
-					distributionUp = StringUtils.removeEnd(startMoneyCStrArr[x], "ÔªÅäËÍ·Ñ");
+				if (StringUtils.endsWith(startMoneyCStrArr[x], "å…ƒé…é€è´¹")) {
+					distributionUp = StringUtils.removeEnd(startMoneyCStrArr[x], "å…ƒé…é€è´¹");
 				} else {
 					continue;
 				}
@@ -103,12 +109,12 @@ public class MeiTuanReptile implements PageProcessor {
 		sortDetail.put("startUp", startUp);
 		sortDetail.put("distributionUp", StringUtils.isEmpty(distributionUp) ? "0" : distributionUp);
 
-		//ÓªÒµÊ±¼ä
+		//è¥ä¸šæ—¶é—´
 		Element businessDateA = document.getElementsByClass("delivery-time").first();
 		Element businessDateB = businessDateA.getElementsByTag("span").last();
 		sortDetail.put("businessDate", businessDateB.text());
 		
-		//ËÍ²ÍÊ±¼ä
+		//é€é¤æ—¶é—´
 		Element deliverMealsA = document.getElementsByClass("nu").get(1);
 		List<Node> deliverMealsList = deliverMealsA.childNodes();
 		for (int y = 0; y < deliverMealsList.size(); y++) {
@@ -118,7 +124,7 @@ public class MeiTuanReptile implements PageProcessor {
 			}
 		}
 		
-		//ËÍ²Íµ½´ïÂÊ
+		//é€é¤åˆ°è¾¾ç‡
 		Element arriveA = document.getElementsByClass("nu").last();
 		List<Node> arriveAList = arriveA.childNodes();
 		for (int y = 0; y < arriveAList.size(); y++) {
@@ -130,7 +136,7 @@ public class MeiTuanReptile implements PageProcessor {
 			}
 		}
 		
-		//ÊÕ²Ø
+		//æ”¶è—
 		Element collectA = document.getElementsByClass("cc-lightred-new").first();
 		if (StringUtils.isEmpty(document.getElementsByClass("cc-lightred-new").text())) {
 			sortDetail.put("collectNumber", 0);
@@ -139,12 +145,12 @@ public class MeiTuanReptile implements PageProcessor {
 			sortDetail.put("collectNumber", collectB.text());
 		}
 		
-		//µØÖ·
+		//åœ°å€
 		Element locationA = document.getElementsByClass("location").first();
 		Element locationB = locationA.getElementsByTag("span").last();
 		sortDetail.put("location", locationB.text());
 		
-		//µç»°
+		//ç”µè¯
 		Element telephoneA = document.getElementsByClass("telephone").first();
 		Element telephoneB = telephoneA.getElementsByTag("span").last();
 		sortDetail.put("telephone", telephoneB.text());
@@ -161,8 +167,18 @@ public class MeiTuanReptile implements PageProcessor {
 		return site;
 	}
 	
+	public String getReal() {
+		return real;
+	}
+
+	public void setReal(String real) {
+		this.real = real;
+	}
+
 	public static void main(String[] args) {
-		Spider.create(new MeiTuanReptile())
+		MeiTuanReptile meiTuanReptile = new MeiTuanReptile();
+		meiTuanReptile.setReal("http://waimai.meituan.com/home/wsb0uqe32sz6");
+		Spider.create(meiTuanReptile)
 			.addUrl("http://waimai.meituan.com")
 			.thread(3)
 			.run();

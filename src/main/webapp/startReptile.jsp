@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>Hello World!</h2>
-	<a href="/t/startReptile">开启爬虫</a>
+	<h2>爬虫开启 请注意控制台输出.</h2>
 </body>
 </html>
