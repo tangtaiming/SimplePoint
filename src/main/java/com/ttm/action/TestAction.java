@@ -8,6 +8,13 @@ import com.ttm.reptile.MeiTuanReptileFactory;
 
 @Controller
 @RequestMapping("t")
+/**
+ * 
+ * <p>介绍</p>
+ * @author 唐太明
+ * @date 2016年3月16日上午9:13:00
+ * @version 1.0
+ */
 public class TestAction {
 	
 	private MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
