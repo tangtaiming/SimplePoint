@@ -1,6 +1,5 @@
 package com.ttm.orm;
 /**
- * 
  * <p>介绍：商店实体</p>
  * @author 唐太明
  * @date 2016年3月17日下午12:57:42
@@ -26,12 +25,17 @@ public class Store {
 	/**
 	 * 评分
 	 */
-	private String reviewScores;
+	private Double reviewScores;
 	
 	/**
 	 * 销售量(月)
 	 */
 	private Integer salesQuantity;
+	
+	/**
+	 * 销售量(总)
+	 */
+	private Integer salesAllQuantity;
 	
 	/**
 	 * 起送价格
@@ -81,6 +85,11 @@ public class Store {
 	/**
 	 * 店铺是否关闭
 	 */
-	private boolean isClose;
+	private Integer status;
+	
+	/**
+	 * 店铺属于公司
+	 */
+	private Integer sortType;
 	
 }
