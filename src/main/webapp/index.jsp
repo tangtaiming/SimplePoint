@@ -15,7 +15,7 @@
         <div class="maia-aux">
              <h1>
                  <a href="www.google.com/">
-                  <img src="/images/googlelogo_color_116x41dp.png" alt="简单点">
+                  <img src="/images/googlelogo_color_116x41dp.png" alt="简单点" />
                  </a>
         	</h1>
         </div>
@@ -35,7 +35,7 @@
             <ul>
                 <li class="break">
                     <a data-g-action="icon" data-g-event="Product click" href="/mobile/">
-                        <img alt="logo" src="/images//images/picasa-32.png">
+                        <img alt="logo" src="/images/picasa-32.png" />
                     </a>
                     <p> <a data-g-action="link" data-g-event="Product click" href="/mobile/">
             湖南工学院新校区
@@ -46,7 +46,7 @@
                 </li>
                 <li>
                     <a data-g-action="icon" data-g-event="Product click" href="/mobile/maps/">
-                        <img alt="logo" src="/images/picasa-32.png">
+                        <img alt="logo" src="/images/picasa-32.png" />
                     </a>
                     <p> <a data-g-action="link" data-g-event="Product click" href="/mobile/maps/">
             湖南高速铁路职业技术学院
@@ -57,7 +57,7 @@
                 </li>
                 <li class="break">
                     <a data-g-action="icon" data-g-event="Product click" href="/mobile/search/">
-                        <img alt="logo" src="/images/picasa-32.png">
+                        <img alt="logo" src="/images/picasa-32.png" />
                     </a>
                     <p> <a data-g-action="link" data-g-event="Product click" href="/mobile/search/">
             湘潭大学
