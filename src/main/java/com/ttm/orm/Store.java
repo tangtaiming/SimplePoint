@@ -103,7 +103,7 @@ public class Store {
 	private String minusExempt;
 	
 	/**
-	 * 下单就送
+	 * 达到就送
 	 */
 	private String give;
 	

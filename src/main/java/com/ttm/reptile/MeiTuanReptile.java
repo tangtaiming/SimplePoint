@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -201,7 +202,7 @@ public class MeiTuanReptile implements PageProcessor {
 		// url
 		sortDetail.put("url", url);
 
-		// 销售量(月)
+		// 销售量(总)
 		int footBodyNumber = document.getElementsByClass("sold-count").size();
 		int salesAllQuantity = 0;
 		for (int x = 0; x < footBodyNumber; x++) {
@@ -243,8 +244,30 @@ public class MeiTuanReptile implements PageProcessor {
 			}
 		}
 		sortDetail.put("salesAllQuantity", salesAllQuantity);
+		
+		//首单优惠  firstOrder
+		getPrivilege("icon i-first", "1.没有首单优惠...", sortDetail, "firstOrder", document);
+		
+		//减免
+		getPrivilege("icon i-minus", "2.没有减免...", sortDetail, "minusExempt", document);
+		
+		//达到就送
+		getPrivilege("icon i-free-gift", "3.下单...", sortDetail, "give", document);
 		System.out.println(sortDetail.toString());
 		return sortDetail;
+	}
+	
+	public void getPrivilege(String classValue, String emptyName, Map<String, Object> sortDetail, String key, Document document) {
+		Elements firstOrderA = document.getElementsByAttributeValue("class", classValue);
+		String bodyHtml = null;
+		if (firstOrderA.isEmpty()) {
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^" + emptyName);
+		} else {
+			Element firstOrderB = firstOrderA.first().nextElementSibling();
+			System.out.println("+++++++++++++++++++++" + firstOrderB.html());
+			bodyHtml = firstOrderB.html();
+		}
+		sortDetail.put(key, bodyHtml);
 	}
 
 	@Override
