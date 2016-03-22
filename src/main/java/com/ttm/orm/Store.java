@@ -92,4 +92,19 @@ public class Store {
 	 */
 	private Integer sortType;
 	
+	/**
+	 * 首单优惠
+	 */
+	private String firstOrder;
+	
+	/**
+	 * 减免
+	 */
+	private String minusExempt;
+	
+	/**
+	 * 下单就送
+	 */
+	private String give;
+	
 }

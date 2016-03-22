@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ttm.reptile.MeiTuanReptileFactory;
 
-@Controller
-@RequestMapping("t")
+
 /**
  * 
  * <p>介绍</p>
@@ -15,6 +14,8 @@ import com.ttm.reptile.MeiTuanReptileFactory;
  * @date 2016年3月16日上午9:13:00
  * @version 1.0
  */
+@Controller
+@RequestMapping("t")
 public class TestAction {
 	
 	private MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
