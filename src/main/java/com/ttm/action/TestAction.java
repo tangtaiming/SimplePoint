@@ -15,7 +15,6 @@ import com.ttm.reptile.MeiTuanReptileFactory;
  * @version 1.0
  */
 @Controller
-@RequestMapping("t")
 public class TestAction {
 	
 	private MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
@@ -26,6 +25,15 @@ public class TestAction {
 		String url = "http://waimai.meituan.com/home/wsb0uqe32sz6";
 		factory.startMeituan(url);
 		return "startReptile";
+	}
+	
+	/**
+	 * 登录后主页面
+	 * @return
+	 */
+	@RequestMapping(value = "loginIndex", method = RequestMethod.GET)
+	public String loginIndex() {
+		return "competence/sort";
 	}
 	
 }
