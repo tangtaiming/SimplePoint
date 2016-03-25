@@ -90,7 +90,7 @@ public class Store {
 	/**
 	 * 店铺属于公司
 	 */
-	private Integer sortType;
+	private Integer sortTypeId;
 	
 	/**
 	 * 首单优惠
@@ -106,5 +106,10 @@ public class Store {
 	 * 达到就送
 	 */
 	private String give;
+	
+	/**
+	 * 创建人
+	 */
+	private Integer userId;
 	
 }
