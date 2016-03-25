@@ -252,7 +252,7 @@ public class MeiTuanReptile implements PageProcessor {
 		getPrivilege("icon i-minus", "2.没有减免...", sortDetail, "minusExempt", document);
 		
 		//达到就送
-		getPrivilege("icon i-free-gift", "3.下单...", sortDetail, "give", document);
+		getPrivilege("icon i-free-gift", "3.没有赠送优惠...", sortDetail, "give", document);
 		System.out.println(sortDetail.toString());
 		return sortDetail;
 	}
