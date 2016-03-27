@@ -25,6 +25,21 @@
 	</mvc:annotation-driven>
 	
 	
+<!-- 	<mvc:annotation-driven> -->
+<!-- 	    <mvc:message-converters> -->
+<!-- 	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> -->
+<!-- 	            <property name="supportedMediaTypes" value="charset=UTF-8" /> -->
+<!-- 	            <property name="objectMapper"> -->
+<!-- 	                <bean class="com.fasterxml.jackson.databind.ObjectMapper"> -->
+<!-- 	                    <property name="serializationInclusion" value="NON_NULL"/> -->
+<!-- 	                </bean> -->
+<!-- 	            </property> -->
+<!-- 	        </bean> -->
+<!-- 	    </mvc:message-converters> -->
+<!--     </mvc:annotation-driven> -->
+	
+	
+	
 	<!-- 配置视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="contentType" value="text/html" />

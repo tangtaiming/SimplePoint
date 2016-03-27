@@ -29,7 +29,7 @@
                   	<input id="ext-name" class="form-control" type="text" name="name" placeholder="不能为空">
                   </div>
                   <div class="col-sm-5">
-                      <p class="control-p text-red">学校名称 不能为空</p>
+                      <p title="学校名称" class="ext-name-error control-p text-red"></p>
                   </div>
               </div><!--- 一行结束 -->  
               <div class="form-group">
@@ -38,13 +38,13 @@
                   	<input id="ext-code" class="form-control" type="text" name="code" placeholder="不能为空">
                   </div>
                   <div class="col-sm-5">
-                      <p class="control-p text-red">学校代码 不能为空</p>
+                      <p title="学校代码" class="ext-code-error control-p text-red"></p>
                   </div>
               </div><!--- 一行结束 --> 
           </div><!--主体-->
           <div class="box-footer">
           	<div class="col-sm-offset-1 col-sm-11">
-              	<button id="submit-school" class="btn btn-primary margin-r-5" type="button"> 保 存 </button>
+              	<button id="submit-school" class="btn btn-primary margin-r-5" type="submit"> 保 存 </button>
                 <button class="btn btn-primary" type="reset"> 重 置 </button>
             </div>
           </div><!-- 脚步 -->
@@ -58,28 +58,25 @@
 <%@include file="container-footer.jsp"%>
 <script>
 	$(function() {
-		console.info("hello jquery");
-		$("#submit-school").click(function() {
-			var params = {};
-			var requests = {};
-			var $value = $("input[id^='ext-']");
-			$value.each(function() {
-				params[$(this).attr("name")] = $(this).val();
-			});
-			console.info(JSON.stringify(requests));
-			$.ajax({
-				url: "/school",
-				type: "post",
-				dataType: "json",
-				contentType:"application/json",
-				data: JSON.stringify(params),
-				success: function(msg) {
-					console.info("msg" + msg);
-				},
-				error: function() {
-					console.error("error...");
+		$(".form-horizontal").submit(function(e) {
+			var $input = $("input[id^='ext-']");
+			var error = false;
+			$input.each(function() {
+				var value = $(this).val();
+				var $id = $(this).attr("id");
+				var $class = "." + $id + "-error";
+				var $error = $($class);
+				if (value == null || value == "") {
+					error = true;
+					$error.html($error.attr("title") + " 值不能为空");
+				} else {
+					$error.html("");
 				}
 			});
+			//取消表单提交
+			if (error) {
+				e.preventDefault();
+			}
 		});
 	});
 </script>

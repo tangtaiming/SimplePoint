@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="container-head.jsp"%>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      学校管理
-      <small>管理学校-基本信息</small>
+      URL列表
+      <small>管理爬虫地址-美团/饿了麽地址信息</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-      <li class="active">学校管理</li>
+      <li class="active">URL列表</li>
     </ol>
   </section>
 
@@ -20,11 +19,11 @@
   <section class="content">
 
     <!-- Your Page Content Here -->
- <div class="row">
+  <div class="row">
     	<div class="col-xs-12">
       	<div class="box">
           	<div class="box-header">
-                  <h3 class="box-title"><a href="/school"><span class="label label-primary">新增</span></a></h3>
+                  <h3 class="box-title"><a href="add-reptile.html"><span class="label label-primary">新增</span></a></h3>
                   <div class="box-tools">
                   	<div class="input-group input-group-sm" style="width: 150px;">
                       	<input class="form-control pull-right" type="text" placeholder="Search" name="table_search">
@@ -52,57 +51,40 @@
                               <th>操作</th>
                               
                           	<th>ID</th>
-                              <th>学校名称</th>
-                              <th>学校代码</th>
+                              <th>URL</th>
                               <th>创建人</th>
                               <th>创建时间</th>
+                              <th>所属平台</th>
+                              <th>所属学校</th>
                           </tr>
-                          <c:forEach items="${schoolsList}" var="school">
                           <tr>
-                        	  <td>
-                            	<input type="checkbox" name="school-${school.id}" />
+                          	<td>
+                              	<input type="checkbox" name="sort-110" />
                               </td>
                               <td>
-                              	<a href="#">
+                              	  <a href="#">
+                                  	<span class="label label-primary">开启爬虫</span>
+                                  </a>
+                              	  <a href="#">
                                   	<span class="label label-primary">编辑</span>
                                   </a>
-                                  <a class="school-delete-${school.id}" title="${school.name}" href="/school/${school.id}">
+                                  <a href="#">
                                   	<span class="label label-danger">删除</span>
                                   </a>
                               </td>
-                              <td>${school.id}</td>
-                              <td>${school.name}</td>
-                              <td>${school.code}</td>
-                              <td>
-                              <c:if test="${school.creatdId==1}">唐太明</c:if>
-                              </td>
-                              <td>${school.creatdDate}</td>
-                          </tr>	
-                          </c:forEach>
-<!--                           <tr> -->
-<!--                           	<td> -->
-<!--                               	<input type="checkbox" name="sort-110" /> -->
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                               	<a href="#"> -->
-<!--                                   	<span class="label label-primary">编辑</span> -->
-<!--                                   </a> -->
-<!--                                   <a href="#"> -->
-<!--                                   	<span class="label label-danger">删除</span> -->
-<!--                                   </a> -->
-<!--                               </td> -->
                               
-<!--                               <td>110</td> -->
-<!--                               <td>湖南工学院</td> -->
-<!--                               <td>10010</td> -->
-<!--                               <td>唐太明</td> -->
-<!--                               <td>2016-03-24 00:00:00</td> -->
-<!--                           </tr> -->
+                              <td>110</td>
+                              <td>http://waimai.meituan.com/home/wsb0uwk955j8</td>
+                              <td>唐太明</td>
+                              <td>2016-03-24 00:00:00</td>
+                              <td>美团</td>
+                              <th>湖南高速铁路职业技术学院</th>
                           <tr>
-                          	  <td></td>
+                          	<td></td>
                               <td></td>
                               
-                          	  <td></td>
+                          	<td></td>
+                              <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -157,28 +139,9 @@
           </div>
       </div>
     </div>
-    <div class="hidden">
-    	<form class="school-rest" action="" method="POST">
-    		<input type="hidden" name="_method" value="DELETE"/>
-    	</form>
-    </div>
+      
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <%@include file="container-footer.jsp"%>
-<script type="text/javascript">
-	$(function() {
-		$("a[class^='school-delete-']").click(function(e) {
-			var $title = $(this).attr("title");
-			if (confirm("确定删除 " + $title + "?")) {
-				var href = $(this).attr("href");
-				$(".school-rest").attr("action", href).submit();
-				return false;
-			} else {
-				//取消事件操作
-				e.preventDefault();
-			}
-		});
-	});
-</script>

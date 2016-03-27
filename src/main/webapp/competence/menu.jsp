@@ -9,7 +9,7 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="/images//user2-160x160.jpg" class="img-circle" alt="User Image">
+        <img src="/images/user2-160x160.jpg" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>Alexander Pierce</p>
@@ -44,15 +44,15 @@
       <li>
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>学校管理</span> <i class="fa fa-angle-left pull-right"></i></a> 
       	<ul class="treeview-menu">
-          	<li><a href="school.html"><i class="fa fa-circle-o"></i> 学校列表</a></li>
-              <li><a href="add-school.html"><i class="fa fa-circle-o"></i> 新增学校</a></li>
+          	<li><a href="/school?page=1&size=20"><i class="fa fa-circle-o"></i> 学校列表</a></li>
+              <li><a href="/school"><i class="fa fa-circle-o"></i> 新增学校</a></li>
           </ul>
       </li>
       <li>
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>爬虫地址管理</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-          	<li><a href="reptile.html"><i class="fa fa-circle-o"></i> url列表</a></li>
-              <li><a href="add-reptile.html"><i class="fa fa-circle-o"></i> 新增url</a></li>
+          	<li><a href="/reptile?page=1&size=20"><i class="fa fa-circle-o"></i> url列表</a></li>
+              <li><a href="/reptile"><i class="fa fa-circle-o"></i> 新增url</a></li>
           </ul>
       </li>
     </ul>

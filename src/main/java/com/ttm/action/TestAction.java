@@ -1,8 +1,11 @@
 package com.ttm.action;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ttm.reptile.MeiTuanReptileFactory;
 
@@ -18,6 +21,10 @@ import com.ttm.reptile.MeiTuanReptileFactory;
 public class TestAction {
 	
 	private MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
+	
+	private String name;
+	
+	private ModelAndView md = new ModelAndView();
 
 	@RequestMapping(value = "startReptile", method = RequestMethod.GET)
 	public String startReptile() {
@@ -34,6 +41,21 @@ public class TestAction {
 	@RequestMapping(value = "loginIndex", method = RequestMethod.GET)
 	public String loginIndex() {
 		return "competence/sort";
+	}
+	
+	@RequestMapping(value = "testShow", method = RequestMethod.GET)
+	public ModelAndView testShow() {
+		md.addObject("name", "xiaoming");
+		md.setViewName("competence/success");
+		return md;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

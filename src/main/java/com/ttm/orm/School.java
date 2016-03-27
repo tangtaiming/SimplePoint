@@ -12,6 +12,9 @@ public class School {
 	
 	private String name;
 	
+	/**
+	 * 代码用于区分校区使用 例如 1 代表 老校区 2 代表 新校区等
+	 */
 	private Integer code;
 	
 	private Integer creatdId;
@@ -57,5 +60,5 @@ public class School {
 	public void setCreatdDate(String creatdDate) {
 		this.creatdDate = creatdDate;
 	}
-	
+
 }
