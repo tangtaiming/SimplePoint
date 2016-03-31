@@ -63,7 +63,7 @@ desired effect
   <%-- 菜单显示部分  --%>
   <%@include file="menu.jsp" %>
   <%-- 数据显示部分  --%>
-  <%@include file="sort.jsp" %>
+  <%@include file="store.jsp" %>
   <%-- 脚步部分  --%>
   <%@include file="footer.jsp" %>
   <%-- 设置部分  --%>
