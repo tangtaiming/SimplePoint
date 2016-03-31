@@ -1,5 +1,9 @@
 package com.ttm.reptile;
 
+import java.util.List;
+
+import com.ttm.orm.Store;
+
 import us.codecraft.webmagic.Spider;
 
 /**
@@ -16,10 +20,11 @@ public class MeiTuanReptileFactory {
 	 * 开启一个美团爬虫爬取对应网址的数据
 	 * @param url
 	 */
-	public void startMeituan(String url) {
+	public List<Store> startMeituan(String url) {
 		MeiTuanReptile meiTuanReptile = new MeiTuanReptile();
 		meiTuanReptile.setReal(url);
 		Spider.create(meiTuanReptile).addUrl(MEI_TUAN).thread(3).run();
+		return meiTuanReptile.getStoresList();
 	}
 	
 }

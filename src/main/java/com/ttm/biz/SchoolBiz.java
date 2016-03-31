@@ -37,4 +37,18 @@ public interface SchoolBiz {
 	 */
 	public abstract List<School> findSchoolList(Integer page, Integer size);
 	
+	/**
+	 * 计算数量
+	 * @param Integer 数量
+	 * @return
+	 */
+	public abstract Integer countSchoolNumber();
+
+	/**
+	 * 排序查询学校所有数据
+	 * @param sortValue 
+	 * @return
+	 */
+	public abstract List<School> findSchoolList(String sortName, String sortValue);
+	
 }

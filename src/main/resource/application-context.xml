@@ -42,6 +42,8 @@
   	    <property name="mappingLocations">
   	        <list>
 				<value>classpath:school.hbm.xml</value>
+				<value>classpath:reptile.hbm.xml</value>
+				<value>classpath:store.hbm.xml</value>
   	   	    </list>
   	    </property>
   	</bean>

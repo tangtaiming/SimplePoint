@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="container-head.jsp"%>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -57,33 +58,39 @@
                               <th>所属平台</th>
                               <th>所属学校</th>
                           </tr>
+                          <c:forEach items="${reptilesList}" var="reptile">
                           <tr>
                           	<td>
-                              	<input type="checkbox" name="sort-110" />
+                              	<input type="checkbox" name="sort-${reptile.id}" />
                               </td>
                               <td>
-                              	  <a href="#">
+                              	  <a href="/reptile/${reptile.id}/start">
                                   	<span class="label label-primary">开启爬虫</span>
                                   </a>
                               	  <a href="#">
                                   	<span class="label label-primary">编辑</span>
                                   </a>
-                                  <a href="#">
+                                  <a class="reptile-delete-${reptile.id}" title="${reptile.url}"  href="/reptile/${reptile.id}">
                                   	<span class="label label-danger">删除</span>
                                   </a>
                               </td>
-                              
-                              <td>110</td>
-                              <td>http://waimai.meituan.com/home/wsb0uwk955j8</td>
-                              <td>唐太明</td>
-                              <td>2016-03-24 00:00:00</td>
-                              <td>美团</td>
-                              <th>湖南高速铁路职业技术学院</th>
+                              <td>${reptile.id}</td>
+                              <td>${reptile.url}</td>
+                              <td>
+                              	<c:if test="${reptile.creatdId==1}">唐太明</c:if>
+                              </td>
+                              <td>${reptile.creatdDate}</td>
+                              <td>
+                              	<c:if test="${reptile.sortTypeId==1}">美团</c:if>
+                              	<c:if test="${reptile.sortTypeId==2}">饿了么</c:if>
+                              </td>
+                              <td>${reptile.schoolId.name}</td>
+                          </tr>
+                          </c:forEach>
                           <tr>
-                          	<td></td>
+                          	  <td></td>
                               <td></td>
-                              
-                          	<td></td>
+                          	  <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -98,12 +105,26 @@
                   	<div class="col-xs-6">
                           <div class="dataTables_length">
                               <label>
-                              	页数 当前第 1 页 - 总共 10 页，每页显示
-                                  <select class="form-control input-sm" name="example1_length" aria-controls="example1">
-                                      <option value="10">10</option>
-                                      <option value="25">25</option>
-                                      <option value="50">50</option>
-                                      <option value="100">100</option>
+                              	页数 当前第 ${page.pageNumber}页 - 总共 ${page.totalPage}页，每页显示
+                              	<c:choose>
+                                  	<c:when test="${page.pageSize==10}">
+                                  		<c:set var="select_10" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==25}">
+                                  		<c:set var="select_25" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==50}">
+                                  		<c:set var="select_50" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==100}">
+                                  		<c:set var="select_100" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  </c:choose>
+                                  <select class="form-control input-sm" name="size_length_reptile" aria-controls="example1">
+                                      <option value="/reptile?page=1&size=10" option-data="10" ${select_10}>10</option>
+                                      <option value="/reptile?page=1&size=25" option-data="25" ${select_25}>25</option>
+                                      <option value="/reptile?page=1&size=50" option-data="50" ${select_50}>50</option>
+                                      <option value="/reptile?page=1&size=100" option-data="100" ${select_100}>100</option>
                                   </select>
                                   数量
                               </label>
@@ -111,27 +132,45 @@
                       </div>
                       <div class="col-xs-6">
                       	<ul class="pagination pagination-sm no-margin pull-right">
+                              <c:if test="${page.previous==true}">
+                              <li>
+                                  <a href="/reptile?page=${page.pageNumber-1}&size=${page.pageSize}">«</a>
+                              </li>
+                              </c:if>
+                              <c:if test="${page.previous==false}">
                               <li class="disabled">
-                                  <a href="#">«</a>
+                                  <a href="javascript:;">«</a>
                               </li>
-                              <li class="active">
-                                  <a href="#">1</a>
+                              </c:if>
+                              
+                              <c:forEach items="${showPage}" var="sp">
+                           	  <c:choose>
+                           	  	<c:when test="${sp==page.pageNumber}">
+                           	  	  <c:set var="active" value="class='active'" scope="request" />
+                           	  	  <c:set var="href" value="" scope="request" />
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	  	  <c:set var="active" value="" scope="request" />
+                           	  	  <c:set var="href" value="href='/reptile?page=${sp}&size=${page.pageSize}'" scope="request" />
+                           	  	</c:otherwise>
+                           	  </c:choose>
+	                           	  
+                           	  <li ${active}>
+                                <a ${href}>${sp}</a>
                               </li>
-                              <li>
-                                  <a href="#">2</a>
+	                          </c:forEach>
+                              
+                              
+                              <c:if test="${page.next==true}">
+							  <li>
+                                  <a href="/reptile?page=${page.pageNumber+1}&size=${page.pageSize}">»</a>
                               </li>
-                              <li>
-                                  <a href="#">3</a>
+							  </c:if>
+							  <c:if test="${page.next==false}">
+							  <li class="disabled">
+                                  <a href="javascript:;">»</a>
                               </li>
-                              <li>
-                                  <a href="#">4</a>
-                              </li>
-                              <li>
-                                  <a href="#">5</a>
-                              </li>
-                              <li>
-                                  <a href="#">»</a>
-                              </li>
+							  </c:if>
                           </ul>
                       </div>
                   </div>
@@ -139,9 +178,35 @@
           </div>
       </div>
     </div>
-      
+    <div class="hidden">
+    	<form class="reptile-rest" action="" method="POST">
+    		<input type="hidden" name="_method" value="DELETE"/>
+    	</form>
+    </div>
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <%@include file="container-footer.jsp"%>
+<script type="text/javascript">
+	$(function() {
+		$("a[class^='reptile-delete-']").click(function(e) {
+			var $title = $(this).attr("title");
+			if (confirm("确定删除 " + $title + "?")) {
+				var href = $(this).attr("href");
+				$(".reptile-rest").attr("action", href).submit();
+				return false;
+			} else {
+				//取消事件操作
+				e.preventDefault();
+			}
+		});
+		
+		$("select[name^='size_length_']").change(function() {
+			var $href = $(this).val();
+			console.info("url:" + $href);
+			$("input[name='_method']").val("GET");
+			$(".reptile-rest").attr("action", $href).submit();
+		});
+	});
+</script>

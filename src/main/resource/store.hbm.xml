@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" > 
+<hibernate-mapping>  
+    <!--生成默认为user的数据库表-->  
+    <class name ="com.ttm.orm.Store" table="my_wxy.store">  
+        <id name ="id">
+            <generator class ="native"></generator>  
+        </id > 
+        <property name ="name" type="string"></property> 
+        <property name ="storeId" type="int"></property>  
+        <property name ="reviewScores" type="double"></property>  
+        <property name ="salesQuantity" type="int"></property>  
+        <property name ="salesAllQuantity" type="int"></property>
+        <property name ="sendThePrice" type="int"></property>
+        <property name ="distributionCost" type="int"></property>
+        <property name ="shopHours" type="int"></property>
+        <property name ="shoprReach" type="int"></property>
+        <property name ="collectQuantity" type="int"></property>
+        <property name ="businessDate" type="string"></property>
+        <property name ="address" type="string"></property>
+        <property name ="phone" type="string"></property>
+        <property name ="url" type="string"></property>
+        <property name ="status" type="int"></property>
+        <property name ="sortTypeId" type="int"></property>
+        <property name ="firstOrder" type="string"></property>
+        <property name ="minusExempt" type="string"></property>
+        <property name ="give" type="string"></property>
+        <property name ="creatdId" type="int"></property>
+        <property name ="creatdDate" type="string"></property>
+        <property name ="updateDate" type="string"></property>
+		
+        <many-to-one name="schoolId" class="com.ttm.orm.School" column="schoolId" lazy="false" />
+    </class > 
+</hibernate-mapping>

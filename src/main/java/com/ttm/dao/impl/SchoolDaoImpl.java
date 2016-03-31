@@ -7,6 +7,7 @@ import com.ttm.dao.MySqlDataFactory;
 import com.ttm.dao.SchoolDao;
 import com.ttm.orm.School;
 
+@SuppressWarnings("unchecked")
 public class SchoolDaoImpl implements SchoolDao {
 	
 	private MySqlDataFactory factory = new MySqlDataFactory();
@@ -19,13 +20,18 @@ public class SchoolDaoImpl implements SchoolDao {
 		return (School) factory.findById(School.class, id);
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	public List<School> findSchoolByList(Map<String, Integer> pageing) {
 		return (List<School>) factory.findToListLimit(School.class, null, null, pageing);
 	}
 
 	public boolean deleteSchool(School school) {
 		return factory.delete(School.class, school);
+	}
+
+	public List<School> findSchoolByList(Map<String, Object> query, Map<String, Object> sort,
+			Map<String, Integer> pageing) {
+		return (List<School>) factory.findToListLimit(School.class, query, sort, pageing);
 	}
 
 }

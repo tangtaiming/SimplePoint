@@ -35,7 +35,11 @@
               <div class="form-group">
                   <label class="col-sm-2 control-label" for="code">学校代码:</label>
                   <div class="col-sm-5">
-                  	<input id="ext-code" class="form-control" type="text" name="code" placeholder="不能为空">
+                  	<select id="ext-code" class="form-control" name="code">
+                  		<option value="3">其他</option>
+                  		<option value="2">新校区</option>
+                  		<option value="1">老校区</option>
+                  	</select>
                   </div>
                   <div class="col-sm-5">
                       <p title="学校代码" class="ext-code-error control-p text-red"></p>

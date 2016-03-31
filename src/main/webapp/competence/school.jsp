@@ -59,10 +59,10 @@
                           </tr>
                           <c:forEach items="${schoolsList}" var="school">
                           <tr>
-                        	  <td>
+                        	  <td width="30">
                             	<input type="checkbox" name="school-${school.id}" />
                               </td>
-                              <td>
+                              <td width="60">
                               	<a href="#">
                                   	<span class="label label-primary">编辑</span>
                                   </a>
@@ -70,34 +70,22 @@
                                   	<span class="label label-danger">删除</span>
                                   </a>
                               </td>
-                              <td>${school.id}</td>
+                              <td width="30">${school.id}</td>
                               <td>${school.name}</td>
-                              <td>${school.code}</td>
+                              <td>
+                              <c:choose>
+                              	<c:when test="${school.code==3}">其他</c:when>
+                              	<c:when test="${school.code==1}">老校区</c:when>
+                              	<c:when test="${school.code==2}">新校区</c:when>
+                              	<c:otherwise>未知</c:otherwise>
+                              </c:choose>
+                              </td>
                               <td>
                               <c:if test="${school.creatdId==1}">唐太明</c:if>
                               </td>
                               <td>${school.creatdDate}</td>
                           </tr>	
                           </c:forEach>
-<!--                           <tr> -->
-<!--                           	<td> -->
-<!--                               	<input type="checkbox" name="sort-110" /> -->
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                               	<a href="#"> -->
-<!--                                   	<span class="label label-primary">编辑</span> -->
-<!--                                   </a> -->
-<!--                                   <a href="#"> -->
-<!--                                   	<span class="label label-danger">删除</span> -->
-<!--                                   </a> -->
-<!--                               </td> -->
-                              
-<!--                               <td>110</td> -->
-<!--                               <td>湖南工学院</td> -->
-<!--                               <td>10010</td> -->
-<!--                               <td>唐太明</td> -->
-<!--                               <td>2016-03-24 00:00:00</td> -->
-<!--                           </tr> -->
                           <tr>
                           	  <td></td>
                               <td></td>
@@ -116,12 +104,26 @@
                   	<div class="col-xs-6">
                           <div class="dataTables_length">
                               <label>
-                              	页数 当前第 1 页 - 总共 10 页，每页显示
-                                  <select class="form-control input-sm" name="example1_length" aria-controls="example1">
-                                      <option value="10">10</option>
-                                      <option value="25">25</option>
-                                      <option value="50">50</option>
-                                      <option value="100">100</option>
+                              	页数 当前第 ${page.pageNumber}页 - 总共 ${page.totalPage}页，每页显示
+                                  <c:choose>
+                                  	<c:when test="${page.pageSize==10}">
+                                  		<c:set var="select_10" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==25}">
+                                  		<c:set var="select_25" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==50}">
+                                  		<c:set var="select_50" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==100}">
+                                  		<c:set var="select_100" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  </c:choose>
+                                  <select class="form-control input-sm" name="size_length_school" aria-controls="example1">
+                                      <option value="/school?page=1&size=10" option-data="10" ${select_10}>10</option>
+                                      <option value="/school?page=1&size=25" option-data="25" ${select_25}>25</option>
+                                      <option value="/school?page=1&size=50" option-data="50" ${select_50}>50</option>
+                                      <option value="/school?page=1&size=100" option-data="100" ${select_100}>100</option>
                                   </select>
                                   数量
                               </label>
@@ -129,27 +131,44 @@
                       </div>
                       <div class="col-xs-6">
                       	<ul class="pagination pagination-sm no-margin pull-right">
+                      		  <c:if test="${page.previous==true}">
+                              <li>
+                                  <a href="/school?page=${page.pageNumber-1}&size=${page.pageSize}">«</a>
+                              </li>
+                              </c:if>
+                              <c:if test="${page.previous==false}">
                               <li class="disabled">
-                                  <a href="#">«</a>
+                                  <a href="javascript:;">«</a>
                               </li>
-                              <li class="active">
-                                  <a href="#">1</a>
+                              </c:if>
+                              	
+                           	<c:forEach items="${showPage}" var="sp">
+                           	  <c:choose>
+                           	  	<c:when test="${sp==page.pageNumber}">
+                           	  	  <c:set var="active" value="class='active'" scope="request" />
+                           	  	  <c:set var="href" value="" scope="request" />
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	  	  <c:set var="active" value="" scope="request" />
+                           	  	  <c:set var="href" value="href='/school?page=${sp}&size=${page.pageSize}'" scope="request" />
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                           	  
+                           	  <li ${active}>
+                                <a ${href}>${sp}</a>
                               </li>
-                              <li>
-                                  <a href="#">2</a>
+                           	</c:forEach>
+                              
+							  <c:if test="${page.next==true}">
+							  <li>
+                                  <a href="/school?page=${page.pageNumber+1}&size=${page.pageSize}">»</a>
                               </li>
-                              <li>
-                                  <a href="#">3</a>
+							  </c:if>
+							  <c:if test="${page.next==false}">
+							  <li class="disabled">
+                                  <a href="javascript:;">»</a>
                               </li>
-                              <li>
-                                  <a href="#">4</a>
-                              </li>
-                              <li>
-                                  <a href="#">5</a>
-                              </li>
-                              <li>
-                                  <a href="#">»</a>
-                              </li>
+							  </c:if>
                           </ul>
                       </div>
                   </div>
@@ -179,6 +198,13 @@
 				//取消事件操作
 				e.preventDefault();
 			}
+		});
+		
+		$("select[name^='size_length_']").change(function() {
+			var $href = $(this).val();
+			console.info("url:" + $href);
+			$("input[name='_method']").val("GET");
+			$(".school-rest").attr("action", $href).submit();
 		});
 	});
 </script>

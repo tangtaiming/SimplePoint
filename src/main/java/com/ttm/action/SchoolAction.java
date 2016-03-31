@@ -5,14 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import com.ttm.biz.SchoolBiz;
 import com.ttm.biz.impl.SchoolBizImpl;
@@ -36,10 +34,13 @@ public class SchoolAction {
 	 * @return
 	 */
 	@RequestMapping(value = "school", params = { "page", "size" }, method = RequestMethod.GET)
-	public ModelAndView school(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+	public ModelAndView school(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea, @RequestParam(value = "sort", required = false) String sort) {
 		List<School> schoolsList = schoolBiz.findSchoolList(page, size);
-		Dumper.dump(schoolsList);
 		view.addObject("schoolsList", schoolsList);
+		// 设置分页对象
+		view.addObject("page", ((SchoolBizImpl) schoolBiz).getPage());
+		view.addObject("showPage", ((SchoolBizImpl) schoolBiz).getShowPage());
 		view.setViewName("competence/school");
 		return view;
 	}

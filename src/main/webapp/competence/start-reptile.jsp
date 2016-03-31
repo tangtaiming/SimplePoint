@@ -27,17 +27,17 @@
           	<div class="box-body">
               	<div class="row">
                   	<div class="col-sm-3">
-                      	<a class="btn btn-app">
+                      	<a class="btn btn-app" href="/reptile/${reptile.id}/start?type=open">
                               <i class="fa fa-play"></i>
                               Play
-                          </a>
+                        </a>
                       </div>
                       <div class="col-sm-9">
                       	<div style="height:55px;">
-                          	开启爬虫地址: http://waimai.meituan.com/home/wsb0uwk955j8
+                          	开启爬虫地址: ${reptile.url}
                           </div>
                           <div>
-                          	开启状态:<span class="result">开启中</span>
+                          	开启状态:<span class="result">${reptileStatus}</span>
                           </div>
                       </div>
                   </div>
@@ -50,5 +50,4 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
 <%@include file="container-footer.jsp"%>

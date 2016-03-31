@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="container-head.jsp"%>
 
 <!-- Content Wrapper. Contains page content -->
@@ -22,15 +23,15 @@
 
     <!-- Your Page Content Here -->
  <div class="box box-info">
-      <form class="form-horizontal" action="">
+      <form class="form-horizontal" action="/reptile" method="post">
           <div class="box-body">
               <div class="form-group">
                   <label class="col-sm-2 control-label" for="sortId">URL:</label>
                   <div class="col-sm-5">
-                  	<textarea id="url" class="form-control"></textarea>
+                  	<textarea id="ext-url" name="url" class="form-control"></textarea>
                   </div>
                   <div class="col-sm-5">
-                      <p class="control-p text-red">URL 不能为空</p>
+                      <p title="URL" class="ext-url-error control-p text-red"></p>
                   </div>
               </div><!--- 一行结束 -->               
               <div class="form-group">
@@ -38,25 +39,31 @@
                   <div class="col-sm-5">
                      <div class="checkbox">
                           <label class="margin-r-5">
-                              <input id="sortTypeId1" type="checkbox" name="sortTypeId">
+                              <input id="extredio-sortTypeId1" type="radio" name="sortTypeId" value="1">
                               美团
                           </label>
                           <label>
-                              <input id="sortTypeId2" type="checkbox" name="sortTypeId">
+                              <input id="extredio-sortTypeId2" type="radio" name="sortTypeId" value="2">
                               饿了麽
                           </label>
                       </div>
+                  </div>
+                  <div class="col-sm-5">
+                      <p title="平台" class="extredio-sortTypeId-error control-p text-red"></p>
                   </div>
               </div><!--- 一行结束 -->
               <div class="form-group">
                   <label class="col-sm-2 control-label" for="schoolId">学校:</label>
                   <div class="col-sm-5">
-                      <select id="schoolId" class="form-control">
-                      	<option>湖南工学院</option>
-                          <option>湘潭大学</option>
-                          <option>湖南大学</option>
-                          <option>深圳大学</option>
+                      <select id="ext-schoolId" name="schoolId.id" class="form-control">
+                      	  <option value="">--Select--</option>
+                      	  <c:forEach items="${schoolsList}" var="school">
+	                  	  	<option value="${school.id}">${school.name}</option>
+	                  	  </c:forEach>
                       </select>
+                  </div>
+                  <div class="col-sm-5">
+                      <p title="学校" class="ext-schoolId-error control-p text-red"></p>
                   </div>
               </div><!--- 一行结束 -->
           </div>
@@ -73,6 +80,42 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-
 <%@include file="container-footer.jsp"%>
+<script type="text/javascript">
+	$(function() {
+		$(".form-horizontal").submit(function(e) {
+			var $input = $("*[id^='ext-']");
+			var error = false;
+			$input.each(function() {
+				var value = $(this).val();
+				var $id = $(this).attr("id");
+				var $class = "." + $id + "-error";
+				var $error = $($class);
+				if (value == null || value == "") {
+					error = true;
+					$error.html($error.attr("title") + " 值不能为空");
+				} else {
+					$error.html("");
+				}
+			});
+			
+			/** 单选按钮验证 */
+			var $radio1 = $("#extredio-sortTypeId1");
+			var $radio2 = $("#extredio-sortTypeId2");
+			var $errorRadio = $(".extredio-sortTypeId-error");
+			var isRadio1 = $radio1[0].checked;
+			var isRadio2 = $radio2[0].checked;
+			if (isRadio1 || isRadio2) {
+				$errorRadio.html("");
+			} else {
+				error = true;
+				$errorRadio.html($errorRadio.attr("title") + " 是必选项");
+			}
+			
+			//取消表单提交
+			if (error) {
+				e.preventDefault();
+			}
+		});
+	});
+</script>

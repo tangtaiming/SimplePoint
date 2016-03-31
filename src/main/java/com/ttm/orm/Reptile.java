@@ -14,7 +14,7 @@ public class Reptile {
 	
 	private Integer creatdId;
 	
-	private String createDate;
+	private String creatdDate;
 	
 	/**
 	 * 所属平台
@@ -24,7 +24,12 @@ public class Reptile {
 	/**
 	 * 学校
 	 */
-	private Integer schoolId;
+	private School schoolId;
+	
+	/**
+	 * 修改时间
+	 */
+	private String updateDate;
 
 	public Integer getId() {
 		return id;
@@ -50,13 +55,6 @@ public class Reptile {
 		this.creatdId = creatdId;
 	}
 
-	public String getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
 
 	public Integer getSortTypeId() {
 		return sortTypeId;
@@ -66,12 +64,28 @@ public class Reptile {
 		this.sortTypeId = sortTypeId;
 	}
 
-	public Integer getSchoolId() {
+	public School getSchoolId() {
 		return schoolId;
 	}
 
-	public void setSchoolId(Integer schoolId) {
+	public void setSchoolId(School schoolId) {
 		this.schoolId = schoolId;
 	}
-	
+
+	public String getCreatdDate() {
+		return creatdDate;
+	}
+
+	public void setCreatdDate(String creatdDate) {
+		this.creatdDate = creatdDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+
 }
