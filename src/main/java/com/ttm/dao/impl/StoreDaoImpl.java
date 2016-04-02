@@ -33,4 +33,8 @@ public class StoreDaoImpl implements StoreDao {
 		return (List<Store>) factory.findToListLimit(Store.class, query, sort, pageing);
 	}
 
+	public Store findStoreById(Integer id) {
+		return (Store) factory.findById(Store.class, id);
+	}
+
 }

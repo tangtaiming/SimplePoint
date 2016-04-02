@@ -37,21 +37,21 @@
       <li class="active">
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>店铺管理</span> <i class="fa fa-angle-left pull-right"></i></a>
       	<ul class="treeview-menu">
-          	<li><a href="starter.html"><i class="fa fa-circle-o"></i> 店铺列表</a></li>
+          	<li><a href="/store?page=1&size=25"><i class="fa fa-circle-o"></i> 店铺列表</a></li>
               <li><a href="add-starter.html"><i class="fa fa-circle-o"></i> 新增店铺</a></li>
           </ul>
       </li>
       <li>
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>学校管理</span> <i class="fa fa-angle-left pull-right"></i></a> 
       	<ul class="treeview-menu">
-          	<li><a href="/school?page=1&size=20"><i class="fa fa-circle-o"></i> 学校列表</a></li>
+          	<li><a href="/school?page=1&size=25"><i class="fa fa-circle-o"></i> 学校列表</a></li>
               <li><a href="/school"><i class="fa fa-circle-o"></i> 新增学校</a></li>
           </ul>
       </li>
       <li>
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>爬虫地址管理</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-          	<li><a href="/reptile?page=1&size=20"><i class="fa fa-circle-o"></i> url列表</a></li>
+          	<li><a href="/reptile?page=1&size=25"><i class="fa fa-circle-o"></i> url列表</a></li>
               <li><a href="/reptile"><i class="fa fa-circle-o"></i> 新增url</a></li>
           </ul>
       </li>

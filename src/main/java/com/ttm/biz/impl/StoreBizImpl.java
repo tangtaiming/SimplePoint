@@ -106,6 +106,10 @@ public class StoreBizImpl implements StoreBiz {
 	}
 
 	public boolean deleteStore(Integer id) {
+		Store store = storeDao.findStoreById(id);
+		if (store != null) {
+			return storeDao.deleteStore(store);
+		}
 		return false;
 	}
 
@@ -136,10 +140,12 @@ public class StoreBizImpl implements StoreBiz {
 			pageNumber = page;
 			this.size = size;
 			totalNumber = countReptileNumber();
+		} else {
+			System.out.println("没有查询出数据...");
 		}
 		this.page = pageUtil.createPage(pageNumber, size, totalNumber, pageRange);
 		countShowPage(this.page.getRangeStart(), this.page.getRangeEnd());
-		return null;
+		return storesList;
 	}
 	
 	/**

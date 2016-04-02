@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="container-head.jsp"%>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -46,12 +47,12 @@
                   	<tbody>
                       	<tr>
                           	<th>
-                              	<input type="checkbox" name="sortAll" />
+                              <input type="checkbox" name="sortAll" />
                               </th>
                               <th>操作</th>
                               
-                          	<th width="50">ID</th>
                               <th width="250">店铺ID</th>
+                              <th>学校</th>
                               <th width="550">店名</th>
                               <th>评分</th>
                               <th>销售量(月)</th>
@@ -59,7 +60,7 @@
                               <th>销售量(总)</th>
                               <th>起送价格</th>
                               <th>配送费</th>
-						<th>送餐所需时间</th>
+							  <th>送餐所需时间</th>
                               <th>送餐到达率</th>
                               
                               <th>收藏数量</th>
@@ -69,95 +70,99 @@
                               <th>url</th>
                               
                               <th>店铺是否关闭</th>
-						<th>店铺属于公司</th>
+							  <th>店铺属于公司</th>
                               <th>首单优惠</th>
                               <th>减免</th>
                               <th>达到就送</th>
+                              
+                              <th>创建人</th>
+                              <th>创建时间</th>
+                              <th>修改时间</th>
                           </tr>
+                          <c:forEach items="${storesList}" var="store">
                           <tr>
                           	<td>
-                              	<input type="checkbox" name="sort-110" />
+                              	<input type="checkbox" name="sort-${store.id}" />
                               </td>
                               <td>
                               	<a href="#">
                                   	<span class="label label-primary">编辑</span>
                                   </a>
-                                  <a href="#">
+                                  <a class="store-delete-${store.id}"  title="${store.name}"  href="/store/${store.id}">
                                   	<span class="label label-danger">删除</span>
                                   </a>
                               </td>
                               
-                              <td>110</td>
-                              <td>34341</td>
-                              <td>麦多基（米饭，汉堡，小吃）</td>
-                              <td>4.6</td>
-                              <td>0</td>
+                              <td>${store.storeId}</td>
+                              <td>
+                              	${store.schoolId.name}
+                              </td>
+                              <td>${store.name}</td>
+                              <td>
+                              	<c:if test="${store.reviewScores==null}">
+                              		0
+                              	</c:if>
+                              	<c:if test="${store.reviewScores!=null}">
+                              		${store.reviewScores}
+                              	</c:if>
+                              </td>
+                              <td>${store.salesQuantity}</td>
                               
-                              <td>4176</td>
-                              <td>20元</td>
-                              <td>0元</td>
-                              <td>36分钟</td>
-                              <td>0</td>
+                              <td>
+                              	<c:if test="${store.salesAllQuantity==null}">0</c:if>
+                              	<c:if test="${store.salesAllQuantity!=null}">${store.salesAllQuantity}</c:if>
+                              </td>
+                              <td>${store.sendThePrice} 元</td>
+                              <td>${store.distributionCost} 元</td>
+                              <td>${store.shopHours} 分钟</td>
+                              <td>
+                              	<c:if test="${store.shoprReach==null}">
+                              		暂无
+                              	</c:if>
+                              	<c:if test="${store.shoprReach!=null}">
+                              		${store.shoprReach} %
+                              	</c:if>
+                              </td>
                               
-                              <td>226</td>
-                              <td>09:00-22:30</td>
-                              <td>师范学院对面</td>
-                              <td>0734-2588729/13307472833</td>
-                              <td>http://waimai.meituan.com/restaurant/34341?pos=2</td>
+                              <td>${store.collectQuantity}</td>
+                              <td>${store.businessDate}</td>
+                              <td>${store.address}</td>
+                              <td>${store.phone}</td>
+                              <td>${store.url}</td>
                               
-                              <td>-1</td>
-                              <td>美团</td>
-                              <td>新用户首次下单,立减4元<span class="special">(手机客户端专享)</span></td>
-                              <td>满20元减1元<span class="special">(手机客户端专享)</span></td>
-                              <td>--</td>
-                          </tr><!-- 一条数据结束 -->
-                          <tr>
-                          	<td>
-                              	<input type="checkbox" name="sort-110" />
+                              <td>
+                              	<c:if test="${store.status==1}">正常</c:if>
+                              	<c:if test="${store.status!=1}">其他</c:if>
                               </td>
                               <td>
-                              	<a href="#">
-                                  	<span class="label label-primary">编辑</span>
-                                  </a>
-                                  <a href="#">
-                                  	<span class="label label-danger">删除</span>
-                                  </a>
+                              	<c:if test="${store.sortTypeId==1}">美团</c:if>
+                              	<c:if test="${store.sortTypeId==2}">饿了么</c:if>
                               </td>
-                              
-                              <td>110</td>
-                              <td>34341</td>
-                              <td>麦多基（米饭，汉堡，小吃）</td>
-                              <td>4.6</td>
-                              <td>0</td>
-                              
-                              <td>4176</td>
-                              <td>20元</td>
-                              <td>0元</td>
-                              <td>36分钟</td>
-                              <td>0</td>
-                              
-                              <td>226</td>
-                              <td>09:00-22:30</td>
-                              <td>师范学院对面</td>
-                              <td>0734-2588729/13307472833</td>
-                              <td>http://waimai.meituan.com/restaurant/34341?pos=2</td>
-                              
-                              <td>-1</td>
-                              <td>美团</td>
-                              <td>新用户首次下单,立减4元<span class="special">(手机客户端专享)</span></td>
-                              <td>满20元减1元<span class="special">(手机客户端专享)</span></td>
-                              <td>--</td>
+                              <td>
+                              	${store.firstOrder}
+                              </td>
+                              <td>
+                              	${store.minusExempt}
+                              </td>
+                              <td>
+                              	${store.give}
+                              </td>
+                              <td>
+                              	<c:if test="${store.creatdId==1}">唐太明</c:if>
+                              	<c:if test="${store.creatdId==0}">系统</c:if>
+                              </td>
+                              <td>
+                              	${store.creatdDate}
+                              </td>
+                              <td>
+                              	${store.updateDate}
+                              </td>
                           </tr><!-- 一条数据结束 -->
+                          </c:forEach>
+                          
                           <tr>
-                          	<td></td>
+                          	  <td></td>
                               
-                          	<td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              
-                              <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -175,6 +180,16 @@
                               <td></td>
                               <td></td>
                               
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
                               <td></td>
                           </tr>
                       </tbody>
@@ -185,12 +200,26 @@
                   	<div class="col-xs-6">
                           <div class="dataTables_length">
                               <label>
-                              	页数 当前第 1 页 - 总共 10 页，每页显示
-                                  <select class="form-control input-sm" name="example1_length" aria-controls="example1">
-                                      <option value="10">10</option>
-                                      <option value="25">25</option>
-                                      <option value="50">50</option>
-                                      <option value="100">100</option>
+                              	页数 当前第 ${page.pageNumber}页 - 总共 ${page.totalPage}页，每页显示
+                                  <c:choose>
+                                  	<c:when test="${page.pageSize==10}">
+                                  		<c:set var="select_10" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==25}">
+                                  		<c:set var="select_25" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==50}">
+                                  		<c:set var="select_50" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==100}">
+                                  		<c:set var="select_100" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  </c:choose>
+                                  <select class="form-control input-sm" name="size_length_store" aria-controls="example1">
+                                      <option value="/store?page=1&size=10" option-data="10" ${select_10}>10</option>
+                                      <option value="/store?page=1&size=25" option-data="25" ${select_25}>25</option>
+                                      <option value="/store?page=1&size=50" option-data="50" ${select_50}>50</option>
+                                      <option value="/store?page=1&size=100" option-data="100" ${select_100}>100</option>
                                   </select>
                                   数量
                               </label>
@@ -198,27 +227,45 @@
                       </div>
                       <div class="col-xs-6">
                       	<ul class="pagination pagination-sm no-margin pull-right">
+                              <c:if test="${page.previous==true}">
+                              <li>
+                                  <a href="/store?page=${page.pageNumber-1}&size=${page.pageSize}">«</a>
+                              </li>
+                              </c:if>
+                              <c:if test="${page.previous==false}">
                               <li class="disabled">
-                                  <a href="#">«</a>
+                                  <a href="javascript:;">«</a>
                               </li>
-                              <li class="active">
-                                  <a href="#">1</a>
+                              </c:if>
+                              
+                              <c:forEach items="${showPage}" var="sp">
+                           	  <c:choose>
+                           	  	<c:when test="${sp==page.pageNumber}">
+                           	  	  <c:set var="active" value="class='active'" scope="request" />
+                           	  	  <c:set var="href" value="" scope="request" />
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	  	  <c:set var="active" value="" scope="request" />
+                           	  	  <c:set var="href" value="href='/store?page=${sp}&size=${page.pageSize}'" scope="request" />
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                           	  
+                              <li ${active}>
+                                <a ${href}>${sp}</a>
                               </li>
-                              <li>
-                                  <a href="#">2</a>
+	                          </c:forEach>
+                              
+                              
+                              <c:if test="${page.next==true}">
+							  <li>
+                                  <a href="/store?page=${page.pageNumber+1}&size=${page.pageSize}">»</a>
                               </li>
-                              <li>
-                                  <a href="#">3</a>
+							  </c:if>
+							  <c:if test="${page.next==false}">
+							  <li class="disabled">
+                                  <a href="javascript:;">»</a>
                               </li>
-                              <li>
-                                  <a href="#">4</a>
-                              </li>
-                              <li>
-                                  <a href="#">5</a>
-                              </li>
-                              <li>
-                                  <a href="#">»</a>
-                              </li>
+							  </c:if>
                           </ul>
                       </div>
                   </div>
@@ -226,9 +273,35 @@
           </div>
       </div>
     </div>
-      
+    <div class="hidden">
+    	<form class="store-rest" action="" method="POST">
+    		<input type="hidden" name="_method" value="DELETE"/>
+    	</form>
+    </div>
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 <%@include file="container-footer.jsp"%>
+<script type="text/javascript">
+	$(function() {
+		$("a[class^='store-delete-']").click(function(e) {
+			var $title = $(this).attr("title");
+			if (confirm("确定删除 " + $title + "?")) {
+				var href = $(this).attr("href");
+				$(".store-rest").attr("action", href).submit();
+				return false;
+			} else {
+				//取消事件操作
+				e.preventDefault();
+			}
+		});
+		
+		$("select[name^='size_length_']").change(function() {
+			var $href = $(this).val();
+			console.info("url:" + $href);
+			$("input[name='_method']").val("GET");
+			$(".store-rest").attr("action", $href).submit();
+		});
+	});
+</script>

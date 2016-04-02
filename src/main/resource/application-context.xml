@@ -44,6 +44,7 @@
 				<value>classpath:school.hbm.xml</value>
 				<value>classpath:reptile.hbm.xml</value>
 				<value>classpath:store.hbm.xml</value>
+				<value>classpath:preferential.hbm.xml</value>
   	   	    </list>
   	    </property>
   	</bean>
