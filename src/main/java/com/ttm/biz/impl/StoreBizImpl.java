@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 
 import com.ttm.biz.StoreBiz;
 import com.ttm.dao.StoreDao;
@@ -32,6 +33,8 @@ import com.ttm.util.ServiceSorterHelper;
  * @version 1.0
  */
 public class StoreBizImpl implements StoreBiz {
+	
+	private static final Logger log = Logger.getLogger(StoreBizImpl.class);
 
 	private StoreDao storeDao = new StoreDaoImpl();
 	
@@ -141,12 +144,23 @@ public class StoreBizImpl implements StoreBiz {
 			this.size = size;
 			totalNumber = countReptileNumber();
 		} else {
-			System.out.println("没有查询出数据...");
+			log.warn("没有查询出数据...");
 		}
 		this.page = pageUtil.createPage(pageNumber, size, totalNumber, pageRange);
 		countShowPage(this.page.getRangeStart(), this.page.getRangeEnd());
 		return storesList;
 	}
+	
+	public List<Store> findStoreList(Integer page, Integer size, String storeName) {
+		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
+		Map<String, Object> sort = ServiceSorterHelper.build(storeName, ServiceSorterHelper.DESC);
+		List<Store> storesList = storeDao.findStoreByList(null, sort, pageing);
+		if (CollectionUtils.isNotEmpty(storesList)) {
+			log.warn("没有查询出数据...");
+		}
+		return storesList;
+	}
+
 	
 	/**
 	 * 计算显示分页 

@@ -56,4 +56,13 @@ public interface StoreBiz {
 	 */
 	public abstract List<Store> findStoreList(Integer page, Integer size);
 	
+	/**
+	 * 分页/排序条件查询数据 默认使用倒序排
+	 * @param page
+	 * @param size
+	 * @param storeName
+	 * @return
+	 */
+	public abstract List<Store> findStoreList(Integer page, Integer size, String storeName);
+	
 }

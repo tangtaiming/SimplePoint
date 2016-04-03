@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="container-head.jsp"%>
 
 <!-- Content Wrapper. Contains page content -->
@@ -22,205 +23,51 @@
 
       <!-- Your Page Content Here -->
 	  <div class="box box-info">
-        <form class="form-horizontal" action="">
+        <div class="form-horizontal">
             <div class="box-body">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="name">优惠-1:</label>
+            	<c:if test="${preferentialsList==null || fn:length(preferentialsList)==0}">
+            	<c:forEach items="${numberList21}" var="number">
+            	<div class="form-group">
+                    <label class="col-sm-2 control-label" for="ext-${number}">优惠-${number}:</label>
                     <div class="col-sm-5">
-                    	<input id="name" class="form-control" type="text" placeholder="不能为空">
+                    	<input id="ext-${number}" name="${number}" class="form-control" type="text" placeholder="优惠多多"  data="${number}" />
                     </div>
                     <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-1 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->  
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-2:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-2 不能为空</p>
+                        <p title="优惠-${number}" class="ext-preferentials-error control-p text-red"></p>
                     </div>
                 </div><!--- 一行结束 -->
+            	</c:forEach>
+                </c:if>
+                
+                <%-- 查询数据不等于空的时候 --%>
+                <c:if test="${preferentialsList!=null}">
+                <c:forEach items="${numberList21}" var="preferentials">
+                <c:if test="${empty preferentialsList[preferentials-1]}">
+                	<c:set var="number" value="${preferentials}" scope="request"/>
+                	<c:set var="name" value="" scope="request"/>
+                </c:if>
+                <c:if test="${!empty preferentialsList[preferentials-1]}">
+                	<c:set var="number" value="${preferentialsList[preferentials-1].id}" scope="request"/>
+                	<c:set var="name" value="${preferentialsList[preferentials-1].name}" scope="request"/>
+                </c:if>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-3:</label>
+                    <label class="col-sm-2 control-label" for="ext-${number}">优惠-${number}:</label>
                     <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
+                    	<input id="ext-${number}" name="${number}" class="form-control" type="text" placeholder="优惠多多" data="${number}" value="${name}" />
                     </div>
                     <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-3 不能为空</p>
+                        <p title="优惠-${number}" class="ext-preferentials-error control-p text-red"></p>
                     </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-4:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-4 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-5:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-5 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-6:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-6 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-7:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-7 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-8:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-8 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-9:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-9 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-10:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-10 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-11:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-11 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-12:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-12 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-13:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-13 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-14:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-14 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-15:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-15 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-16:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-16 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-17:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-17 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-18:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-18 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-19:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-19 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-20:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-20 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 -->
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="code">优惠-21:</label>
-                    <div class="col-sm-5">
-                    	<input id="code" class="form-control" type="text" placeholder="不能为空">
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="control-p text-red">优惠-21 不能为空</p>
-                    </div>
-                </div><!--- 一行结束 --> 
+                </div><!--- 一行结束 -->	
+                </c:forEach>
+                </c:if>
             </div><!--主体-->
             <div class="box-footer">
             	<div class="col-sm-offset-1 col-sm-11">
-                	<button class="btn btn-primary margin-r-5" type="submit"> 保 存 </button>
-                    <button class="btn btn-primary" type="reset"> 重 置 </button>
+                	<button id="submit" class="btn btn-primary margin-r-5" type="button"> 保 存 </button>
                 </div>
             </div><!-- 脚步 -->
-        </form>
+        </div>
       </div><!-- /.row -->
         
     </section>
@@ -229,3 +76,36 @@
 <!-- /.content-wrapper -->
 
 <%@include file="container-footer.jsp"%>
+<script>
+	$(function() {
+		$("#submit").click(function(e) {
+			var $input = $("input[id^='ext-']");
+			var params = {};
+			var request = {};
+			$input.each(function() {
+				var value = $(this).val();
+				var $id = $(this).attr("name");
+				if (value == null) {
+					request[$id] = "";
+				} else {
+					request[$id] = value;
+				}
+			});
+			params["requestJson"] = JSON.stringify(request);
+			console.info(params);
+			$.ajax({
+				url: "/preferential",
+				data: params,
+				type: "post",
+				success: function(msg) {
+					console.info("请求发送成功...");
+					window.location.href = "/preferential?page=1&size=25"
+				},
+				error: function() {
+					console.error("请求发送失败...");
+				}
+			});
+			
+		});
+	});
+</script>

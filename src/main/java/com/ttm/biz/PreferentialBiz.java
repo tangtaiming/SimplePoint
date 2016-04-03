@@ -54,4 +54,17 @@ public interface PreferentialBiz {
 	 */
 	public abstract List<Preferential> findPreferentialList(String sortName, String sortValue);
 	
+	/**
+	 * 解析 httpservletRequest 请求获取的字符串Map 并且解析成对应的Map
+	 * @param requestJson
+	 * @return
+	 */
+	public abstract Map<String, Object> parseRequestParams(String requestJson);
+	
+	/**
+	 * 更新主页优惠模块信息
+	 * @return
+	 */
+	public abstract boolean updateIndex();
+	
 }

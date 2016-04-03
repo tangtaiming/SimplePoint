@@ -59,6 +59,7 @@
       	<a href="javascript:;"><i class="fa fa-link"></i> <span>模块管理</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
           	  <li><a href="/preferential?page=1&size=25"><i class="fa fa-circle-o"></i> 优惠模块</a></li>
+          	  <li><a href="/preferential?page=1&size=25"><i class="fa fa-circle-o"></i> 首页学校模块</a></li>
           </ul>
       </li>
     </ul>

@@ -27,9 +27,6 @@
 						<h3 class="box-title">
 							<a href="/preferential"><span class="label label-primary">编辑</span></a>
 						</h3>
-						<h3 class="box-title">
-							<a href="#"><span class="label label-primary">更新</span></a>
-						</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
 								<input class="form-control pull-right" type="text"
@@ -61,77 +58,117 @@
 									<th>创建人</th>
 									<th>创建时间</th>
 								</tr>
+								
+								<c:forEach items="${preferentialsList}" var="preferential">
 								<tr>
-									<td>110</td>
-									<td>http://waimai.meituan.com/home/wsb0uwk955j8</td>
-									<td>唐太明</td>
-									<td>2016-03-24 00:00:00</td>
-
-
-									<tr>
-									<td></td>
-                                <td></td>
-                                
-                            	<td></td>
-                                <td></td>
-                            </tr>
+									<td>${preferential.id}</td>
+									<td>${preferential.name}</td>
+									<td><c:if test="${preferential.creatdId==1}">唐太明</c:if></td>
+									<td>${preferential.creatdDate}</td>
+								<tr>
+								</c:forEach>
                         </tbody>
                     </table>
                 </div>
-					<!-- 内容数据结束 -->
+				<!-- 内容数据结束 -->
                 <div class="box-footer clearfix">
                     <div class="row">
                     	<div class="col-xs-6">
                             <div class="dataTables_length">
                                 <label>
-                                	页数 当前第 1 页 - 总共 10 页，每页显示
-                                    <select
-										class="form-control input-sm" name="example1_length"
-										aria-controls="example1">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                    数量
-                                </label>
+                              	页数 当前第 ${page.pageNumber}页 - 总共 ${page.totalPage}页，每页显示
+                                  <c:choose>
+                                  	<c:when test="${page.pageSize==10}">
+                                  		<c:set var="select_10" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==25}">
+                                  		<c:set var="select_25" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==50}">
+                                  		<c:set var="select_50" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  	<c:when test="${page.pageSize==100}">
+                                  		<c:set var="select_100" value="selected='selected'" scope="request" />
+                                  	</c:when>
+                                  </c:choose>
+                                  <select class="form-control input-sm" name="size_length_preferential" aria-controls="example1">
+                                      <option value="/preferential?page=1&size=10" option-data="10" ${select_10}>10</option>
+                                      <option value="/preferential?page=1&size=25" option-data="25" ${select_25}>25</option>
+                                      <option value="/preferential?page=1&size=50" option-data="50" ${select_50}>50</option>
+                                      <option value="/preferential?page=1&size=100" option-data="100" ${select_100}>100</option>
+                                  </select>
+                                  数量
+                              </label>
                             </div>
                         </div>
+                        
                         <div class="col-xs-6">
-                        	<ul
-									class="pagination pagination-sm no-margin pull-right">
-                                <li class="disabled">
-                                    <a href="#">«</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li>
-                                    <a href="#">»</a>
-                                </li>
+                        	<ul class="pagination pagination-sm no-margin pull-right">
+                              <c:if test="${page.previous==true}">
+                              <li>
+                                  <a href="/preferential?page=${page.pageNumber-1}&size=${page.pageSize}">«</a>
+                              </li>
+                              </c:if>
+                              <c:if test="${page.previous==false}">
+                              <li class="disabled">
+                                  <a href="javascript:;">«</a>
+                              </li>
+                              </c:if>
+                                
+                                
+                              <c:forEach items="${showPage}" var="sp">
+                           	  <c:choose>
+                           	  	<c:when test="${sp==page.pageNumber}">
+                           	  	  <c:set var="active" value="class='active'" scope="request" />
+                           	  	  <c:set var="href" value="" scope="request" />
+                           	  	</c:when>
+                           	  	<c:otherwise>
+                           	  	  <c:set var="active" value="" scope="request" />
+                           	  	  <c:set var="href" value="href='/preferential?page=${sp}&size=${page.pageSize}'" scope="request" />
+                           	  	</c:otherwise>
+                           	  </c:choose>
+                           	  
+                           	  <li ${active}>
+                                <a ${href}>${sp}</a>
+                              </li>
+                           	  </c:forEach>
+                           	
+                              <c:if test="${page.next==true}">
+							  <li>
+                                  <a href="/preferential?page=${page.pageNumber+1}&size=${page.pageSize}">»</a>
+                              </li>
+							  </c:if>
+							  <c:if test="${page.next==false}">
+							  <li class="disabled">
+                                  <a href="javascript:;">»</a>
+                              </li>
+							  </c:if>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
         
+      </div>
+      <div class="hidden">
+    	<form class="preferential-rest" action="" method="POST">
+    		<input type="hidden" name="_method" value="DELETE"/>
+    	</form>
+      </div>
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
 <%@include file="container-footer.jsp"%>
+<script type="text/javascript">
+	$(function() {
+		$("select[name^='size_length_']").change(function() {
+			var $href = $(this).val();
+			console.info("url:" + $href);
+			$("input[name='_method']").val("GET");
+			$(".preferential-rest").attr("action", $href).submit();
+		});
+	});
+</script>

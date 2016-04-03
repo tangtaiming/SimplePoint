@@ -1,8 +1,13 @@
 package com.ttm.biz.impl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +15,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.xmlbeans.impl.jam.mutable.MPackage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ttm.biz.PreferentialBiz;
 import com.ttm.dao.PreferentialDao;
 import com.ttm.dao.impl.PreferentialDaoImpl;
@@ -98,8 +108,25 @@ public class PreferentialBizImpl implements PreferentialBiz {
 		}
 		return true;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> parseRequestParams(String requestJson) {
+		Map<String, Object> tempMap = new HashMap<String, Object>();
+		ObjectMapper om = new ObjectMapper();
+		if (StringUtils.isNotEmpty(requestJson)) {
+			try {
+				tempMap = om.readValue(requestJson, Map.class);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return tempMap;
+	}
 
-	@Override
 	public List<Preferential> findPreferentialList(Integer page, Integer size) {
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
 		Map<String, Object> sort = ServiceSorterHelper.build("id", ServiceSorterHelper.ASC);
@@ -144,11 +171,68 @@ public class PreferentialBizImpl implements PreferentialBiz {
 	private boolean findPreferential(Integer id) {
 		preferential = preferentialDao.findPreferentialById(id);
 		if (preferential == null) {
-			return false;
-		} else {
+			preferential = new Preferential();
 			return true;
+		} else {
+			return false;
 		}
 	}
+
+	public boolean updateIndex() {
+		List<Preferential> preferentialsList = findPreferentialList("id", ServiceSorterHelper.ASC);
+		if (CollectionUtils.isEmpty(preferentialsList)) {
+			return false;
+		}
+		File file = new File("E://Project//learngit//SimplePoint//src//main//webapp//index.jsp");
+		System.out.println("~~~~~~~~~~~~~" + file.isFile());
+		Document document = null;
+		try {
+			document = Jsoup.parse(file, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Element div = document.getElementById("box_famoussite_1");
+		System.out.println(div.html());
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^删除后");
+		//删除所有元素
+		div.select("span").remove();
+		System.out.println(div.html());
+		for (Preferential preferential : preferentialsList) {
+			String startHtml = "<span> <a class=\"famoussite-mainlink\" href=\"http://www.fang.com \">";
+			String endHtml = "</a></span>";
+			div.append(startHtml + preferential.getName() + endHtml);
+		}
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^更新之后");
+		System.out.println(div.html());
+		
+		char[] buffer = new char[32];
+		int hasRead = 0;
+		
+		StringReader sr = null;
+		FileWriter sw = null;
+		try {
+			sr = new StringReader(document.html());
+			sw = new FileWriter(file);
+			while((hasRead = sr.read(buffer)) > 0){
+				sw.write(buffer, 0, hasRead);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (sr != null) {
+				sr.close();
+			}
+			if (sw != null) {
+				try {
+					sw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+
 	
 	/**
 	 * 计算显示分页 
@@ -163,6 +247,18 @@ public class PreferentialBizImpl implements PreferentialBiz {
 			showPage.add(x);
 		}
 		setShowPage(showPage);
+	}
+	
+	/**
+	 * 查询没有数据的时候获取
+	 * @return
+	 */
+	public List<Integer> fetch21() {
+		List<Integer> numbersList = new ArrayList<Integer>();
+		for (int x = 1; x <= 21; x++) {
+			numbersList.add(x);
+		}
+		return numbersList;
 	}
 	
 	public Preferential getPreferential() {
