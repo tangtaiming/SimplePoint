@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" > 
+<hibernate-mapping package="com.ttm.orm">  
+    <!--生成默认为的 安全 数据库表-->
+    <class name ="com.ttm.orm.Safety" table="my_wxy.home_anquan_meishi_shiping_meishijia">  
+        <id name ="id">
+            <generator class ="native"></generator>  
+        </id > 
+        <property name ="title" type="string"></property>
+        <property name ="url" type="string"></property>  
+        <property name ="img" type="string"></property>  
+        <property name ="mark" type="int"></property>  
+        <property name ="creatdId" type="int"></property>  
+        <property name ="creatdDate" type="string"></property>  
+        <property name ="type" type="int"></property>
+    </class >
+</hibernate-mapping>

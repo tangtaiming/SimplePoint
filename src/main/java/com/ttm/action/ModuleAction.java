@@ -1,14 +1,25 @@
 package com.ttm.action;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ttm.biz.PreferentialBiz;
@@ -36,23 +47,111 @@ public class ModuleAction {
 	private StoreBiz storeBiz = new StoreBizImpl();
 	
 	/**
-	 * 首页学校模块列表
+	 * 新增安全食物 - 图片上传
+	 * @param type
+	 * @return
+	 * @throws MalformedURLException 
+	 */
+	@RequestMapping(value = "safety", method = RequestMethod.POST)
+	public String safety(HttpServletRequest request) throws MalformedURLException {
+		System.out.println("url：" + request.getParameter("url"));
+		System.out.println("title：" + request.getParameter("title"));
+		System.out.println("mark：" + request.getParameter("mark"));
+		String pathName = request.getSession().getServletContext().getContextPath();
+		
+		//开始时间
+		long startTime = System.currentTimeMillis();
+		
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iterator = multiRequest.getFileNames();
+		
+		
+		while(iterator.hasNext()) {
+			//遍历所有文件
+			MultipartFile file = multiRequest.getFile(iterator.next().toString());
+			if (file != null) {
+				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+				System.out.println("^^^^^^^^^^^^^^^^" + file.getOriginalFilename());
+				System.out.println(request.getSession().getServletContext().getRealPath("/"));
+				String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\" + format.format(new Date()) + file.getOriginalFilename();
+				//上传
+				try {
+					file.transferTo(new File(path));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		//结束时间
+		long endTime = System.currentTimeMillis();
+		System.out.println("运行时间:" + String.valueOf(endTime - startTime));
+		
+		return "redirect:/index";
+	}
+	
+	public static void main(String[] args) {
+		File file = new File("");
+		System.out.println(file.getAbsoluteFile());
+	}
+	
+	/**
+	 * 进入安全食物新增页面
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "safety", params = "type", method = RequestMethod.GET)
+	public String safety(@RequestParam(value = "type") String type) {
+		//s 代表保存
+		if (StringUtils.equals(type, "s")) {
+			return "/competence/add-safety";
+		}
+		return "/index";
+	}
+	
+	
+	/**
+	 * 首页安全食物模块
 	 * @param page
 	 * @param size
 	 * @param sea
 	 * @param sort
 	 * @return
 	 */
-	@RequestMapping(value = "preferential", params = { "page", "size" }, method = RequestMethod.GET)
-	public ModelAndView school(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+	@RequestMapping(value = "safety", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView safety(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
 			@RequestParam(value = "sea", required = false) String sea, @RequestParam(value = "sort", required = false) String sort) {
-		List<Store> storesList = storeBiz.findStoreList(page, size);
-		view.addObject("storesList", storesList);
-		view.addObject("page", ((StoreBizImpl) storesList).getPage());
-		view.addObject("showPage", ((StoreBizImpl) storesList).getShowPage());
+		//安全模块  默认第一页 (page)，查询数量 (size)，类型是安全 (type)，根据mark排序 升序排序 (mark)
+		//1 代表 安全模块
+		Integer type = 1;
+		//默认排序 mark
+		String defaultSort = "mark";
+		
+		view.setViewName("/competence/safety");
 		return view;
 	}
 	
+	/**
+	 * 首页学校店铺模块列表 按销量排序
+	 * @param page
+	 * @param size
+	 * @param sea
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping(value = "school_module", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView schoolModule(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea, @RequestParam(value = "sort", required = false) String sort) {
+		List<Store> storesList = storeBiz.findStoreList(page, size);
+		view.addObject("storesList", storesList);
+		view.addObject("page", ((StoreBizImpl) storeBiz).getPage());
+		view.addObject("showPage", ((StoreBizImpl) storeBiz).getShowPage());
+		view.setViewName("/competence/store-module");
+		return view;
+	}
+
 	/**
 	 * 优惠模块列表
 	 * @param page

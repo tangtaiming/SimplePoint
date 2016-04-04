@@ -31,6 +31,9 @@ public class HomeAction {
 	
 	private ModelAndView view = new ModelAndView();
 	
+	//1 代表 安全
+	private Integer type;
+	
 	/**
 	 * 当前页
 	 */
@@ -47,6 +50,9 @@ public class HomeAction {
 		List<Store> storesList = storeBiz.findStoreList(page, size, "salesQuantity");
 		view.addObject("storesList", storesList);
 		view.addObject("preferentialsList", preferentialsList);
+		
+		//安全模块  默认第一页 (page)，查询数量 (size)，类型是安全 (type)，根据mark排序 升序排序 (mark)
+		
 		view.setViewName("/index");
 		return view;
 	}
