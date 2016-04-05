@@ -26,4 +26,16 @@ public interface SafetyBiz {
 	 */
 	public abstract List<Safety> findSafetyList(Integer page, Integer size, Integer type, String sortName);
 	
+	/**
+	 * 保存安全模块数据
+	 * @param url
+	 * @param title
+	 * @param mark
+	 * @param img
+	 * @param creator
+	 * @param creatorDate
+	 * @return
+	 */
+	public abstract boolean saveSafety(String url, String title, Integer mark, String img, Integer creator, String creatorDate);
+	
 }

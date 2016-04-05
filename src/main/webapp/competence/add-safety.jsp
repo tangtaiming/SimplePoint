@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="title">标题:</label>
                     <div class="col-sm-5">
-                    	<input id="title" name="" class="form-control" type="text" placeholder="不能为空">
+                    	<input id="title" name="title" class="form-control" type="text" placeholder="不能为空">
                     </div>
                     <div class="col-sm-5">
                         <p title="标题" class="ext-title-error control-p text-red"></p>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="url">url:</label>
                     <div class="col-sm-5">
-                    	<textarea id="url" name="" class="form-control"></textarea>
+                    	<textarea id="url" name="url" class="form-control"></textarea>
                     </div>
                     <div class="col-sm-5">
                         <p title="url" class="ext-title-error control-p text-red"></p>
