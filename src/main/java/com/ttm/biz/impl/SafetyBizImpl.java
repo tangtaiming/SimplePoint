@@ -56,7 +56,7 @@ public class SafetyBizImpl implements SafetyBiz	 {
 		ServiceQueryHelper.and(query, "type", type);
 		List<Safety> safetysList = safetyDao.findSafetyByList(query, sort, pageing);
 		if (CollectionUtils.isNotEmpty(safetysList)) {
-			this.totalNumber = countReptileNumber();
+			this.totalNumber = countReptileNumber(query);
 			pageNumber = page;
 			this.size = size;
 		} else {
@@ -90,8 +90,8 @@ public class SafetyBizImpl implements SafetyBiz	 {
 	 * 计算总数量
 	 * @return
 	 */
-	public Integer countReptileNumber() {
-		List<Safety> reptilesList = safetyDao.findSafetyByList(null, null, null);
+	public Integer countReptileNumber(Map<String, Object> query) {
+		List<Safety> reptilesList = safetyDao.findSafetyByList(query, null, null);
 		if (CollectionUtils.isNotEmpty(reptilesList)) {
 			return reptilesList.size();
 		}

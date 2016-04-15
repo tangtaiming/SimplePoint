@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,15 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ttm.biz.MeiShiBiz;
 import com.ttm.biz.PreferentialBiz;
 import com.ttm.biz.SafetyBiz;
 import com.ttm.biz.StoreBiz;
+import com.ttm.biz.impl.MeiShiBizImpl;
 import com.ttm.biz.impl.PreferentialBizImpl;
 import com.ttm.biz.impl.SafetyBizImpl;
 import com.ttm.biz.impl.StoreBizImpl;
+import com.ttm.orm.MeiShi;
 import com.ttm.orm.Preferential;
 import com.ttm.orm.Safety;
 import com.ttm.orm.Store;
@@ -52,8 +53,76 @@ public class ModuleAction {
 	private PreferentialBiz preferentialBiz = new PreferentialBizImpl();
 
 	private StoreBiz storeBiz = new StoreBizImpl();
-	
+
 	private SafetyBiz safetyBiz = new SafetyBizImpl();
+	
+	private MeiShiBiz meiShiBiz = new MeiShiBizImpl();
+	
+	/**
+	 * 美食模块
+	 * @param page
+	 * @param size
+	 * @param sea
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping(value = "meishi", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView meiShi(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea,
+			@RequestParam(value = "sort", required = false) String sort) {
+		// 美食默认第一页 (page)，查询数量 (size)，类型是美食 (type)，根据mark排序 升序排序 (mark)
+		// 2 代表 美食
+		Integer type = 2;
+		// 默认排序 mark
+		String defaultSort = "mark";
+		
+		List<MeiShi> meiShisList = meiShiBiz.findMeiShiList(page, size, type, defaultSort);
+		view.addObject("meiShisList", meiShisList);
+		view.addObject("page", ((MeiShiBizImpl) meiShiBiz).getPage());
+		view.addObject("showPage", ((MeiShiBizImpl) meiShiBiz).getShowPage());
+		view.setViewName("/competence/meishi");
+		return view;
+	}
+	
+	/**
+	 * 进入美食新增页面
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "meishi", method = RequestMethod.GET)
+	public String meiShi(@RequestParam(value = "type") String type) {
+		// s 代表保存
+		if (type.equals("s")) {
+			return "/competence/add-meishi";
+		}
+		return "/index";
+	}
+	
+	/**
+	 * 美食数据保存 /并且上传图片
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "meishi", method = RequestMethod.POST)
+	public String meiShi(HttpServletRequest request) {
+		System.out.println("url：" + request.getParameter("url"));
+		System.out.println("title：" + request.getParameter("title"));
+		System.out.println("mark：" + request.getParameter("mark"));
+		String url = request.getParameter("url");
+		String title = request.getParameter("title");
+		String mark = request.getParameter("mark");
+		
+		//上传图片
+		((MeiShiBizImpl) meiShiBiz).uploadImg((MultipartHttpServletRequest) request);
+		if (!((MeiShiBizImpl) meiShiBiz).isUpload() ) {
+			return "/competence/meishi?type=s";
+		}
+		String img = ((MeiShiBizImpl) meiShiBiz).getImgPath();
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		meiShiBiz.saveMeiShi(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
+		return "redirect:/meishi?page=1&size=25";
+	}
 
 	/**
 	 * 新增安全食物 - 图片上传
@@ -85,7 +154,7 @@ public class ModuleAction {
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 				String datePath = format.format(new Date());
 				String jpgPath = datePath + "_" + file.getOriginalFilename();
-				//获取文件名称
+				// 获取文件名称
 				img = jpgPath;
 				System.out.println(
 						"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + request.getSession().getServletContext().getRealPath("/"));
@@ -114,7 +183,7 @@ public class ModuleAction {
 		if (!isUpload) {
 			return "redirect:/safety?type=s";
 		}
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		safetyBiz.saveSafety(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/safety?page=1&size=25";
@@ -238,5 +307,5 @@ public class ModuleAction {
 		preferentialBiz.updateIndex();
 		return "/";
 	}
-
+	
 }
