@@ -3,7 +3,6 @@ package com.ttm.biz;
 import java.util.List;
 
 import com.ttm.orm.MeiShi;
-import com.ttm.orm.Safety;
 
 /**
  * 

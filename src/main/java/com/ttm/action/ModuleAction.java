@@ -21,19 +21,25 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ttm.biz.MeiShiBiz;
+import com.ttm.biz.MeiShiJiaBiz;
 import com.ttm.biz.PreferentialBiz;
 import com.ttm.biz.SafetyBiz;
 import com.ttm.biz.ShiPinBiz;
+import com.ttm.biz.ShuiGuoBiz;
 import com.ttm.biz.StoreBiz;
 import com.ttm.biz.impl.MeiShiBizImpl;
+import com.ttm.biz.impl.MeiShiJiaBizImpl;
 import com.ttm.biz.impl.PreferentialBizImpl;
 import com.ttm.biz.impl.SafetyBizImpl;
 import com.ttm.biz.impl.ShiPinBizImpl;
+import com.ttm.biz.impl.ShuiGuoBizImpl;
 import com.ttm.biz.impl.StoreBizImpl;
 import com.ttm.orm.MeiShi;
+import com.ttm.orm.MeiShiJia;
 import com.ttm.orm.Preferential;
 import com.ttm.orm.Safety;
 import com.ttm.orm.ShiPin;
+import com.ttm.orm.ShuiGuo;
 import com.ttm.orm.Store;
 import com.ttm.util.Dumper;
 import com.ttm.util.ServiceSorterHelper;
@@ -58,13 +64,154 @@ public class ModuleAction {
 	private StoreBiz storeBiz = new StoreBizImpl();
 
 	private SafetyBiz safetyBiz = new SafetyBizImpl();
-	
+
 	private MeiShiBiz meiShiBiz = new MeiShiBizImpl();
-	
+
 	private ShiPinBiz shiPinBiz = new ShiPinBizImpl();
+
+	private MeiShiJiaBiz meiShiJiaBiz = new MeiShiJiaBizImpl();
+
+	private ShuiGuoBiz shuiGuoBiz = new ShuiGuoBizImpl();
+
+	/**
+	 * 保存水果数据/并且上传图片
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "shuiguo", method = RequestMethod.POST)
+	public String shuiGuo(HttpServletRequest request) {
+		System.out.println("url：" + request.getParameter("url"));
+		System.out.println("title：" + request.getParameter("title"));
+		System.out.println("mark：" + request.getParameter("mark"));
+		String url = request.getParameter("url");
+		String title = request.getParameter("title");
+		String mark = request.getParameter("mark");
+
+		// 上传图片
+		((ShuiGuoBizImpl) shuiGuoBiz).uploadImg((MultipartHttpServletRequest) request);
+		if (!((ShuiGuoBizImpl) shuiGuoBiz).isUpload()) {
+			return "/competence/shuiguo?type=s";
+		}
+		String img = ((ShuiGuoBizImpl) shuiGuoBiz).getImgPath();
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		shuiGuoBiz.saveShuiGuo(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
+		return "redirect:/shuiguo?page=1&size=25";
+	}
 	
 	/**
+	 * 进入水果新增页面
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "shuiguo", method = RequestMethod.GET)
+	public String shuiGuo(@RequestParam(value = "type") String type) {
+		// s 代表保存
+		if (type.equals("s")) {
+			return "/competence/add-shuiguo";
+		}
+		return "/index";
+	}
+
+	/**
+	 * 水果模块列表
+	 * 
+	 * @param page
+	 * @param size
+	 * @param sea
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping(value = "shuiguo", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView shuiGuo(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea,
+			@RequestParam(value = "sort", required = false) String sort) {
+		// 水果家默认第一页 (page)，查询数量 (size)，类型是水果(type)，根据mark排序 升序排序 (mark)
+		// 5 代表 视水果
+		Integer type = 5;
+		// 默认排序 mark
+		String defaultSort = "mark";
+
+		List<ShuiGuo> shuiGuosList = shuiGuoBiz.findShuiGuoList(page, size, type, defaultSort);
+		view.addObject("shuiGuosList", shuiGuosList);
+		view.addObject("page", ((ShuiGuoBizImpl) shuiGuoBiz).getPage());
+		view.addObject("showPage", ((ShuiGuoBizImpl) shuiGuoBiz).getShowPage());
+		view.setViewName("/competence/shuiguo");
+		return view;
+	}
+
+	/**
+	 * 保存美食家数据/并且上传照片
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "meishijia", method = RequestMethod.POST)
+	public String meiShiJia(HttpServletRequest request) {
+		System.out.println("url：" + request.getParameter("url"));
+		System.out.println("title：" + request.getParameter("title"));
+		System.out.println("mark：" + request.getParameter("mark"));
+		String url = request.getParameter("url");
+		String title = request.getParameter("title");
+		String mark = request.getParameter("mark");
+
+		// 上传图片
+		((MeiShiJiaBizImpl) meiShiJiaBiz).uploadImg((MultipartHttpServletRequest) request);
+		if (!((MeiShiJiaBizImpl) meiShiJiaBiz).isUpload()) {
+			return "/competence/meishijia?type=s";
+		}
+		String img = ((MeiShiJiaBizImpl) meiShiJiaBiz).getImgPath();
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		meiShiJiaBiz.saveMeiShiJia(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
+		return "redirect:/meishijia?page=1&size=25";
+	}
+
+	/**
+	 * 进入美食家新增页面
+	 * 
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "meishijia", method = RequestMethod.GET)
+	public String meiShiJia(@RequestParam(value = "type") String type) {
+		// s 代表保存
+		if (type.equals("s")) {
+			return "/competence/add-meishijia";
+		}
+		return "/index";
+	}
+
+	/**
+	 * 美食家模块
+	 * 
+	 * @param page
+	 * @param size
+	 * @param sea
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping(value = "meishijia", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView meiShiJia(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea,
+			@RequestParam(value = "sort", required = false) String sort) {
+		// 美食家默认第一页 (page)，查询数量 (size)，类型是美食家(type)，根据mark排序 升序排序 (mark)
+		// 4 代表 视美食家
+		Integer type = 4;
+		// 默认排序 mark
+		String defaultSort = "mark";
+
+		List<MeiShiJia> meisShiJiasList = meiShiJiaBiz.findMeiShiJiaList(page, size, type, defaultSort);
+		view.addObject("meisShiJiasList", meisShiJiasList);
+		view.addObject("page", ((MeiShiJiaBizImpl) meiShiJiaBiz).getPage());
+		view.addObject("showPage", ((MeiShiJiaBizImpl) meiShiJiaBiz).getShowPage());
+		view.setViewName("/competence/meishijia");
+		return view;
+	}
+
+	/**
 	 * 视频数据保存 /并且上传图片
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -76,21 +223,22 @@ public class ModuleAction {
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
-		
-		//上传图片
+
+		// 上传图片
 		((ShiPinBizImpl) shiPinBiz).uploadImg((MultipartHttpServletRequest) request);
-		if (!((ShiPinBizImpl) shiPinBiz).isUpload() ) {
+		if (!((ShiPinBizImpl) shiPinBiz).isUpload()) {
 			return "/competence/shipin?type=s";
 		}
 		String img = ((ShiPinBizImpl) shiPinBiz).getImgPath();
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		shiPinBiz.saveShiPin(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/shipin?page=1&size=25";
 	}
-	
+
 	/**
 	 * 进入视频新增页面
+	 * 
 	 * @param type
 	 * @return
 	 */
@@ -102,9 +250,10 @@ public class ModuleAction {
 		}
 		return "/index";
 	}
-	
+
 	/**
 	 * 视频模块
+	 * 
 	 * @param page
 	 * @param size
 	 * @param sea
@@ -115,12 +264,12 @@ public class ModuleAction {
 	public ModelAndView shiPin(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
 			@RequestParam(value = "sea", required = false) String sea,
 			@RequestParam(value = "sort", required = false) String sort) {
-		// 美食默认第一页 (page)，查询数量 (size)，类型是美食 (type)，根据mark排序 升序排序 (mark)
-		// 3 代表 美食
+		// 视频默认第一页 (page)，查询数量 (size)，类型是视频(type)，根据mark排序 升序排序 (mark)
+		// 3 代表 视频
 		Integer type = 3;
 		// 默认排序 mark
 		String defaultSort = "mark";
-		
+
 		List<ShiPin> shiPinsList = shiPinBiz.findShiPinList(page, size, type, defaultSort);
 		view.addObject("shiPinsList", shiPinsList);
 		view.addObject("page", ((ShiPinBizImpl) shiPinBiz).getPage());
@@ -128,9 +277,10 @@ public class ModuleAction {
 		view.setViewName("/competence/shipin");
 		return view;
 	}
-	
+
 	/**
 	 * 美食模块
+	 * 
 	 * @param page
 	 * @param size
 	 * @param sea
@@ -146,7 +296,7 @@ public class ModuleAction {
 		Integer type = 2;
 		// 默认排序 mark
 		String defaultSort = "mark";
-		
+
 		List<MeiShi> meiShisList = meiShiBiz.findMeiShiList(page, size, type, defaultSort);
 		view.addObject("meiShisList", meiShisList);
 		view.addObject("page", ((MeiShiBizImpl) meiShiBiz).getPage());
@@ -154,9 +304,10 @@ public class ModuleAction {
 		view.setViewName("/competence/meishi");
 		return view;
 	}
-	
+
 	/**
 	 * 进入美食新增页面
+	 * 
 	 * @param type
 	 * @return
 	 */
@@ -168,9 +319,10 @@ public class ModuleAction {
 		}
 		return "/index";
 	}
-	
+
 	/**
 	 * 美食数据保存 /并且上传图片
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -182,14 +334,14 @@ public class ModuleAction {
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
-		
-		//上传图片
+
+		// 上传图片
 		((MeiShiBizImpl) meiShiBiz).uploadImg((MultipartHttpServletRequest) request);
-		if (!((MeiShiBizImpl) meiShiBiz).isUpload() ) {
+		if (!((MeiShiBizImpl) meiShiBiz).isUpload()) {
 			return "/competence/meishi?type=s";
 		}
 		String img = ((MeiShiBizImpl) meiShiBiz).getImgPath();
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		meiShiBiz.saveMeiShi(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/meishi?page=1&size=25";
@@ -378,5 +530,5 @@ public class ModuleAction {
 		preferentialBiz.updateIndex();
 		return "/";
 	}
-	
+
 }
