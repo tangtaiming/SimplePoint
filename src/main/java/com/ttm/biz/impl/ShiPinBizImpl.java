@@ -93,8 +93,8 @@ public class ShiPinBizImpl implements ShiPinBiz {
 		shiPin.setImg(img);
 		shiPin.setCreatdId(creator);
 		shiPin.setCreatdDate(creatorDate);
-		// 2，代表美食
-		shiPin.setType(2);
+		// 3，代表视屏
+		shiPin.setType(3);
 		return shiPin;
 	}
 
@@ -193,6 +193,14 @@ public class ShiPinBizImpl implements ShiPinBiz {
 
 	public void setUpload(boolean isUpload) {
 		this.isUpload = isUpload;
+	}
+
+	public Page getPage() {
+		return page;
+	}
+
+	public void setPage(Page page) {
+		this.page = page;
 	}
 
 }

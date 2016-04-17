@@ -23,14 +23,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ttm.biz.MeiShiBiz;
 import com.ttm.biz.PreferentialBiz;
 import com.ttm.biz.SafetyBiz;
+import com.ttm.biz.ShiPinBiz;
 import com.ttm.biz.StoreBiz;
 import com.ttm.biz.impl.MeiShiBizImpl;
 import com.ttm.biz.impl.PreferentialBizImpl;
 import com.ttm.biz.impl.SafetyBizImpl;
+import com.ttm.biz.impl.ShiPinBizImpl;
 import com.ttm.biz.impl.StoreBizImpl;
 import com.ttm.orm.MeiShi;
 import com.ttm.orm.Preferential;
 import com.ttm.orm.Safety;
+import com.ttm.orm.ShiPin;
 import com.ttm.orm.Store;
 import com.ttm.util.Dumper;
 import com.ttm.util.ServiceSorterHelper;
@@ -38,7 +41,7 @@ import com.ttm.util.ServiceSorterHelper;
 /**
  * 
  * <p>
- * 介绍:优惠模块 action
+ * 介绍:模块 action
  * </p>
  * 
  * @author 唐太明
@@ -57,6 +60,74 @@ public class ModuleAction {
 	private SafetyBiz safetyBiz = new SafetyBizImpl();
 	
 	private MeiShiBiz meiShiBiz = new MeiShiBizImpl();
+	
+	private ShiPinBiz shiPinBiz = new ShiPinBizImpl();
+	
+	/**
+	 * 视频数据保存 /并且上传图片
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "shipin", method = RequestMethod.POST)
+	public String shiPin(HttpServletRequest request) {
+		System.out.println("url：" + request.getParameter("url"));
+		System.out.println("title：" + request.getParameter("title"));
+		System.out.println("mark：" + request.getParameter("mark"));
+		String url = request.getParameter("url");
+		String title = request.getParameter("title");
+		String mark = request.getParameter("mark");
+		
+		//上传图片
+		((ShiPinBizImpl) shiPinBiz).uploadImg((MultipartHttpServletRequest) request);
+		if (!((ShiPinBizImpl) shiPinBiz).isUpload() ) {
+			return "/competence/shipin?type=s";
+		}
+		String img = ((ShiPinBizImpl) shiPinBiz).getImgPath();
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		shiPinBiz.saveShiPin(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
+		return "redirect:/shipin?page=1&size=25";
+	}
+	
+	/**
+	 * 进入视频新增页面
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping(value = "shipin", method = RequestMethod.GET)
+	public String shiPin(@RequestParam(value = "type") String type) {
+		// s 代表保存
+		if (type.equals("s")) {
+			return "/competence/add-shipin";
+		}
+		return "/index";
+	}
+	
+	/**
+	 * 视频模块
+	 * @param page
+	 * @param size
+	 * @param sea
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping(value = "shipin", params = { "page", "size" }, method = RequestMethod.GET)
+	public ModelAndView shiPin(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+			@RequestParam(value = "sea", required = false) String sea,
+			@RequestParam(value = "sort", required = false) String sort) {
+		// 美食默认第一页 (page)，查询数量 (size)，类型是美食 (type)，根据mark排序 升序排序 (mark)
+		// 3 代表 美食
+		Integer type = 3;
+		// 默认排序 mark
+		String defaultSort = "mark";
+		
+		List<ShiPin> shiPinsList = shiPinBiz.findShiPinList(page, size, type, defaultSort);
+		view.addObject("shiPinsList", shiPinsList);
+		view.addObject("page", ((ShiPinBizImpl) shiPinBiz).getPage());
+		view.addObject("showPage", ((ShiPinBizImpl) shiPinBiz).getShowPage());
+		view.setViewName("/competence/shipin");
+		return view;
+	}
 	
 	/**
 	 * 美食模块

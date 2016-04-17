@@ -62,6 +62,7 @@
           	  <li><a href="/school_module?page=1&size=25"><i class="fa fa-circle-o"></i> 首页学校店铺模块</a></li>
           	  <li><a href="/safety?page=1&size=25"><i class="fa fa-circle-o"></i> 食物安全模块</a></li>
           	  <li><a href="/meishi?page=1&size=25"><i class="fa fa-circle-o"></i> 美食/微博模块</a></li>
+          	  <li><a href="/shipin?page=1&size=25"><i class="fa fa-circle-o"></i> 视频模块</a></li>
           </ul>
       </li>
     </ul>

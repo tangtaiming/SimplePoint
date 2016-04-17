@@ -15,7 +15,7 @@ import com.ttm.orm.Safety;
 public interface MeiShiBiz {
 
 	/**
-	 * 查询对应安全类型的数据 按照对应的排序方式分页查询数据
+	 * 查询对应美食类型的数据 按照对应的排序方式分页查询数据
 	 * @param page
 	 * @param size
 	 * @param type
@@ -25,7 +25,7 @@ public interface MeiShiBiz {
 	public abstract List<MeiShi> findMeiShiList(Integer page, Integer size, Integer type, String sortName);
 	
 	/**
-	 * 保存安全模块数据
+	 * 保存美食模块数据
 	 * @param url
 	 * @param title
 	 * @param mark
