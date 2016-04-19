@@ -77,5 +77,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<%@include file="../buju/script.jsp"%>
 
-<%@include file="container-footer.jsp"%>
+<%@include file="../buju/container-footer-2.jsp"%>

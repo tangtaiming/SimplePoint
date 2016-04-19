@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +57,8 @@ import com.ttm.util.ServiceSorterHelper;
  */
 @Controller
 public class ModuleAction {
+	
+	private Logger logger = Logger.getLogger(ModuleAction.class);
 
 	private ModelAndView view = new ModelAndView();
 
@@ -148,9 +151,9 @@ public class ModuleAction {
 	 */
 	@RequestMapping(value = "meishijia", method = RequestMethod.POST)
 	public String meiShiJia(HttpServletRequest request) {
-		System.out.println("url：" + request.getParameter("url"));
-		System.out.println("title：" + request.getParameter("title"));
-		System.out.println("mark：" + request.getParameter("mark"));
+		logger.info("url：" + request.getParameter("url"));
+		logger.info("title：" + request.getParameter("title"));
+		logger.info("mark: " + request.getParameter("mark"));
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");

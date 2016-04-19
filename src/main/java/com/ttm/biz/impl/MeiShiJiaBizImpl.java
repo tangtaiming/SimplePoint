@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.StringUtil;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -146,25 +148,31 @@ public class MeiShiJiaBizImpl implements MeiShiJiaBiz {
 			// 遍历所有文件
 			MultipartFile file = multiRequest.getFile(iterator.next().toString());
 			if (file != null) {
-				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-				String datePath = format.format(new Date());
-				String jpgPath = datePath + "_" + file.getOriginalFilename();
-				// 获取文件名称
-				imgPath = jpgPath;
-				System.out.println(
-						"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + multiRequest.getServletContext().getRealPath("/"));
-//				String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\"
-//						+ jpgPath;
-				String path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + jpgPath;
-				// 上传
-				try {
-					file.transferTo(new File(path));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					isUpload = false;
-				} catch (IOException e) {
-					e.printStackTrace();
-					isUpload = false;
+				String of = file.getOriginalFilename();
+				if (StringUtils.isEmpty(of)) {
+					log.info("文件为空.");
+				} else {
+					log.info("获取文件是否为空:" + file.isEmpty());
+					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+					String datePath = format.format(new Date());
+					String jpgPath = datePath + "_" + of;
+					// 获取文件名称
+					imgPath = jpgPath;
+					System.out.println(
+							"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + multiRequest.getServletContext().getRealPath("/"));
+//					String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\"
+//							+ jpgPath;
+					String path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + jpgPath;
+					// 上传
+					try {
+						file.transferTo(new File(path));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+						isUpload = false;
+					} catch (IOException e) {
+						e.printStackTrace();
+						isUpload = false;
+					}
 				}
 			}
 		}
