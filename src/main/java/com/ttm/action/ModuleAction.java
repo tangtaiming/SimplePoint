@@ -83,9 +83,9 @@ public class ModuleAction {
 	 */
 	@RequestMapping(value = "shuiguo", method = RequestMethod.POST)
 	public String shuiGuo(HttpServletRequest request) {
-		System.out.println("url：" + request.getParameter("url"));
-		System.out.println("title：" + request.getParameter("title"));
-		System.out.println("mark：" + request.getParameter("mark"));
+		logger.info("url：" + request.getParameter("url"));
+		logger.info("title：" + request.getParameter("title"));
+		logger.info("mark: " + request.getParameter("mark"));
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
@@ -220,9 +220,9 @@ public class ModuleAction {
 	 */
 	@RequestMapping(value = "shipin", method = RequestMethod.POST)
 	public String shiPin(HttpServletRequest request) {
-		System.out.println("url：" + request.getParameter("url"));
-		System.out.println("title：" + request.getParameter("title"));
-		System.out.println("mark：" + request.getParameter("mark"));
+		logger.info("url：" + request.getParameter("url"));
+		logger.info("title：" + request.getParameter("title"));
+		logger.info("mark: " + request.getParameter("mark"));
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
@@ -331,9 +331,9 @@ public class ModuleAction {
 	 */
 	@RequestMapping(value = "meishi", method = RequestMethod.POST)
 	public String meiShi(HttpServletRequest request) {
-		System.out.println("url：" + request.getParameter("url"));
-		System.out.println("title：" + request.getParameter("title"));
-		System.out.println("mark：" + request.getParameter("mark"));
+		logger.info("url：" + request.getParameter("url"));
+		logger.info("title：" + request.getParameter("title"));
+		logger.info("mark: " + request.getParameter("mark"));
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
@@ -359,57 +359,22 @@ public class ModuleAction {
 	 */
 	@RequestMapping(value = "safety", method = RequestMethod.POST)
 	public String safety(HttpServletRequest request) throws MalformedURLException {
-		System.out.println("url：" + request.getParameter("url"));
-		System.out.println("title：" + request.getParameter("title"));
-		System.out.println("mark：" + request.getParameter("mark"));
+		logger.info("url：" + request.getParameter("url"));
+		logger.info("title：" + request.getParameter("title"));
+		logger.info("mark: " + request.getParameter("mark"));
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
-		String img = "";
 
-		// 开始时间
-		long startTime = System.currentTimeMillis();
-
-		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multiRequest.getFileNames();
-		boolean isUpload = true;
-		while (iterator.hasNext()) {
-			// 遍历所有文件
-			MultipartFile file = multiRequest.getFile(iterator.next().toString());
-			if (file != null) {
-				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-				String datePath = format.format(new Date());
-				String jpgPath = datePath + "_" + file.getOriginalFilename();
-				// 获取文件名称
-				img = jpgPath;
-				System.out.println(
-						"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + request.getSession().getServletContext().getRealPath("/"));
-				String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\"
-						+ jpgPath;
-				path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + jpgPath;
-				// 上传
-				try {
-					file.transferTo(new File(path));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					isUpload = false;
-				} catch (IOException e) {
-					e.printStackTrace();
-					isUpload = false;
-				}
-			}
-		}
-		// 结束时间
-		long endTime = System.currentTimeMillis();
-		System.out.println("运行时间:" + String.valueOf(endTime - startTime));
-
+		((SafetyBizImpl) safetyBiz).uploadImg((MultipartHttpServletRequest) request);
 		// 保存数据 并且上传图片
 		// url， title， mark，img名称 ，创建人，创建时间
 		// 错误重新进入新增页面
-		if (!isUpload) {
+		if (!((SafetyBizImpl) safetyBiz).isUpload()) {
 			return "redirect:/safety?type=s";
 		}
-
+		String img = ((SafetyBizImpl) safetyBiz).getImgPath();
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		safetyBiz.saveSafety(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/safety?page=1&size=25";

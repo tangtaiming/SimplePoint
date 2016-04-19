@@ -1,30 +1,24 @@
 package com.ttm.biz.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ttm.biz.ShiPinBiz;
 import com.ttm.dao.ShiPinDao;
 import com.ttm.dao.impl.ShiPinDaoImpl;
-import com.ttm.orm.MeiShi;
 import com.ttm.orm.ShiPin;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
 import com.ttm.util.ServicePaginationHelper;
 import com.ttm.util.ServiceQueryHelper;
 import com.ttm.util.ServiceSorterHelper;
+import com.ttm.util.UploadImgUtil;
 
 public class ShiPinBizImpl implements ShiPinBiz {
 
@@ -59,6 +53,11 @@ public class ShiPinBizImpl implements ShiPinBiz {
 	private String imgPath = "";
 	
 	private boolean isUpload = true;
+	
+	/**
+	 * 文件上传小工具
+	 */
+	private UploadImgUtil upload = new UploadImgUtil();
 	
 	public List<ShiPin> findShiPinList(Integer page, Integer size, Integer type, String sortName) {
 		Map<String, Object> query = new HashMap<String, Object>();
@@ -128,39 +127,16 @@ public class ShiPinBizImpl implements ShiPinBiz {
 		setShowPage(showPage);
 	}
 
+	/**
+	 * 上传图片
+	 * @param multiRequest
+	 */
 	public void uploadImg(MultipartHttpServletRequest multiRequest) {
-		// 开始时间
-		long startTime = System.currentTimeMillis();
-		Iterator<String> iterator = multiRequest.getFileNames();
-		while (iterator.hasNext()) {
-			// 遍历所有文件
-			MultipartFile file = multiRequest.getFile(iterator.next().toString());
-			if (file != null) {
-				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-				String datePath = format.format(new Date());
-				String jpgPath = datePath + "_" + file.getOriginalFilename();
-				// 获取文件名称
-				imgPath = jpgPath;
-				System.out.println(
-						"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + multiRequest.getServletContext().getRealPath("/"));
-//				String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\"
-//						+ jpgPath;
-				String path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + jpgPath;
-				// 上传
-				try {
-					file.transferTo(new File(path));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					isUpload = false;
-				} catch (IOException e) {
-					e.printStackTrace();
-					isUpload = false;
-				}
-			}
-		}
-		// 结束时间
-		long endTime = System.currentTimeMillis();
-		System.out.println("运行时间:" + String.valueOf(endTime - startTime));
+		upload.uploadImg(multiRequest);
+		imgPath = upload.getPathImg();
+		isUpload = upload.isImg();
+		log.info("isUpload:" + isUpload);
+		log.info("imgPath:" + imgPath);
 	}
 
 	public List<Integer> getShowPage() {

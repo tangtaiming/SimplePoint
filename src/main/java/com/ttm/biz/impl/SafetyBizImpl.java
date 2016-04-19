@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ttm.biz.SafetyBiz;
 import com.ttm.dao.SafetyDao;
@@ -18,6 +19,7 @@ import com.ttm.util.PageUtil;
 import com.ttm.util.ServicePaginationHelper;
 import com.ttm.util.ServiceQueryHelper;
 import com.ttm.util.ServiceSorterHelper;
+import com.ttm.util.UploadImgUtil;
 
 public class SafetyBizImpl implements SafetyBiz	 {
 	
@@ -48,6 +50,12 @@ public class SafetyBizImpl implements SafetyBiz	 {
 	 * 前后显示数量
 	 */
 	private int pageRange = 5;
+	
+	private UploadImgUtil upload = new UploadImgUtil();
+	
+	private String imgPath;
+	
+	private boolean isUpload;
 	
 	public List<Safety> findSafetyList(Integer page, Integer size, Integer type, String sortName) {
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
@@ -112,6 +120,19 @@ public class SafetyBizImpl implements SafetyBiz	 {
 		}
 		setShowPage(showPage);
 	}
+	
+	/**
+	 * 上传图片
+	 * @param multiRequest
+	 */
+	public void uploadImg(MultipartHttpServletRequest multiRequest) {
+		upload.uploadImg(multiRequest);
+		imgPath = upload.getPathImg();
+		isUpload = upload.isImg();
+		log.info("isUpload:" + isUpload);
+		log.info("imgPath:" + imgPath);
+	}
+
 
 	public Page getPage() {
 		return page;
@@ -127,5 +148,21 @@ public class SafetyBizImpl implements SafetyBiz	 {
 
 	public void setShowPage(List<Integer> showPage) {
 		this.showPage = showPage;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public boolean isUpload() {
+		return isUpload;
+	}
+
+	public void setUpload(boolean isUpload) {
+		this.isUpload = isUpload;
 	}
 }

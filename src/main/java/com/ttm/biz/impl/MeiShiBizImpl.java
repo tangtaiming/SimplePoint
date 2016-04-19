@@ -26,6 +26,7 @@ import com.ttm.util.PageUtil;
 import com.ttm.util.ServicePaginationHelper;
 import com.ttm.util.ServiceQueryHelper;
 import com.ttm.util.ServiceSorterHelper;
+import com.ttm.util.UploadImgUtil;
 
 public class MeiShiBizImpl implements MeiShiBiz {
 
@@ -60,6 +61,8 @@ public class MeiShiBizImpl implements MeiShiBiz {
 	private String imgPath = "";
 	
 	private boolean isUpload = true;
+	
+	private UploadImgUtil upload = new UploadImgUtil();
 
 	public List<MeiShi> findMeiShiList(Integer page, Integer size, Integer type, String sortName) {
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
@@ -130,38 +133,11 @@ public class MeiShiBizImpl implements MeiShiBiz {
 	}
 
 	public void uploadImg(MultipartHttpServletRequest multiRequest) {
-		// 开始时间
-		long startTime = System.currentTimeMillis();
-		Iterator<String> iterator = multiRequest.getFileNames();
-		while (iterator.hasNext()) {
-			// 遍历所有文件
-			MultipartFile file = multiRequest.getFile(iterator.next().toString());
-			if (file != null) {
-				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-				String datePath = format.format(new Date());
-				String jpgPath = datePath + "_" + file.getOriginalFilename();
-				// 获取文件名称
-				imgPath = jpgPath;
-				System.out.println(
-						"^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + multiRequest.getServletContext().getRealPath("/"));
-//				String path = request.getSession().getServletContext().getRealPath("/") + "\\images\\upload\\"
-//						+ jpgPath;
-				String path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + jpgPath;
-				// 上传
-				try {
-					file.transferTo(new File(path));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					isUpload = false;
-				} catch (IOException e) {
-					e.printStackTrace();
-					isUpload = false;
-				}
-			}
-		}
-		// 结束时间
-		long endTime = System.currentTimeMillis();
-		System.out.println("运行时间:" + String.valueOf(endTime - startTime));
+		upload.uploadImg(multiRequest);
+		imgPath = upload.getPathImg();
+		isUpload = upload.isImg();
+		log.info("isUpload:" + isUpload);
+		log.info("imgPath:" + imgPath);
 	}
 
 	public Page getPage() {
