@@ -68,15 +68,15 @@
                                 	<a href="#">
                                     	<span class="label label-primary">编辑</span>
                                     </a>
-                                    <a href="#">
+                                    <a href="javascript:;" data-href="/meishi/${meishi.id}" class="meishi-delete-${meishi.id}" title="${meishi.title}">
                                     	<span class="label label-danger">删除</span>
                                     </a>
                                 </td>
                                 
                                 <td>${meishi.id}</td>
                                 <td>${meishi.title}</td>
-                                <td>${meishi.url}</td>
-                                <td>${meishi.img}</td>
+                                <td><a alt="url地址" href="${meishi.url}" target="_blank">查看</a></td>
+                                <td><a alt="图片" href="/images/upload/${meishi.img}" target="_blank">查看</a></td>
                                 <td><c:if test="${meishi.creatdId==1}">唐太明</c:if></td>
                                 <td>${meishi.creatdDate}</td>
                             </tr>
@@ -185,21 +185,9 @@
 </div>
 <!-- /.content-wrapper -->
 
-<%@include file="container-footer.jsp"%>
+<%@include file="../buju/script-liebiao.jsp"%>
 <script type="text/javascript">
 	$(function() {
-		$("a[class^='meishi-delete-']").click(function(e) {
-			var $title = $(this).attr("title");
-			if (confirm("确定删除 " + $title + "?")) {
-				var href = $(this).attr("href");
-				$(".meishi-rest").attr("action", href).submit();
-				return false;
-			} else {
-				//取消事件操作
-				e.preventDefault();
-			}
-		});
-		
 		$("select[name^='size_length_']").change(function() {
 			var $href = $(this).val();
 			console.info("url:" + $href);
@@ -208,3 +196,4 @@
 		});
 	});
 </script>
+<%@include file="../buju/container-footer-2.jsp"%>

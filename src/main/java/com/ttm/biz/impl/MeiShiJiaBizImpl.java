@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ttm.biz.MeiShiJiaBiz;
 import com.ttm.dao.MeiShiJiaDao;
 import com.ttm.dao.impl.MeiShiJiaDaoImpl;
+import com.ttm.orm.MeiShi;
 import com.ttm.orm.MeiShiJia;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
@@ -94,6 +95,25 @@ public class MeiShiJiaBizImpl implements MeiShiJiaBiz {
 		MeiShiJia meiShiJia = setMeiShiJia(url, title, mark, img, creator, creatorDate);
 		return meiShiJiaDao.addMeiShiJia(meiShiJia);
 	}
+	
+	public MeiShiJia findMeiShiJia(Integer id) {
+		MeiShiJia meiShiJia = meiShiJiaDao.findMeiShiJia(id);
+		if (meiShiJia == null) {
+			log.warn("查询美食家数据为空");
+		}
+		return meiShiJia;
+	}
+
+	public boolean deleteMeiShiJia(Integer id) {
+		MeiShiJia meiShiJia = findMeiShiJia(id);
+		if (meiShiJia == null) {
+			log.info("无法删除美食家数据。");
+			return false;
+		} else {
+			return meiShiJiaDao.deleteMeiShiJia(meiShiJia);
+		}
+	}
+
 	
 	private MeiShiJia setMeiShiJia(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
 		MeiShiJia meiShiJia = new MeiShiJia();
@@ -181,5 +201,4 @@ public class MeiShiJiaBizImpl implements MeiShiJiaBiz {
 	public void setUpload(boolean isUpload) {
 		this.isUpload = isUpload;
 	}
-
 }

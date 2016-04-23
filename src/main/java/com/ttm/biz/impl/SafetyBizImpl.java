@@ -80,6 +80,21 @@ public class SafetyBizImpl implements SafetyBiz	 {
 		Safety safety = setSafety(url, title, mark, img, creator, creatorDate);
 		return safetyDao.addSafety(safety);
 	}
+	
+	public Safety findSafety(Integer id) {
+		return safetyDao.findSafetyById(id);
+	}
+
+	public boolean deleteSafety(Integer id) {
+		Safety safety = findSafety(id);
+		if (safety == null) {
+			log.warn("查询食品安全数据为空，无法进行删除操作");
+			return false;
+		} else {
+			safetyDao.deleteSafety(safety);
+			return true;
+		}
+	}
 
 	private Safety setSafety(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
 		Safety safety = new Safety();
@@ -165,4 +180,5 @@ public class SafetyBizImpl implements SafetyBiz	 {
 	public void setUpload(boolean isUpload) {
 		this.isUpload = isUpload;
 	}
+
 }

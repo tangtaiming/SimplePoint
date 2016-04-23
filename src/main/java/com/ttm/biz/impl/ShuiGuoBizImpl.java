@@ -92,6 +92,25 @@ public class ShuiGuoBizImpl implements ShuiGuoBiz {
 		return shuiGuoDao.addShuiGuo(shuiGuo);
 	}
 	
+	public ShuiGuo findShuiGuo(Integer id) {
+		ShuiGuo shuiGuo = shuiGuoDao.findShuiGuoById(id);
+		if (shuiGuo == null) {
+			log.warn("查询对应id：" + id + "水果数据为空");
+			return null;
+		}
+		return shuiGuo;
+	}
+
+	public boolean deleteShuiGuo(Integer id) {
+		ShuiGuo shuiGuo = findShuiGuo(id);
+		if (shuiGuo == null) {
+			log.warn("查询对应id：" + id + "水果数据为空，删除动作终止");
+			return false;
+		} else {
+			return shuiGuoDao.deleteShuiGuo(shuiGuo);
+		}
+	}
+	
 	private ShuiGuo setShuiGuo(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
 		ShuiGuo shuiGuo = new ShuiGuo();
 		shuiGuo.setUrl(url);

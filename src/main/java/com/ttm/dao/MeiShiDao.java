@@ -6,6 +6,13 @@ import java.util.Map;
 import com.ttm.orm.MeiShi;
 
 public interface MeiShiDao {
+	
+	/**
+	 * 删除美食
+	 * @param meishi
+	 * @return
+	 */
+	public abstract boolean deleteMeiShi(MeiShi meishi);
 
 	/**
 	 * 新增美食模块

@@ -30,5 +30,19 @@ public interface ShuiGuoBiz {
 	 */
 	public abstract boolean saveShuiGuo(String url, String title, Integer mark, String img, Integer creator,
 			String creatorDate);
+	
+	/**
+	 * id 查询水果信息
+	 * @param id
+	 * @return
+	 */
+	public abstract ShuiGuo findShuiGuo(Integer id);
+	
+	/**
+	 * 删除对应 id 水果信息
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean deleteShuiGuo(Integer id);
 
 }

@@ -1,26 +1,18 @@
 package com.ttm.biz.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.Provider.Service;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ttm.biz.MeiShiBiz;
 import com.ttm.dao.MeiShiDao;
 import com.ttm.dao.impl.MeiShiDaoImpl;
 import com.ttm.orm.MeiShi;
-import com.ttm.util.Dumper;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
 import com.ttm.util.ServicePaginationHelper;
@@ -61,8 +53,6 @@ public class MeiShiBizImpl implements MeiShiBiz {
 	private String imgPath = "";
 	
 	private boolean isUpload = true;
-	
-	private UploadImgUtil upload = new UploadImgUtil();
 
 	public List<MeiShi> findMeiShiList(Integer page, Integer size, Integer type, String sortName) {
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
@@ -87,6 +77,18 @@ public class MeiShiBizImpl implements MeiShiBiz {
 	public boolean saveMeiShi(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
 		MeiShi meiShi = setMeiShi(url, title, mark, img, creator, creatorDate);
 		return meiShiDao.addMeiShi(meiShi);
+	}
+	
+	public MeiShi findMeiShi(Integer id) {
+		return meiShiDao.findMeiShiById(id);
+	}
+
+	public boolean deleteMeiShi(Integer id) {
+		MeiShi meiShi = findMeiShi(id);
+		if (meiShi != null) {
+			return meiShiDao.deleteMeiShi(meiShi);
+		}
+		return false;
 	}
 
 	private MeiShi setMeiShi(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
@@ -133,6 +135,7 @@ public class MeiShiBizImpl implements MeiShiBiz {
 	}
 
 	public void uploadImg(MultipartHttpServletRequest multiRequest) {
+		UploadImgUtil upload = new UploadImgUtil();
 		upload.uploadImg(multiRequest);
 		imgPath = upload.getPathImg();
 		isUpload = upload.isImg();

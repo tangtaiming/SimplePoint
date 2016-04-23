@@ -39,5 +39,9 @@ public class MeiShiDaoImpl implements MeiShiDao {
 		return (List<MeiShi>) factory.findToListLimit(MeiShi.class, query, sort, pageing);
 	}
 
+	public boolean deleteMeiShi(MeiShi meishi) {
+		return factory.delete(MeiShi.class, meishi);
+	}
+
 
 }

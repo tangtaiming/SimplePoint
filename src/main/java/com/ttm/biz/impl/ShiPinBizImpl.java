@@ -83,6 +83,20 @@ public class ShiPinBizImpl implements ShiPinBiz {
 		ShiPin shiPin = setShiPin(url, title, mark, img, creator, creatorDate);
 		return shiPinDao.addShiPin(shiPin);
 	}
+
+	public ShiPin findShiPin(Integer id) {
+		return shiPinDao.findShiPinById(id);
+	}
+
+	public boolean deleteShiPin(Integer id) {
+		ShiPin shipin = this.findShiPin(id);
+		if (shipin == null) {
+			log.warn("查询视屏数据失败,无法进行删除操作!");
+			return false;
+		} else {
+			return shiPinDao.deleteShiPin(shipin);
+		} 
+	}
 	
 	private ShiPin setShiPin(String url, String title, Integer mark, String img, Integer creator, String creatorDate) {
 		ShiPin shiPin = new ShiPin();

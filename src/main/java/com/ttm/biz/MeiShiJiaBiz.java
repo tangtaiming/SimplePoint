@@ -27,4 +27,18 @@ public interface MeiShiJiaBiz {
 	 */
 	public abstract boolean saveMeiShiJia(String url, String title, Integer mark, String img, Integer creator, String creatorDate);
 
+	/**
+	 * id 查询美食家信息
+	 * @param id
+	 * @return
+	 */
+	public abstract MeiShiJia findMeiShiJia(Integer id);
+	
+	/**
+	 * 删除美食家信息
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean deleteMeiShiJia(Integer id);
+	
 }

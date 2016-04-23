@@ -38,4 +38,18 @@ public interface SafetyBiz {
 	 */
 	public abstract boolean saveSafety(String url, String title, Integer mark, String img, Integer creator, String creatorDate);
 	
+	/**
+	 * id 查询安全模块数据
+	 * @param id
+	 * @return
+	 */
+	public abstract Safety findSafety(Integer id);
+	
+	/**
+	 * id 删除安全模块数据
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean deleteSafety(Integer id);
+	
 }

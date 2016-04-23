@@ -16,6 +16,7 @@ import com.ttm.orm.ShuiGuo;
  * @version 1.0
  */
 public interface ShuiGuoDao {
+	
 	/**
 	 * 新增水果模块
 	 * 
@@ -51,4 +52,12 @@ public interface ShuiGuoDao {
 	public abstract List<ShuiGuo> findShuiGuoByList(Map<String, Object> query, Map<String, Object> sort,
 			Map<String, Integer> pageing);
 
+	
+	/**
+	 * 删除水果信息
+	 * @param shuiGuo
+	 * @return
+	 */
+	public abstract boolean deleteShuiGuo(ShuiGuo shuiGuo);
+	
 }

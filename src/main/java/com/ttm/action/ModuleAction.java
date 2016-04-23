@@ -1,11 +1,8 @@
 package com.ttm.action;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -76,6 +73,21 @@ public class ModuleAction {
 
 	private ShuiGuoBiz shuiGuoBiz = new ShuiGuoBizImpl();
 
+	/**
+	 * 删除水果数据信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "shuiguo/{id}", method = RequestMethod.DELETE)
+	public String shuiGuo(@PathVariable(value = "id") int id) {
+		if (shuiGuoBiz.deleteShuiGuo(id)) {
+			logger.info("删除水果id:" + id + "成功");
+		} else {
+			logger.info("删除水果id:" + id + "失败");
+		}
+		return "redirect:/shuiguo?page=1&size=25";
+	}
+	
 	/**
 	 * 保存水果数据/并且上传图片
 	 * @param request
@@ -141,6 +153,21 @@ public class ModuleAction {
 		view.addObject("showPage", ((ShuiGuoBizImpl) shuiGuoBiz).getShowPage());
 		view.setViewName("/competence/shuiguo");
 		return view;
+	}
+	
+	/**
+	 * 删除美食家信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "meishijia/{id}", method = RequestMethod.DELETE)
+	public String meiShiJia(@PathVariable(value = "id") int id) {
+		if(meiShiJiaBiz.deleteMeiShiJia(id)) {
+			logger.info("删除视频 " + id + "成功");
+		} else {
+			logger.info("删除视频 " + id + "失败");
+		}
+		return "redirect:/meishijia?page=1&size=25";
 	}
 
 	/**
@@ -213,6 +240,21 @@ public class ModuleAction {
 	}
 
 	/**
+	 * 删除视频操作
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "shipin/{id}", method = RequestMethod.DELETE)
+	public String shipin(@PathVariable(value = "id") int id) {
+		if (shiPinBiz.deleteShiPin(id)) {
+			logger.info("删除视频 " + id + "成功");
+		} else {
+			logger.info("删除视频 " + id + "失败");
+		}
+		return "redirect:/shipin?page=1&size=25";
+	}
+	
+	/**
 	 * 视频数据保存 /并且上传图片
 	 * 
 	 * @param request
@@ -279,6 +321,21 @@ public class ModuleAction {
 		view.addObject("showPage", ((ShiPinBizImpl) shiPinBiz).getShowPage());
 		view.setViewName("/competence/shipin");
 		return view;
+	}
+	
+	/**
+	 * 删除美食数据
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "meishi/{id}", method = RequestMethod.DELETE)
+	public String meiShi(@PathVariable(value = "id") Integer id) {
+		if (meiShiBiz.deleteMeiShi(id)) {
+			logger.info("删除" + id + "成功.");
+		} else {
+			logger.info("删除" + id + "失败.");
+		}
+		return "redirect:/meishi?page=1&size=25";
 	}
 
 	/**
@@ -348,6 +405,21 @@ public class ModuleAction {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		meiShiBiz.saveMeiShi(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/meishi?page=1&size=25";
+	}
+	
+	/**
+	 * 删除食物安全模块
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "safety/{id}", method = RequestMethod.DELETE)
+	public String safety(@PathVariable(value = "id") int id) {
+		if (safetyBiz.deleteSafety(id)) {
+			logger.info("删除食物安全 " + id + " 成功");
+		} else {
+			logger.info("删除食物安全 " + id + " 失败");
+		}
+		return "redirect:/safety?page=1&size=25";
 	}
 
 	/**

@@ -39,4 +39,12 @@ public class MeiShiJiaDaoImpl implements MeiShiJiaDao {
 		return (List<MeiShiJia>) factory.findToListLimit(MeiShiJia.class, query, sort, pageing);
 	}
 
+	public MeiShiJia findMeiShiJia(Integer id) {
+		return (MeiShiJia) factory.findById(MeiShiJia.class, id);
+	}
+
+	public boolean deleteMeiShiJia(MeiShiJia meiShiJia) {
+		return factory.delete(MeiShiJia.class, meiShiJia);
+	}
+
 }

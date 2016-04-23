@@ -35,4 +35,18 @@ public interface MeiShiBiz {
 	 */
 	public abstract boolean saveMeiShi(String url, String title, Integer mark, String img, Integer creator, String creatorDate);
 	
+	/**
+	 * id 查询美食
+	 * @param id
+	 * @return
+	 */
+	public abstract MeiShi findMeiShi(Integer id);
+	
+	/**
+	 * id 删除美食
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean deleteMeiShi(Integer id);
+	
 }

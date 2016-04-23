@@ -36,5 +36,18 @@ public interface MeiShiJiaDao {
 	 */
 	public abstract List<MeiShiJia> findMeiShiJiaByList(Map<String, Object> query, Map<String, Object> sort, Map<String, Integer> pageing);
 
+	/**
+	 * id 查询美食家数据
+	 * @param id
+	 * @return
+	 */
+	public abstract MeiShiJia findMeiShiJia(Integer id);
+	
+	/**
+	 * 删除美食家数据
+	 * @param meiShiJia
+	 * @return
+	 */
+	public abstract boolean deleteMeiShiJia(MeiShiJia meiShiJia);
 
 }

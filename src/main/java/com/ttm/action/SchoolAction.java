@@ -87,7 +87,7 @@ public class SchoolAction {
 	@RequestMapping(value = "school/{id}", method = RequestMethod.DELETE)
 	public String school(@PathVariable(value = "id") Integer id) {
 		schoolBiz.deleteSchool(id);
-		return "redirect:/school?page=1&size=20";
+		return "redirect:/school?page=1&size=25";
 	}
 
 	/*

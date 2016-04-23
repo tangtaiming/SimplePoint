@@ -29,4 +29,8 @@ public class ShiPinDaoImpl implements ShiPinDao {
 		return (List<ShiPin>) factory.findToListLimit(ShiPin.class, query, sort, pageing);
 	}
 
+	public boolean deleteShiPin(ShiPin shiPin) {
+		return factory.delete(ShiPin.class, shiPin);
+	}
+
 }

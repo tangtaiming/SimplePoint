@@ -46,4 +46,11 @@ public interface SafetyDao {
 	 * @return
 	 */
 	public abstract List<Safety> findSafetyByList(Map<String, Object> query, Map<String, Object> sort, Map<String, Integer> pageing);
+
+	/**
+	 * 删除食品安全数据
+	 * @param safety
+	 * @return
+	 */
+	public abstract boolean deleteSafety(Safety safety);
 }

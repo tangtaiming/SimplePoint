@@ -37,5 +37,11 @@ public interface ShiPinDao {
 	 */
 	public abstract List<ShiPin> findShiPinByList(Map<String, Object> query, Map<String, Object> sort, Map<String, Integer> pageing);
 
+	/**
+	 * 删除视频数据
+	 * @param shiPin
+	 * @return
+	 */
+	public abstract boolean deleteShiPin(ShiPin shiPin);
 	
 }

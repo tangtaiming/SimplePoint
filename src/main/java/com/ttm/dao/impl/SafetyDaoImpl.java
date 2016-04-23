@@ -29,4 +29,8 @@ public class SafetyDaoImpl implements SafetyDao {
 		return (List<Safety>) factory.findToListLimit(Safety.class, query, sort, pageing);
 	}
 
+	public boolean deleteSafety(Safety safety) {
+		return factory.delete(Safety.class, safety);
+	}
+
 }

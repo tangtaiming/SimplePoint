@@ -68,15 +68,15 @@
                                 	<a href="#">
                                     	<span class="label label-primary">编辑</span>
                                     </a>
-                                    <a href="#">
+                                    <a href="javascript:;" data-href="/shuiguo/${shuiguo.id}" class="shuiguo-delete-${shuiguo.id}" title="${meishijia.title}">
                                     	<span class="label label-danger">删除</span>
                                     </a>
                                 </td>
                                 
                                 <td>${shuiguo.id}</td>
                                 <td>${shuiguo.title}</td>
-                                <td>${shuiguo.url}</td>
-                                <td>${shuiguo.img}</td>
+                                <td><a alt="url地址" href="${shuiguo.url}" target="_blank">查看</a></td>
+                                <td><a alt="图片" href="/images/upload/${shuiguo.img}" target="_blank">查看</a></td>
                                 <td><c:if test="${shuiguo.creatdId==1}">唐太明</c:if></td>
                                 <td>${shuiguo.creatdDate}</td>
                             </tr>
@@ -185,20 +185,20 @@
 </div>
 <!-- /.content-wrapper -->
 
-<%@include file="container-footer.jsp"%>
+<%@include file="../buju/script-liebiao.jsp"%>
 <script type="text/javascript">
 	$(function() {
-		$("a[class^='shuiguo-delete-']").click(function(e) {
-			var $title = $(this).attr("title");
-			if (confirm("确定删除 " + $title + "?")) {
-				var href = $(this).attr("href");
-				$(".shuiguo-rest").attr("action", href).submit();
-				return false;
-			} else {
-				//取消事件操作
-				e.preventDefault();
-			}
-		});
+// 		$("a[class^='shuiguo-delete-']").click(function(e) {
+// 			var $title = $(this).attr("title");
+// 			if (confirm("确定删除 " + $title + "?")) {
+// 				var href = $(this).attr("href");
+// 				$(".shuiguo-rest").attr("action", href).submit();
+// 				return false;
+// 			} else {
+// 				//取消事件操作
+// 				e.preventDefault();
+// 			}
+// 		});
 		
 		$("select[name^='size_length_']").change(function() {
 			var $href = $(this).val();
@@ -208,3 +208,4 @@
 		});
 	});
 </script>
+<%@include file="../buju/container-footer-2.jsp"%>

@@ -28,5 +28,18 @@ public interface ShiPinBiz {
 	 */
 	public abstract boolean saveShiPin(String url, String title, Integer mark, String img, Integer creator, String creatorDate);
 
+	/**
+	 * id 查询视频数据
+	 * @param id
+	 * @return
+	 */
+	public abstract ShiPin findShiPin(Integer id);
+	
+	/**
+	 * id 删除视频信息
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean deleteShiPin(Integer id);
 	
 }

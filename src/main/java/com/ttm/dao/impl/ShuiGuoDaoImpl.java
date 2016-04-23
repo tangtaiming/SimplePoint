@@ -39,4 +39,8 @@ public class ShuiGuoDaoImpl implements ShuiGuoDao {
 		return (List<ShuiGuo>) factory.findToListLimit(ShuiGuo.class, query, sort, pageing);
 	}
 
+	public boolean deleteShuiGuo(ShuiGuo shuiGuo) {
+		return factory.delete(ShuiGuo.class, shuiGuo);
+	}
+
 }
