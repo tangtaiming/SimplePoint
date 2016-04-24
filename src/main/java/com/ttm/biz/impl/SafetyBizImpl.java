@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ttm.biz.SafetyBiz;
 import com.ttm.dao.SafetyDao;
 import com.ttm.dao.impl.SafetyDaoImpl;
+import com.ttm.enums.MoKuaiLeiXinEnum;
 import com.ttm.orm.Reptile;
 import com.ttm.orm.Safety;
 import com.ttm.util.Page;
@@ -105,7 +106,7 @@ public class SafetyBizImpl implements SafetyBiz	 {
 		safety.setCreatdId(creator);
 		safety.setCreatdDate(creatorDate);
 		//1，代表安全模块
-		safety.setType(1);
+		safety.setType(MoKuaiLeiXinEnum.SHIWU_ANQUAN.getType());
 		return safety;
 	}
 	

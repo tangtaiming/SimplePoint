@@ -68,7 +68,7 @@
                                 	<a href="#">
                                     	<span class="label label-primary">编辑</span>
                                     </a>
-                                    <a href="javascript:;" data-href="/shuiguo/${shuiguo.id}" class="shuiguo-delete-${shuiguo.id}" title="${meishijia.title}">
+                                    <a href="javascript:;" data-href="/shuiguo/${shuiguo.id}" class="entity-delete-${shuiguo.id}" title="${meishijia.title}">
                                     	<span class="label label-danger">删除</span>
                                     </a>
                                 </td>
@@ -176,7 +176,7 @@
         </div>
       </div>
       <div class="hidden">
-    	<form class="shuiguo-rest" action="" method="POST">
+    	<form class="entity-rest" action="" method="POST">
     		<input type="hidden" name="_method" value="DELETE"/>
     	</form>
       </div>  
@@ -184,28 +184,5 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
 <%@include file="../buju/script-liebiao.jsp"%>
-<script type="text/javascript">
-	$(function() {
-// 		$("a[class^='shuiguo-delete-']").click(function(e) {
-// 			var $title = $(this).attr("title");
-// 			if (confirm("确定删除 " + $title + "?")) {
-// 				var href = $(this).attr("href");
-// 				$(".shuiguo-rest").attr("action", href).submit();
-// 				return false;
-// 			} else {
-// 				//取消事件操作
-// 				e.preventDefault();
-// 			}
-// 		});
-		
-		$("select[name^='size_length_']").change(function() {
-			var $href = $(this).val();
-			console.info("url:" + $href);
-			$("input[name='_method']").val("GET");
-			$(".shuiguo-rest").attr("action", $href).submit();
-		});
-	});
-</script>
 <%@include file="../buju/container-footer-2.jsp"%>

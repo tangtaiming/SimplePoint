@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ttm.biz.ShiPinBiz;
 import com.ttm.dao.ShiPinDao;
 import com.ttm.dao.impl.ShiPinDaoImpl;
+import com.ttm.enums.MoKuaiLeiXinEnum;
 import com.ttm.orm.ShiPin;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
@@ -107,7 +108,7 @@ public class ShiPinBizImpl implements ShiPinBiz {
 		shiPin.setCreatdId(creator);
 		shiPin.setCreatdDate(creatorDate);
 		// 3，代表视屏
-		shiPin.setType(3);
+		shiPin.setType(MoKuaiLeiXinEnum.SHIPIN.getType());
 		return shiPin;
 	}
 

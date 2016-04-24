@@ -52,16 +52,19 @@ public class UploadImgUtil {
 				if (StringUtils.isEmpty(of)) {
 					log.info("文件为空.");
 				} else {
-					log.info("获取文件是否为空:" + file.isEmpty());
 					SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 					String datePath = format.format(new Date());
+					//获取图片文件上传目录
+					String dir = multiRequest.getServletContext().getRealPath("/images/upload");
 					// 获取文件名称
 					pathImg = datePath + "_" + of;
 					log.info("getServletContext(): " + multiRequest.getServletContext().getRealPath("/"));
-					String path = "E:\\Project\\learngit\\SimplePoint\\src\\main\\webapp\\images\\upload\\" + pathImg;
+					String path = dir + "/" + pathImg;
+					
 					// 上传
 					try {
 						file.transferTo(new File(path));
+						log.info("上传图片 " + pathImg + "成功,上传至" + dir + "目录下");
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 						isImg = false;

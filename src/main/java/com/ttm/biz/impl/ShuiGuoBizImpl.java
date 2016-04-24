@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ttm.biz.ShuiGuoBiz;
 import com.ttm.dao.ShuiGuoDao;
 import com.ttm.dao.impl.ShuiGuoDaoImpl;
+import com.ttm.enums.MoKuaiLeiXinEnum;
 import com.ttm.orm.ShuiGuo;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
@@ -120,7 +121,7 @@ public class ShuiGuoBizImpl implements ShuiGuoBiz {
 		shuiGuo.setCreatdId(creator);
 		shuiGuo.setCreatdDate(creatorDate);
 		// 5，代表水果
-		shuiGuo.setType(5);
+		shuiGuo.setType(MoKuaiLeiXinEnum.SHUIGUO.getType());
 		return shuiGuo;
 	}
 

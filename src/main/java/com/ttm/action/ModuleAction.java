@@ -32,6 +32,7 @@ import com.ttm.biz.impl.SafetyBizImpl;
 import com.ttm.biz.impl.ShiPinBizImpl;
 import com.ttm.biz.impl.ShuiGuoBizImpl;
 import com.ttm.biz.impl.StoreBizImpl;
+import com.ttm.enums.MoKuaiLeiXinEnum;
 import com.ttm.orm.MeiShi;
 import com.ttm.orm.MeiShiJia;
 import com.ttm.orm.Preferential;
@@ -143,7 +144,7 @@ public class ModuleAction {
 			@RequestParam(value = "sort", required = false) String sort) {
 		// 水果家默认第一页 (page)，查询数量 (size)，类型是水果(type)，根据mark排序 升序排序 (mark)
 		// 5 代表 视水果
-		Integer type = 5;
+		Integer type = MoKuaiLeiXinEnum.SHUIGUO.getType();
 		// 默认排序 mark
 		String defaultSort = "mark";
 
@@ -227,7 +228,7 @@ public class ModuleAction {
 			@RequestParam(value = "sort", required = false) String sort) {
 		// 美食家默认第一页 (page)，查询数量 (size)，类型是美食家(type)，根据mark排序 升序排序 (mark)
 		// 4 代表 视美食家
-		Integer type = 4;
+		Integer type = MoKuaiLeiXinEnum.MEISHI_JIA.getType();
 		// 默认排序 mark
 		String defaultSort = "mark";
 
@@ -311,7 +312,7 @@ public class ModuleAction {
 			@RequestParam(value = "sort", required = false) String sort) {
 		// 视频默认第一页 (page)，查询数量 (size)，类型是视频(type)，根据mark排序 升序排序 (mark)
 		// 3 代表 视频
-		Integer type = 3;
+		Integer type = MoKuaiLeiXinEnum.SHIPIN.getType();
 		// 默认排序 mark
 		String defaultSort = "mark";
 
@@ -353,7 +354,7 @@ public class ModuleAction {
 			@RequestParam(value = "sort", required = false) String sort) {
 		// 美食默认第一页 (page)，查询数量 (size)，类型是美食 (type)，根据mark排序 升序排序 (mark)
 		// 2 代表 美食
-		Integer type = 2;
+		Integer type = MoKuaiLeiXinEnum.MEISHI.getType();
 		// 默认排序 mark
 		String defaultSort = "mark";
 
@@ -482,7 +483,7 @@ public class ModuleAction {
 			@RequestParam(value = "sort", required = false) String sort) {
 		// 安全模块 默认第一页 (page)，查询数量 (size)，类型是安全 (type)，根据mark排序 升序排序 (mark)
 		// 1 代表 安全模块
-		Integer type = 1;
+		Integer type = MoKuaiLeiXinEnum.SHIWU_ANQUAN.getType();
 		// 默认排序 mark
 		String defaultSort = "mark";
 		List<Safety> safetysList = safetyBiz.findSafetyList(page, size, type, defaultSort);

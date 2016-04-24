@@ -68,7 +68,7 @@
                                 	<a href="#">
                                     	<span class="label label-primary">编辑</span>
                                     </a>
-                                    <a href="javascript:;" data-href="/shipin/${shipin.id}" class="shipin-delete-${shipin.id}" title="${shipin.title}">
+                                    <a href="javascript:;" data-href="/shipin/${shipin.id}" class="entity-delete-${shipin.id}" title="${shipin.title}">
                                     	<span class="label label-danger">删除</span>
                                     </a>
                                 </td>
@@ -176,7 +176,7 @@
         </div>
       </div>
       <div class="hidden">
-    	<form class="shipin-rest" action="" method="POST">
+    	<form class="entity-rest" action="" method="POST">
     		<input type="hidden" name="_method" value="DELETE"/>
     	</form>
       </div>  
@@ -185,14 +185,4 @@
 </div>
 <!-- /.content-wrapper -->
 <%@include file="../buju/script-liebiao.jsp"%>
-<script type="text/javascript">
-	$(function() {
-		$("select[name^='size_length_']").change(function() {
-			var $href = $(this).val();
-			console.info("url:" + $href);
-			$("input[name='_method']").val("GET");
-			$(".shipin-rest").attr("action", $href).submit();
-		});
-	});
-</script>
 <%@include file="../buju/container-footer-2.jsp"%>

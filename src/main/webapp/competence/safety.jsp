@@ -68,7 +68,7 @@
                                 	<a href="#">
                                     	<span class="label label-primary">编辑</span>
                                     </a>
-                                    <a href="javascript:;" data-href="/safety/${safety.id}" class="safety-delete-${safety.id}" title="${safety.title}">
+                                    <a href="javascript:;" data-href="/safety/${safety.id}" class="entity-delete-${safety.id}" title="${safety.title}">
                                     	<span class="label label-danger">删除</span>
                                     </a>
                                 </td>
@@ -176,7 +176,7 @@
         </div>
       </div>
       <div class="hidden">
-    	<form class="safety-rest" action="" method="POST">
+    	<form class="entity-rest" action="" method="POST">
     		<input type="hidden" name="_method" value="DELETE"/>
     	</form>
       </div>  
@@ -184,16 +184,5 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
 <%@include file="../buju/script-liebiao.jsp"%>
-<script type="text/javascript">
-	$(function() {
-		$("select[name^='size_length_']").change(function() {
-			var $href = $(this).val();
-			console.info("url:" + $href);
-			$("input[name='_method']").val("GET");
-			$(".safety-rest").attr("action", $href).submit();
-		});
-	});
-</script>
 <%@include file="../buju/container-footer-2.jsp"%>

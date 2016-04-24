@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -208,91 +209,42 @@
             <div class="bd widget-site" bosszone="fin_1">
             	
                 <div id="box_famoussite_1" class="box-famoussite widget-famoussite">
-                	<span>
-                        <a class="famoussite-mainlink " href="">美团高评分外卖</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">开店销售量突破1W大关店铺</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">开店销售量突破5千大关店铺</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">0 元"起送价格" 限制</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">0 元 "配送费"</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">0元起送价+0元配送费</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">外卖三十分钟送达</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">外卖四十分钟送达</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">收藏超过500店铺</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">提供外卖电话的商家</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">美团网的店家</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">饿了么的店家</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">首单优惠（手机用户）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">减免（手机用户）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">高送餐率的商家</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">你买赠送（手机用户）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">评分高店家</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">首单优惠+减免+你买赠送</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">限时订购有优惠</a>
-                    </span>
+                	<c:forEach items="${preferentialsList}" var="preferential">
+                     <span>
+                         <a class="famoussite-mainlink " href="">${preferential.name}</a>
+                     </span>	
+                    </c:forEach>
                 </div>
                 
             </div>
         </div>
         <div id="tech" class="contentMod contentMod-height" style="margin-right: 0px;">
-            <div bosszone="techDigitab" class="hd">
+            <div class="hd">
                     <h2><a target="_blank" href="http://tech.qq.com/">食物安全</a>·<a target="_blank" href="http://gd.qq.com/food/">外卖</a></h2>
             </div>
-            <div bosszone="techDigi" class="bd">
+            <div class="bd">
                 <div class="contentLeft">
-                    <div bosszone="tech" class="imgArea">
-                        <a href="http://tech.qq.com/a/20160331/012451.htm#p=1" target="_blank">
-                            <img alt="淘宝与饿了么连夜回应\"315\"晚会曝光问题" src="/images/photo3.jpg">
-                        </a>
-                    </div>
-                    <div bosszone="tech" class="txtArea">
-                            <h3><a href="http://tech.qq.com/a/20160331/012451.htm#p=1" target="_blank">淘宝与饿了么连夜回应"315"晚会曝光问题。</a></h3>
-                    </div>
-                    <ul>
-                        <li bosszone="tech"><a href="http://tech.qq.com/a/20160331/009181.htm" target="_blank" class="">饿了么"七大举措"初见成效 多项措施已落地。</a>
-                        </li>
-                        <li bosszone="tech"><a href="http://tech.qq.com/a/20160331/011809.htm" target="_blank" class="">丰台取缔两家"饿了么"线下商户。</a>
-                        </li>
-                        <li bosszone="tech"><a href="http://tech.qq.com/a/20160331/010629.htm" target="_blank" class="qm_c_2">美团外卖被曝拖欠员工工资 官方称对方想多要钱。</a>
-                        </li>
-                        <li bosszone="digi"><a href="http://digi.tech.qq.com/a/20160331/010434.htm" target="_blank" class="">探秘美团外卖骑手：一天可送五六十单 收入可观。</a>
-                        </li>
-                    </ul>
+                	<c:forEach items="${safetiesList}" var="safetie" varStatus="index">
+                		<c:if test="${index.count==1}">
+                		 <div class="imgArea">
+	                         <a href="${safetie.url}" target="_blank">
+	                             <img alt="${safetie.title}" src="/images/upload/${safetie.img}" />
+	                         </a>
+	                     </div>
+	                     <div class="txtArea">
+	                          <h3><a href="${safetie.url}" target="_blank">${safetie.title}</a></h3>
+	                     </div>	
+                		</c:if>
+                		
+                	</c:forEach>
+                	<ul>
+                	 <c:forEach items="${safetiesList}" var="safetie" varStatus="index">
+                		 <c:if test="${index.count>1}">
+	                		 <li><a href="${safetie.url}" target="_blank" class="">${safetie.title}</a>
+	                         </li>
+                		 </c:if>
+                	 </c:forEach>
+                	</ul>
                 </div>
             </div>
         </div>
@@ -314,87 +266,11 @@
             <div class="bd widget-site" bosszone="fin_2">
             	
                 <div id="box_famoussite_2" class="box-famoussite widget-famoussite">
-                	<span>
-                        <a class="famoussite-mainlink " href="">麦多基（米饭，汉堡，小吃）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">两只小兔的简餐小铺【每日特价】送饮品</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">鲜目录寿司（东风之路店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">美丽契约(丽黎鲜花批发部)</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">米苏城堡</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">宏辉蛋糕</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">川香冒菜</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">私厨小灶</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">吃货宝典零食店</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">黄焖鸡米饭（总店）【土豆爱上鸡特价】</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">（送饮料）快乐家汉堡（高铁学院店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">1942壹玖肆贰（师院店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">迅达快餐（送荔枝果汁）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">黑潮饮店</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">胖胖饺子&简餐（送热狗）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">莫卡咖啡</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">优米客黄焖鸡米饭（特价促销）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">魔锅坊麻辣香锅</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">（特价促销）学子食府（十年老店！）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">（鸡排饭）鸡排达人</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">（送饮料）快乐家炸鸡汉堡（工学院店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">鲜目录外带寿司（雁峰店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">私厨小灶</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">四禧堂土豆粉（黄焖鸡米饭）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">鲜目录寿司（东风之路店）</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">美丽契约(丽黎鲜花批发部)</a>
-                    </span>
-                    <span>
-                    	<a class="famoussite-mainlink " href="http://www.fang.com/">川香冒菜</a>
-                    </span>
+                    <c:forEach items="${storesList}" var="store">
+                     <span>
+	                    <a class="famoussite-mainlink " href="${store.url}">${store.name}</a>
+	                 </span>
+                    </c:forEach>
                 </div>
                 
             </div>

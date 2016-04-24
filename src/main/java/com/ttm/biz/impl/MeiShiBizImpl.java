@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ttm.biz.MeiShiBiz;
 import com.ttm.dao.MeiShiDao;
 import com.ttm.dao.impl.MeiShiDaoImpl;
+import com.ttm.enums.MoKuaiLeiXinEnum;
 import com.ttm.orm.MeiShi;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
@@ -100,7 +101,7 @@ public class MeiShiBizImpl implements MeiShiBiz {
 		meishi.setCreatdId(creator);
 		meishi.setCreatdDate(creatorDate);
 		// 2，代表美食
-		meishi.setType(2);
+		meishi.setType(MoKuaiLeiXinEnum.MEISHI.getType());
 		return meishi;
 	}
 

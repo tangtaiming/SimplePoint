@@ -17,7 +17,14 @@
 				// 取消事件操作
 				$e.preventDefault();
 			}
-		}
+		},
+		
+		meiyexianshi : function ( $input, $formname ) {
+			var $href = $(this).val();
+			//console.info("url:" + $href);
+			$("input[name='" + $input + "']").val("GET");
+			$("." + $formname).attr("action", $href).submit();
+		} 
 	};
 
 	$.fn.tool = function( method ) {
