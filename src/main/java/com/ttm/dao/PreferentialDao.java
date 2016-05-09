@@ -50,5 +50,12 @@ public interface PreferentialDao {
 	 */
 	public abstract List<Preferential> findPreferentialByList(Map<String, Object> query, Map<String, Object> sort,
 			Map<String, Integer> pageing);
+	
+	/**
+	 * 删除优惠
+	 * @param preferential
+	 * @return
+	 */
+	public abstract boolean deletePreferential(Preferential preferential);
 
 }

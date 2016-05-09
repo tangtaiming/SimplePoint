@@ -21,6 +21,25 @@ public class StoreAction {
 	private ModelAndView view = new ModelAndView();
 
 	/**
+	 * 优惠多多，安全多多模块
+	 * http://127.0.0.1:8001/store?p1=reviewScores_ge_0&p2=distributionCost_eq_0&page=50&size=1&sort=desc&sortName=updateDate
+	 * 50&size=1
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "youHuiStore", params = { "p1", "p2" , "page", "size", "sort" }, method = RequestMethod.GET)
+	public ModelAndView youHuiStore(@RequestParam("p1") String p1, @RequestParam(value="p2", required=false) String p2,
+			@RequestParam("page") int page, @RequestParam("size") int size, @RequestParam("sort") String sort, @RequestParam("sortName") String sortName) {
+		// 利用一个值标识对应的优惠 根据对应的值获取相应的查询条件
+		List<Store> storesList = storeBiz.findStoreDuoTiaoJian(p1, p2, page, size, sort, sortName);
+		view.addObject("storesList", storesList);
+		view.setViewName("/competence/store");
+		return view;
+	}
+	
+	
+
+	/**
 	 * 商店 列表页面
 	 * 
 	 * @param page

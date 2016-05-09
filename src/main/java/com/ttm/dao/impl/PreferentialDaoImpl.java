@@ -39,4 +39,8 @@ public class PreferentialDaoImpl implements PreferentialDao {
 		return (Preferential) factory.findById(Preferential.class, id);
 	}
 
+	public boolean deletePreferential(Preferential preferential) {
+		return factory.delete(Preferential.class, preferential);
+	}
+
 }

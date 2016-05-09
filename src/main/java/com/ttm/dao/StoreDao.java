@@ -3,6 +3,10 @@ package com.ttm.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+
 import com.ttm.orm.Store;
 
 /**
@@ -66,5 +70,14 @@ public interface StoreDao {
 	 */
 	public abstract List<Store> findStoreByList(Map<String, Object> query, Map<String, Object> sort,
 			Map<String, Integer> pageing);
+	
+	/**
+	 * 两个条件/排序/分页查询 店铺集合
+	 * @param criteria
+	 * @param sort
+	 * @param pageing
+	 * @return
+	 */
+	public abstract List<Store> findStoreLianGeTiaoJianChaXun(List<Criterion> query, Map<String, Object> sort, Map<String, Integer> pageing);
 
 }

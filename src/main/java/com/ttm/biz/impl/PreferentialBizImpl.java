@@ -69,6 +69,7 @@ public class PreferentialBizImpl implements PreferentialBiz {
 	 */
 	private int pageRange = 5;
 
+	@Deprecated
 	public boolean saveOrUpdatePreferential(Map<String, Object> preferentialMap) {
 		if (MapUtils.isEmpty(preferentialMap)) {
 			log.info("传入参数 为空...");
@@ -129,7 +130,7 @@ public class PreferentialBizImpl implements PreferentialBiz {
 
 	public List<Preferential> findPreferentialList(Integer page, Integer size) {
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
-		Map<String, Object> sort = ServiceSorterHelper.build("id", ServiceSorterHelper.ASC);
+		Map<String, Object> sort = ServiceSorterHelper.build("id", ServiceSorterHelper.DESC);
 		List<Preferential> preferentialsList = preferentialDao.findPreferentialByList(null, sort, pageing);
 		
 		PageUtil pageUtil = PageUtil.getPageUtil();
@@ -160,7 +161,40 @@ public class PreferentialBizImpl implements PreferentialBiz {
 		return preferentialsList;
 	}
 	
+	public boolean saveOrUpdatePreferentialSimple(String name, String url) {
+		//去除左右空格判断是否为空值?
+		if (StringUtils.isEmpty(name.trim())) {
+			log.warn("name值为空.");
+			return false;
+		} 
+		if (StringUtils.isEmpty(url.trim())) {
+			log.warn("url值为空.");
+			return false;
+		}
+		
+		preferential = new Preferential();
+		preferential.setName(name);
+		preferential.setUrl(url);
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		preferential.setCreatdDate(format.format(new Date()));
+		//1  代表唐太明
+		preferential.setCreatdId(1);
+		return preferentialDao.addPreferential(preferential);
+	}
 
+	public boolean deletePreferential(Integer id) {
+		if (findPreferential(id)) {
+			log.warn(preferential.getClass().getName() + " 实体对象查询数据为空.");
+			return false;
+		}
+		
+		return preferentialDao.deletePreferential(preferential);
+	}
+
+	
+	//******************************************************************************************
+	
 	/**
 	 * id查询是否有对应的优惠数据
 	 * 	true 查询出 数据 做数据更新操作
@@ -284,5 +318,5 @@ public class PreferentialBizImpl implements PreferentialBiz {
 	public void setShowPage(List<Integer> showPage) {
 		this.showPage = showPage;
 	}
-
+	
 }

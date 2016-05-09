@@ -15,11 +15,13 @@ public class Preferential {
 	private Integer id;
 
 	private String name;
+	
+	private String url;
 
 	private Integer creatdId;
 
 	private String creatdDate;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -50,6 +52,14 @@ public class Preferential {
 
 	public void setCreatdDate(String creatdDate) {
 		this.creatdDate = creatdDate;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

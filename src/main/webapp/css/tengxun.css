@@ -50,7 +50,7 @@ p{word-wrap:break-word}
 
 /*搜搜*/
     .soso{width:1000px;height:48px;margin:0 auto;padding:23px 0 19px;}
-.soso .logo{float:left;display:inline;margin-left:160px;}
+.soso .logo{float:left;display:inline;}
 .soso .logo .qqlogo{display:block;width:134px;height:44px;background-image:url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_1x.png);background-image:-webkit-image-set(url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_1x.png) 1x,url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_2x.png) 2x);background-repeat:no-repeat;}
 .soso .search{float:left;padding:5px 0 0 42px;}
 .soso .searchTxt{float:left;width:290px;height:35px;border:1px solid #c1c4cb;border-right:0;position:relative;z-index:20;background:#fff;}

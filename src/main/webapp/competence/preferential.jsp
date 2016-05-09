@@ -25,7 +25,7 @@
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">
-							<a href="/preferential"><span class="label label-primary">编辑</span></a>
+							<a href="/preferential"><span class="label label-primary">新增</span></a>
 						</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
@@ -54,6 +54,7 @@
 							<tbody>
 								<tr>
 									<th>ID</th>
+									<th>操作</th>
 									<th>优惠名称</th>
 									<th>创建人</th>
 									<th>创建时间</th>
@@ -62,6 +63,14 @@
 								<c:forEach items="${preferentialsList}" var="preferential">
 								<tr>
 									<td>${preferential.id}</td>
+									<td>
+		                              	<a href="#">
+		                                  	<span class="label label-primary">编辑</span>
+		                                </a>
+		                                <a href="javascript:;" data-href="/preferential/${preferential.id}" class="entity-delete-${preferential.id}" title="${preferential.name}">
+		                                  	<span class="label label-danger">删除</span>
+		                                </a>
+		                            </td>
 									<td>${preferential.name}</td>
 									<td><c:if test="${preferential.creatdId==1}">唐太明</c:if></td>
 									<td>${preferential.creatdDate}</td>
@@ -152,7 +161,7 @@
         
       </div>
       <div class="hidden">
-    	<form class="preferential-rest" action="" method="POST">
+    	<form class="entity-rest" action="" method="POST">
     		<input type="hidden" name="_method" value="DELETE"/>
     	</form>
       </div>
@@ -160,15 +169,5 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-<%@include file="container-footer.jsp"%>
-<script type="text/javascript">
-	$(function() {
-		$("select[name^='size_length_']").change(function() {
-			var $href = $(this).val();
-			console.info("url:" + $href);
-			$("input[name='_method']").val("GET");
-			$(".preferential-rest").attr("action", $href).submit();
-		});
-	});
-</script>
+<%@include file="../buju/script-liebiao.jsp"%>
+<%@include file="../buju/container-footer-2.jsp"%>

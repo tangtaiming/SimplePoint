@@ -3,6 +3,7 @@ package com.ttm.action;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import com.ttm.biz.impl.ShiPinBizImpl;
 import com.ttm.biz.impl.ShuiGuoBizImpl;
 import com.ttm.biz.impl.StoreBizImpl;
 import com.ttm.enums.MoKuaiLeiXinEnum;
+import com.ttm.enums.StoreEnum;
 import com.ttm.orm.MeiShi;
 import com.ttm.orm.MeiShiJia;
 import com.ttm.orm.Preferential;
@@ -73,7 +75,7 @@ public class ModuleAction {
 	private MeiShiJiaBiz meiShiJiaBiz = new MeiShiJiaBizImpl();
 
 	private ShuiGuoBiz shuiGuoBiz = new ShuiGuoBizImpl();
-
+	
 	/**
 	 * 删除水果数据信息
 	 * @param id
@@ -535,13 +537,63 @@ public class ModuleAction {
 		view.setViewName("/competence/preferential");
 		return view;
 	}
+	
+	/**
+	 * 进入优惠新增模块
+	 * @return
+	 */
+	@RequestMapping(value = "preferential", method = RequestMethod.GET)
+	public ModelAndView preferentialCurrent() {
+		//循环获取商店属性名称
+		Map<String, Object> stromMap = new HashMap<String, Object>();
+		for (StoreEnum storeEnum : StoreEnum.values()) {
+			stromMap.put(storeEnum.getStoreName(), storeEnum.getStoreNameZh());
+		}
+		
+		view.addObject("stromMap", stromMap);
+		view.setViewName("/competence/add-preferential");
+		return view;
+	}
+	
+	/**
+	 * ----------------
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "preferential/{id}", method = RequestMethod.DELETE)
+	public String preferential(@PathVariable(value = "id") int id) {
+		if (preferentialBiz.deletePreferential(id)) {
+			logger.info("删除 preferential " + id + " 成功.");
+		} else {
+			logger.info("删除 preferential " + id + " fail.");
+		}
+		return "redirect:/preferential?page=1&size=25";
+	}
+	
+	/**
+	 * 保存优惠
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "preferential", method = RequestMethod.POST)
+	public ModelAndView preferentialCurrent(HttpServletRequest request) {
+		String url = request.getParameter("url");
+		String name = request.getParameter("name");
+		logger.info("url:" + url);
+		logger.info("name:" + name);
+		
+		preferentialBiz.saveOrUpdatePreferentialSimple(name, url);
+		view.setViewName("redirect:/preferential?page=1&size=25");
+		return view;
+	}
 
 	/**
 	 * 进入优惠编辑模块
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "preferential", method = RequestMethod.GET)
+//	@RequestMapping(value = "preferential", method = RequestMethod.GET)
+	@Deprecated
 	public ModelAndView preferential() {
 		List<Preferential> preferentialsList = preferentialBiz.findPreferentialList("id", ServiceSorterHelper.ASC);
 		view.addObject("numberList21", ((PreferentialBizImpl) preferentialBiz).fetch21());
@@ -557,7 +609,8 @@ public class ModuleAction {
 	 * @param requestJson
 	 * @return
 	 */
-	@RequestMapping(value = "preferential", method = RequestMethod.POST)
+//	@RequestMapping(value = "preferential", method = RequestMethod.POST)
+	@Deprecated
 	public String preferential(HttpServletRequest request) {
 		System.out.println(request.getParameter("requestJson"));
 		String requestJson = request.getParameter("requestJson");

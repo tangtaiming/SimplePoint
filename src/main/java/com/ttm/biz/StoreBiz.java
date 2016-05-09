@@ -65,4 +65,10 @@ public interface StoreBiz {
 	 */
 	public abstract List<Store> findStoreList(Integer page, Integer size, String storeName);
 	
+	/**
+	 * 2个条件查询商店集合信息
+	 * @return
+	 */
+	public abstract List<Store> findStoreDuoTiaoJian(String p1, String p2, int page, int size, String sort, String sortName);
+	
 }
