@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,11 +39,15 @@ import com.ttm.enums.StoreEnum;
 import com.ttm.orm.MeiShi;
 import com.ttm.orm.MeiShiJia;
 import com.ttm.orm.Preferential;
+import com.ttm.orm.PreferentialValue;
 import com.ttm.orm.Safety;
 import com.ttm.orm.ShiPin;
 import com.ttm.orm.ShuiGuo;
 import com.ttm.orm.Store;
+import com.ttm.service.ServiceResponse;
+import com.ttm.service.ServiceResponseCode;
 import com.ttm.util.Dumper;
+import com.ttm.util.Json;
 import com.ttm.util.ServiceSorterHelper;
 
 /**
@@ -57,7 +62,7 @@ import com.ttm.util.ServiceSorterHelper;
  */
 @Controller
 public class ModuleAction {
-	
+
 	private Logger logger = Logger.getLogger(ModuleAction.class);
 
 	private ModelAndView view = new ModelAndView();
@@ -78,6 +83,7 @@ public class ModuleAction {
 	
 	/**
 	 * 删除水果数据信息
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -90,9 +96,10 @@ public class ModuleAction {
 		}
 		return "redirect:/shuiguo?page=1&size=25";
 	}
-	
+
 	/**
 	 * 保存水果数据/并且上传图片
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -116,9 +123,10 @@ public class ModuleAction {
 		shuiGuoBiz.saveShuiGuo(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/shuiguo?page=1&size=25";
 	}
-	
+
 	/**
 	 * 进入水果新增页面
+	 * 
 	 * @param type
 	 * @return
 	 */
@@ -157,15 +165,16 @@ public class ModuleAction {
 		view.setViewName("/competence/shuiguo");
 		return view;
 	}
-	
+
 	/**
 	 * 删除美食家信息
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "meishijia/{id}", method = RequestMethod.DELETE)
 	public String meiShiJia(@PathVariable(value = "id") int id) {
-		if(meiShiJiaBiz.deleteMeiShiJia(id)) {
+		if (meiShiJiaBiz.deleteMeiShiJia(id)) {
 			logger.info("删除视频 " + id + "成功");
 		} else {
 			logger.info("删除视频 " + id + "失败");
@@ -244,6 +253,7 @@ public class ModuleAction {
 
 	/**
 	 * 删除视频操作
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -256,7 +266,7 @@ public class ModuleAction {
 		}
 		return "redirect:/shipin?page=1&size=25";
 	}
-	
+
 	/**
 	 * 视频数据保存 /并且上传图片
 	 * 
@@ -325,9 +335,10 @@ public class ModuleAction {
 		view.setViewName("/competence/shipin");
 		return view;
 	}
-	
+
 	/**
 	 * 删除美食数据
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -409,9 +420,10 @@ public class ModuleAction {
 		meiShiBiz.saveMeiShi(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/meishi?page=1&size=25";
 	}
-	
+
 	/**
 	 * 删除食物安全模块
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -449,7 +461,7 @@ public class ModuleAction {
 			return "redirect:/safety?type=s";
 		}
 		String img = ((SafetyBizImpl) safetyBiz).getImgPath();
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		safetyBiz.saveSafety(url, title, Integer.valueOf(mark), img, 1, format.format(new Date()));
 		return "redirect:/safety?page=1&size=25";
@@ -518,6 +530,26 @@ public class ModuleAction {
 	}
 
 	/**
+	 * 优惠模块编辑
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "preferential/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView preferential(@PathVariable(value = "id") int id) {
+		logger.info("id:" + id);
+		Preferential preferential = preferentialBiz.findPreferentialById(id);
+		List<PreferentialValue> mList = ((PreferentialBizImpl) preferentialBiz).getPreferentialValuesList();
+		if (preferential == null) {
+			return view;
+		}
+		
+		view.addObject("mList", Json.toJson(mList));
+		view.addObject("preferential", preferential);
+		view.setViewName("/competence/add-preferential");
+		return view;
+	}
+
+	/**
 	 * 优惠模块列表
 	 * 
 	 * @param page
@@ -537,31 +569,34 @@ public class ModuleAction {
 		view.setViewName("/competence/preferential");
 		return view;
 	}
-	
+
 	/**
 	 * 进入优惠新增模块
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "preferential", method = RequestMethod.GET)
 	public ModelAndView preferentialCurrent() {
-		//循环获取商店属性名称
+		// 循环获取商店属性名称
 		Map<String, Object> stromMap = new HashMap<String, Object>();
 		for (StoreEnum storeEnum : StoreEnum.values()) {
 			stromMap.put(storeEnum.getStoreName(), storeEnum.getStoreNameZh());
 		}
-		
+
+		view.clear();
 		view.addObject("stromMap", stromMap);
 		view.setViewName("/competence/add-preferential");
 		return view;
 	}
-	
+
 	/**
-	 * ----------------
+	 * 删除优惠
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "preferential/{id}", method = RequestMethod.DELETE)
-	public String preferential(@PathVariable(value = "id") int id) {
+	public String delete(@PathVariable(value = "id") int id) {
 		if (preferentialBiz.deletePreferential(id)) {
 			logger.info("删除 preferential " + id + " 成功.");
 		} else {
@@ -569,21 +604,29 @@ public class ModuleAction {
 		}
 		return "redirect:/preferential?page=1&size=25";
 	}
-	
+
 	/**
 	 * 保存优惠
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "preferential", method = RequestMethod.POST)
-	public ModelAndView preferentialCurrent(HttpServletRequest request) {
-		String url = request.getParameter("url");
-		String name = request.getParameter("name");
-		logger.info("url:" + url);
-		logger.info("name:" + name);
-		
-		preferentialBiz.saveOrUpdatePreferentialSimple(name, url);
-		view.setViewName("redirect:/preferential?page=1&size=25");
+	public ModelAndView preferentialCurrent(@RequestBody Map<String, Object> stringJson) {
+		Dumper.dump(stringJson);
+		System.out.println("^^^^^^^^^^^^^^^" + stringJson.toString());
+		ServiceResponse response = new ServiceResponse();
+		if (((PreferentialBizImpl) preferentialBiz).saveOrUpdatePreferentialCurrent(stringJson)) {
+			response.setCode(ServiceResponseCode.SUCCESS);
+			response.setData("/preferential?page=1&size=25");
+			response.setMsg("保存数据成功.");
+		} else {
+			response.setCode(ServiceResponseCode.ERROR);
+			response.setData("");
+			response.setMsg("保存数据失败!");
+		}
+		view.addObject("requestJson", Json.toJson(response));
+		view.setViewName("/competence/success");
 		return view;
 	}
 
@@ -592,7 +635,7 @@ public class ModuleAction {
 	 * 
 	 * @return
 	 */
-//	@RequestMapping(value = "preferential", method = RequestMethod.GET)
+	// @RequestMapping(value = "preferential", method = RequestMethod.GET)
 	@Deprecated
 	public ModelAndView preferential() {
 		List<Preferential> preferentialsList = preferentialBiz.findPreferentialList("id", ServiceSorterHelper.ASC);
@@ -609,7 +652,7 @@ public class ModuleAction {
 	 * @param requestJson
 	 * @return
 	 */
-//	@RequestMapping(value = "preferential", method = RequestMethod.POST)
+	// @RequestMapping(value = "preferential", method = RequestMethod.POST)
 	@Deprecated
 	public String preferential(HttpServletRequest request) {
 		System.out.println(request.getParameter("requestJson"));

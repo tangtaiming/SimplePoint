@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.dialect.Sybase11Dialect;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,8 +28,11 @@ import com.ttm.biz.PreferentialBiz;
 import com.ttm.dao.PreferentialDao;
 import com.ttm.dao.impl.PreferentialDaoImpl;
 import com.ttm.orm.Preferential;
+import com.ttm.orm.PreferentialValue;
+import com.ttm.util.Dumper;
 import com.ttm.util.Page;
 import com.ttm.util.PageUtil;
+import com.ttm.util.ParamsUtils;
 import com.ttm.util.ServicePaginationHelper;
 import com.ttm.util.ServiceSorterHelper;
 /**
@@ -37,6 +42,7 @@ import com.ttm.util.ServiceSorterHelper;
  * @date 2016年4月2日 下午11:19:08
  * @version 1.0
  */
+@SuppressWarnings("unchecked")
 public class PreferentialBizImpl implements PreferentialBiz {
 	
 	private static final Logger log = Logger.getLogger(PreferentialBizImpl.class);
@@ -68,6 +74,130 @@ public class PreferentialBizImpl implements PreferentialBiz {
 	 * 前后显示数量
 	 */
 	private int pageRange = 5;
+	
+	private List<PreferentialValue> preferentialValuesList;
+	
+	public boolean saveOrUpdatePreferentialCurrent(Map<String, Object> preferentialMap) {
+//		Map<String, Object> mList = (Map<String, Object>) preferentialMap.get("requestJson");
+		String name = (String) preferentialMap.get("name");
+		String url = (String) preferentialMap.get("url");
+		
+		preferential = new Preferential();
+		if (preferentialMap.get("id") == null) {
+			//1 代表唐太泰明
+			preferential.setCreatdId(1);
+			//获取系统当前时间
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String creatdDate = format.format(new Date());
+			preferential.setCreatdDate(creatdDate);
+			preferential.setName(name);
+			preferential.setUrl(ParamsUtils.URL_START + url + ParamsUtils.URL_END);
+			if (preferentialDao.addPreferential(preferential)) {
+				log.info("preferential 保存数据成功...");
+			} else {
+				log.error("preferential 保存数据失败...");
+			}
+		} else {
+			
+		}
+		
+		
+//		if (mList.size() <= 1) {
+//			Map<String, Object> mValueMap = mList.get(0);
+//			String firstKey = "0";
+//			Map<String, Object> firstMap = (Map<String, Object>) mValueMap.get(firstKey);
+//			String name = (String) firstMap.get("name");
+//			
+//			//循环获取
+//			Integer number = 0;
+//			String mParams = "";
+//			for (String mKey : mValueMap.keySet()) {
+//				if (mKey.equals(firstKey)) {
+//					continue;
+//				}
+//				
+//				Map<String, Object> mMap = (Map<String, Object>) mValueMap.get(mKey);
+//				String attName = (String) mMap.get("fix");
+//				String symbol = (String) mMap.get("sign");
+//				String attValue = "";
+//				String p = "&p" + (number + 1) + "=";
+//				if (symbol.equals("gt") || symbol.equals("eq")) {
+//					attValue = (String) mMap.get("value");
+//					mParams += p + attName + "_" + symbol + "_" + attValue;
+//				} else {
+//					mParams += p + attName + "_" + symbol;
+//				}
+//				
+//	 			number++;
+//			}
+//			log.info("params:" + mParams);
+//			mParams += ParamsUtils.URL_END;
+//			mParams = ParamsUtils.URL_START + StringUtils.removeStart(mParams, "&");
+//			preferential = new Preferential();
+//			preferential.setUrl(mParams);
+//			preferential.setName(name);
+//			//1 代表唐太泰明
+//			preferential.setCreatdId(1);
+//			//获取系统当前时间
+//			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			String creatdDate = format.format(new Date());
+//			preferential.setCreatdDate(creatdDate);
+//			if (preferentialDao.addPreferential(preferential)) {
+//				log.info("preferential 保存数据成功...");
+//			} else {
+//				log.error("preferential 保存数据失败...");
+//			}
+//			
+//		} else {
+//			Map<String, Object> mId = mList.get(0);
+//			String id = (String) mId.get("id");
+//			
+//			Preferential preferential = preferentialDao.findPreferentialById(Integer.valueOf(id));
+//			if (preferential == null) {
+//				System.out.println("没有查询出优惠数据.");
+//				return false;
+//			}
+//			
+//			Map<String, Object> mValueMap = mList.get(1);
+//			String firstKey = "0";
+//			Map<String, Object> firstMap = (Map<String, Object>) mValueMap.get(firstKey);
+//			String name = (String) firstMap.get("name");
+//			
+//			//循环获取
+//			Integer number = 0;
+//			String mParams = "";
+//			for (String mKey : mValueMap.keySet()) {
+//				if (mKey.equals(firstKey)) {
+//					continue;
+//				}
+//				
+//				Map<String, Object> mMap = (Map<String, Object>) mValueMap.get(mKey);
+//				String attName = (String) mMap.get("fix");
+//				String symbol = (String) mMap.get("sign");
+//				String attValue = "";
+//				String p = "&p" + (number + 1) + "=";
+//				if (!symbol.equals("not")) {
+//					attValue = (String) mMap.get("value");
+//					mParams += p + attName + "_" + symbol + "_" + attValue;
+//				} else {
+//					mParams += p + attName + "_" + symbol;
+//				}
+//				
+//	 			number++;
+//			}
+//			log.info("params:" + mParams);
+//			mParams += ParamsUtils.URL_END;
+//			mParams = ParamsUtils.URL_START + StringUtils.removeStart(mParams, "&");
+//			preferential.setUrl(mParams);
+//			preferential.setName(name);
+//			if (preferentialDao.updatePreferential(preferential)) {
+//				log.info("preferential 修改数据成功...");
+//			} else {
+//				log.error("preferential 修改数据失败...");
+//			}
+//		}
+		return true;
+	}
 
 	@Deprecated
 	public boolean saveOrUpdatePreferential(Map<String, Object> preferentialMap) {
@@ -110,7 +240,6 @@ public class PreferentialBizImpl implements PreferentialBiz {
 		return true;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Map<String, Object> parseRequestParams(String requestJson) {
 		Map<String, Object> tempMap = new HashMap<String, Object>();
 		ObjectMapper om = new ObjectMapper();
@@ -154,7 +283,7 @@ public class PreferentialBizImpl implements PreferentialBiz {
 
 	public List<Preferential> findPreferentialList(String sortName, String sortValue) {
 		Map<String, Object> sort = ServiceSorterHelper.build(sortName, sortValue);
-		List<Preferential> preferentialsList = preferentialDao.findPreferentialByList(null, sort, null);
+		List<Preferential> preferentialsList = preferentialDao.findPreferentialByList(null, sort, ServicePaginationHelper.build(21, 1));
 		if (CollectionUtils.isNotEmpty(preferentialsList)) {
 			log.info("排序查询出数据...");
 		}
@@ -191,9 +320,49 @@ public class PreferentialBizImpl implements PreferentialBiz {
 		
 		return preferentialDao.deletePreferential(preferential);
 	}
-
+	
+	public boolean updatePreferential(Preferential preferential) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public Preferential findPreferentialById(Integer id) {
+		preferential = preferentialDao.findPreferentialById(id);
+		preferentialValuesList = parseUrl(preferential.getUrl());
+		return preferential;
+	}
+	
 	
 	//******************************************************************************************
+	
+	/**
+	 * 解析url 获取参数
+	 * @param url
+	 * @return
+	 */
+	public List<PreferentialValue> parseUrl(String url) {
+		List<PreferentialValue> mList = new ArrayList<>();
+		String mUrl = url;
+		mUrl = StringUtils.removeStart(mUrl, ParamsUtils.URL_START);
+		mUrl = StringUtils.removeEnd(mUrl, ParamsUtils.URL_END);
+		String[] params = StringUtils.split(mUrl, "&");
+		for (int x = 0; x < params.length; x++) {
+			PreferentialValue pMap = new PreferentialValue();
+			String mP = params[x];
+			String removeP = "p" + (x + 1) + "=";
+			if (StringUtils.contains(mP, removeP)) {
+				mP = StringUtils.remove(mP, removeP);
+			}
+			String[] rowP = StringUtils.split(mP, "_");
+			pMap.setName(rowP[0]);
+			pMap.setSign(rowP[1]);
+			if (rowP.length > 2) {
+				pMap.setValue(Double.valueOf(rowP[2]));
+			}
+			mList.add(pMap);
+		}
+		return mList;
+	}
 	
 	/**
 	 * id查询是否有对应的优惠数据
@@ -318,5 +487,13 @@ public class PreferentialBizImpl implements PreferentialBiz {
 	public void setShowPage(List<Integer> showPage) {
 		this.showPage = showPage;
 	}
-	
+
+	public List<PreferentialValue> getPreferentialValuesList() {
+		return preferentialValuesList;
+	}
+
+	public void setPreferentialValuesList(List<PreferentialValue> preferentialValuesList) {
+		this.preferentialValuesList = preferentialValuesList;
+	}
+
 }

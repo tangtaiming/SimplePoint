@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,6 +22,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.springframework.beans.propertyeditors.ZoneIdEditor;
 
+import com.ttm.orm.School;
 import com.ttm.orm.Store;
 import com.ttm.util.Dumper;
 
@@ -48,6 +51,8 @@ public class MeiTuanReptile implements PageProcessor {
 	private List<Map<String, Object>> listsMap = new ArrayList<Map<String, Object>>();
 
 	private List<Store> storesList = new ArrayList<Store>();
+	
+	private School schoolId;
 
 	/**
 	 * 获取真实的url
@@ -243,11 +248,40 @@ public class MeiTuanReptile implements PageProcessor {
 
 		// 达到就送
 		getPrivilege("icon i-free-gift", "3.没有赠送优惠...", sortDetail, "give", document);
+		
+		//外卖店招聘信息
+		int recruitment = 0;
+		Elements recruitmentEle = document.getElementsByAttributeValue("class", "widget broadcaster");
+		if (!recruitmentEle.isEmpty()) {
+			Elements bRecruitmentEle = recruitmentEle.get(0).getElementsByAttributeValue("class", "content ct-deepgrey");
+			Elements cRecruitmentEle = bRecruitmentEle.get(0).children();
+			String recruitmentele = cRecruitmentEle.get(1).html();
+			
+			recruitment = getRecruitment(recruitmentele);
+		} else {
+			System.out.println("没有公告");
+		}
+		
+		sortDetail.put("recruitment", recruitment);
+		//Elements bRecruitmentEle = recruitmentEle.get(0).getElementsByAttributeValue("class", "content ct-deepgrey");
+		//String recruitment = bRecruitmentEle.get(0).text().trim();
+
 		System.out.println(sortDetail.toString());
 		parseStore(sortDetail, url, (String) sortDetail.get("firstOrder"), (String) sortDetail.get("minusExempt"),
 				(String) sortDetail.get("give"));
 		listsMap.add(sortDetail);
 		return sortDetail;
+	}
+	
+	public int getRecruitment(String text) {
+		String exista = "现招";
+		String existb = "招聘";
+		
+		if (StringUtils.contains(text, exista) || StringUtils.contains(text, existb)) {
+			return 1;	//有
+		} else {
+			return 0;	//没有
+		}
 	}
 
 	public void getPrivilege(String classValue, String emptyName, Map<String, Object> sortDetail, String key,
@@ -307,6 +341,7 @@ public class MeiTuanReptile implements PageProcessor {
 		store.setGive(give);
 		//1 代表 此家点正在运营
 		store.setStatus(1);
+		store.setSchoolId(schoolId);
 		storesList.add(store);
 		System.out.println("^^^^^^^^^^^^^爬取 " + storesList.size() + " 条数据");
 //		Dumper.dump(store);
@@ -362,6 +397,14 @@ public class MeiTuanReptile implements PageProcessor {
 
 	public void setStoresList(List<Store> storesList) {
 		this.storesList = storesList;
+	}
+
+	public School getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(School schoolId) {
+		this.schoolId = schoolId;
 	}
 
 }

@@ -80,4 +80,21 @@ public interface StoreDao {
 	 */
 	public abstract List<Store> findStoreLianGeTiaoJianChaXun(List<Criterion> query, Map<String, Object> sort, Map<String, Integer> pageing);
 
+	/**
+	 * 
+	 * @param params
+	 * @param sort
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public abstract List<Store> findStoreListMore(String params, String sort, Integer page, Integer size);
+	
+	/**
+	 * 搜索
+	 * @param sea
+	 * @return
+	 */
+	public abstract List<Store> findStoreSearch(String sea, Integer schoolId, Integer page, Integer size);
+	
 }

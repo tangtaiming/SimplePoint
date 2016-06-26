@@ -90,5 +90,19 @@ public interface PreferentialBiz {
 	 * @return
 	 */
 	public abstract boolean deletePreferential(Integer id);
+	
+	/**
+	 * 修改 优惠
+	 * @param preferential
+	 * @return
+	 */
+	public abstract boolean updatePreferential(Preferential preferential);
+	
+	/**
+	 * ID查询优惠
+	 * @param id
+	 * @return
+	 */
+	public abstract Preferential findPreferentialById(Integer id);
 
 }

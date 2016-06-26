@@ -126,6 +126,11 @@ public class Store {
 	 * 学校
 	 */
 	private School schoolId;
+	
+	/**
+	 * 招聘信息
+	 */
+	private int recruitment;
 
 	public Integer getId() {
 		return id;
@@ -317,6 +322,14 @@ public class Store {
 
 	public void setSchoolId(School schoolId) {
 		this.schoolId = schoolId;
+	}
+
+	public int getRecruitment() {
+		return recruitment;
+	}
+
+	public void setRecruitment(int recruitment) {
+		this.recruitment = recruitment;
 	}
 	
 }

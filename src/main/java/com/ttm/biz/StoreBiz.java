@@ -71,4 +71,30 @@ public interface StoreBiz {
 	 */
 	public abstract List<Store> findStoreDuoTiaoJian(String p1, String p2, int page, int size, String sort, String sortName);
 	
+	/**
+	 * 学校Id查询优惠数据
+	 * @param schoolId
+	 * @param page
+	 * @param size
+	 * @param storeName
+	 * @return
+	 */
+	public abstract List<Store> findStoreList(Integer schoolId, Integer page, Integer size, String storeName);
+	
+	/**
+	 * 主键查询 店铺信息
+	 * @param id
+	 * @return
+	 */
+	public abstract Store findById(Integer id);
+	
+	/**
+	 * 分页搜索店铺
+	 * @param sea
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public abstract List<Store> search(String sea, Integer schoolId, Integer page, Integer size);
+	
 }

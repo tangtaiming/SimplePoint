@@ -6,7 +6,7 @@ public class MeiTuanDemo {
 
 	public static void main(String[] args) {
 		MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
-		factory.startMeituan("http://waimai.meituan.com/home/wsb0uqcxp0r9");
+		factory.startMeituan("http://waimai.meituan.com/home/wsb0uqe32sz6");
 	}
 	
 }

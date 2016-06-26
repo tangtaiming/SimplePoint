@@ -81,6 +81,10 @@ public class SchoolBizImpl implements SchoolBiz {
 		return 1;
 	}
 	
+	public School findSchoolById(Integer id) {
+		return schoolDao.findSchoolById(id);
+	}
+	
 	/**
 	 * 根据对象对应字段查询数据
 	 * @param String sortName

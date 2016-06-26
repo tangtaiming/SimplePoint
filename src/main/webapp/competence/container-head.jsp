@@ -57,7 +57,8 @@ desired effect
 -->
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
+  
+  <%@include file="prompt.jsp" %>
   <%-- 头部部分  --%>
   <%@include file="head.jsp" %> 
   <%-- 菜单显示部分  --%>

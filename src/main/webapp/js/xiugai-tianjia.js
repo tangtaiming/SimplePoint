@@ -24,7 +24,7 @@
 			//console.info("url:" + $href);
 			$("input[name='" + $input + "']").val("GET");
 			$("." + $formname).attr("action", $href).submit();
-		} 
+		}
 	};
 
 	$.fn.tool = function( method ) {

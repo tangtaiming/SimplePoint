@@ -52,6 +52,8 @@
                               <th>操作</th>
                               
                               <th width="250">店铺ID</th>
+                              <th>修改时间</th>
+                              <th>兼职</th>
                               <th>学校</th>
                               <th width="550">店名</th>
                               <th>评分</th>
@@ -77,7 +79,6 @@
                               
                               <th>创建人</th>
                               <th>创建时间</th>
-                              <th>修改时间</th>
                           </tr>
                           <c:forEach items="${storesList}" var="store">
                           <tr>
@@ -94,6 +95,13 @@
                               </td>
                               
                               <td>${store.storeId}</td>
+                              <td>
+                              	${store.updateDate}
+                              </td>
+                              <td>
+                              	<c:if test="${store.recruitment==1}">有</c:if>
+                              	<c:if test="${store.recruitment==0}">没有</c:if>
+                              </td>
                               <td>
                               	${store.schoolId.name}
                               </td>
@@ -153,9 +161,6 @@
                               </td>
                               <td>
                               	${store.creatdDate}
-                              </td>
-                              <td>
-                              	${store.updateDate}
                               </td>
                           </tr><!-- 一条数据结束 -->
                           </c:forEach>

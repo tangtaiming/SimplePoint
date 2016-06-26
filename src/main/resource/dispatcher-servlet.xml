@@ -12,17 +12,16 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
 	<mvc:default-servlet-handler />
+	
+	<!-- 自定义拦截器 -->
+	<mvc:interceptors>
+		<bean name="adminInter" class="com.ttm.interceptors.AdminInterceptors" />	    
+	</mvc:interceptors>
 
 	<!-- 扫描包 -->
 	<context:component-scan base-package="com.ttm.action" />
 
-	<mvc:annotation-driven>
-		<mvc:message-converters register-defaults="true">
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+	<mvc:annotation-driven />
 
 	<!-- 多部分文件上传 -->
 	<bean id="multipartResolver"
@@ -31,7 +30,7 @@
 		<property name="maxInMemorySize" value="4096" />
 		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
-
+	
 
 	<!-- <mvc:annotation-driven> -->
 	<!-- <mvc:message-converters> -->

@@ -30,6 +30,7 @@
         <property name ="creatdId" type="int"></property>
         <property name ="creatdDate" type="string"></property>
         <property name ="updateDate" type="string"></property>
+        <property name ="recruitment" type="int"></property>
 		
         <many-to-one name="schoolId" class="com.ttm.orm.School" column="schoolId" lazy="false" />
     </class > 

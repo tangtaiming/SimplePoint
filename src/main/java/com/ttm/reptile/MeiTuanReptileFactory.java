@@ -2,6 +2,7 @@ package com.ttm.reptile;
 
 import java.util.List;
 
+import com.ttm.orm.School;
 import com.ttm.orm.Store;
 
 import us.codecraft.webmagic.Spider;
@@ -26,5 +27,19 @@ public class MeiTuanReptileFactory {
 		Spider.create(meiTuanReptile).addUrl(MEI_TUAN).thread(3).run();
 		return meiTuanReptile.getStoresList();
 	}
+	
+	/**
+	 * 开启一个美团爬虫爬取对应网址的数据
+	 * @param url
+	 * @param school
+	 * @return
+	 */
+	public List<Store> startMeituan(String url, School school) {
+		MeiTuanReptile meiTuanReptile = new MeiTuanReptile();
+		meiTuanReptile.setReal(url);
+		meiTuanReptile.setSchoolId(school);
+		Spider.create(meiTuanReptile).addUrl(MEI_TUAN).thread(3).run();
+		return meiTuanReptile.getStoresList();
+	} 
 	
 }

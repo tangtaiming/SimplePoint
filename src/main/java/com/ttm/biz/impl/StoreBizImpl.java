@@ -66,9 +66,53 @@ public class StoreBizImpl implements StoreBiz {
 	 * 前后显示数量
 	 */
 	private int pageRange = 5;
+	
+//	@SuppressWarnings("unchecked")
+//	public boolean saveOrUpdateStore(Map<String, Object> preferentialMap) {
+//		String firstKey = "0";
+//		Map<String, Object> firstMap = (Map<String, Object>) preferentialMap.get(firstKey);
+//		String name = (String) firstMap.get("name");
+//		
+//		//循环获取
+//		StringBuffer params = new StringBuffer();
+//		Integer number = 0;
+//		for (String mKey : preferentialMap.keySet()) {
+//			if (mKey.equals(firstKey)) {
+//				continue;
+//			}
+//			
+//			Map<String, Object> mMap = (Map<String, Object>) preferentialMap.get(mKey);
+//			String attName = (String) mMap.get("fix");
+//			String symbol = (String) mMap.get("sign");
+//			String attValue = "";
+//			if (!symbol.equals("not")) {
+//				attValue = (String) mMap.get("value");
+//			}
+//			
+//			if (symbol.equals("gt")) {
+//				params.append(attName);
+//				params.append(" > ");
+//				params.append(attValue);
+//			} else if (symbol.equals("not")) {
+//				params.append(attName);
+//				params.append(" is not null ");
+//			}
+//			
+//			if (preferentialMap.size() >= number) {
+//				params.append(" and ");
+//			}
+// 			number++;
+//		}
+//		String sort = "updateDate";
+//		pageNumber = 0;
+//		size = 50;
+//		storeDao.findStoreListMore(params.toString(), sort, pageNumber, size);
+//		return true;
+//	}
+	
 
 	public boolean saveStore(Store store, School schoolId, Integer sortTypeId) {
-		Store lastStore = findStoreById(store.getStoreId());
+		Store lastStore = findStoreById(store.getStoreId(), schoolId.getId());
 		boolean isFind = (lastStore != null ? true : false);
 		if (isFind) {
 			// reviewScores, salesQuantity, salesAllQuantity, sendThePrice,
@@ -84,6 +128,7 @@ public class StoreBizImpl implements StoreBiz {
 			lastStore.setFirstOrder(store.getFirstOrder());
 			lastStore.setMinusExempt(store.getMinusExempt());
 			lastStore.setGive(store.getGive());
+			lastStore.setRecruitment(store.getRecruitment());
 
 			// 修改时间
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -95,21 +140,39 @@ public class StoreBizImpl implements StoreBiz {
 			if (store.getSalesQuantity() != 0) {
 				lastStore.setSalesQuantity(store.getSalesQuantity());
 			}
-			isFind = storeDao.updateStore(lastStore);
-			System.out.println("update^^^^^^^^^^^^^^^^^^^^^^" + isFind);
+			
+			if (lastStore.getSchoolId().getId() != schoolId.getId()) {
+				isFind = extractSaveStore(store, schoolId, sortTypeId);
+			} else {
+				isFind = storeDao.updateStore(lastStore);
+				System.out.println("update^^^^^^^^^^^^^^^^^^^^^^" + isFind);
+			}
 		} else {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			TimeZone zon = TimeZone.getTimeZone("Asia/Shanghai");
-			Calendar calendar = Calendar.getInstance(zon);
-			String creatdDate = format.format(calendar.getTime());
-			store.setCreatdDate(creatdDate);
-			// 0 代表爬虫 系统
-			store.setCreatdId(0);
-			store.setSortTypeId(sortTypeId);
-			store.setSchoolId(schoolId);
-			isFind = storeDao.saveStore(store);
-			System.out.println("save^^^^^^^^^^^^^^^^^^^^^^" + isFind);
+			isFind = extractSaveStore(store, schoolId, sortTypeId);
 		}
+		return isFind;
+	}
+
+	/**
+	 * 保存数据
+	 * @param store
+	 * @param schoolId
+	 * @param sortTypeId
+	 * @return
+	 */
+	private boolean extractSaveStore(Store store, School schoolId, Integer sortTypeId) {
+		boolean isFind;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		TimeZone zon = TimeZone.getTimeZone("Asia/Shanghai");
+		Calendar calendar = Calendar.getInstance(zon);
+		String creatdDate = format.format(calendar.getTime());
+		store.setCreatdDate(creatdDate);
+		// 0 代表爬虫 系统
+		store.setCreatdId(0);
+		store.setSortTypeId(sortTypeId);
+		store.setSchoolId(schoolId);
+		isFind = storeDao.saveStore(store);
+		System.out.println("save^^^^^^^^^^^^^^^^^^^^^^" + isFind);
 		return isFind;
 	}
 
@@ -125,12 +188,13 @@ public class StoreBizImpl implements StoreBiz {
 		return false;
 	}
 
-	private Store findStoreById(Integer storeId) {
+	private Store findStoreById(Integer storeId, Integer schoolId) {
 		Map<String, Object> query = new HashMap<String, Object>();
 		ServiceQueryHelper.and(query, "storeId", storeId);
+		ServiceQueryHelper.and(query, "schoolId.id", schoolId);
 		return storeDao.findStoreById(query);
 	}
-
+	
 	public Integer countReptileNumber() {
 		List<Store> storesList = storeDao.findStoreByList(null, null, null);
 		if (CollectionUtils.isNotEmpty(storesList)) {
@@ -165,10 +229,18 @@ public class StoreBizImpl implements StoreBiz {
 		}
 		return storesList;
 	}
-	
-	public static void main(String[] args) {
-		
+
+	public List<Store> search(String sea, Integer schoolId, Integer page, Integer size) {
+		page = (page - 1) * size;
+		List<Store> storeList = storeDao.findStoreSearch(sea, schoolId, page, size);
+		if (CollectionUtils.isEmpty(storeList)) {
+			log.warn("没有查询出数据..");
+		}
+		return storeList;
 	}
+
+	
+	/*******************************************************************************************************/
 
 	public List<Store> findStoreDuoTiaoJian(String p1, String p2, int page, int size, String sort, String sortName) {
 		List<Criterion> criterionsList = new ArrayList<Criterion>();
@@ -193,6 +265,23 @@ public class StoreBizImpl implements StoreBiz {
 		return storesList;
 	}
 	
+	public List<Store> findStoreList(Integer schoolId, Integer page, Integer size, String storeName) {
+		Map<String, Object> query = new HashMap<String, Object>();
+		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
+		Map<String, Object> sort = ServiceSorterHelper.build(storeName, ServiceSorterHelper.ASC);
+		ServiceQueryHelper.and(query, "schoolId.id", schoolId);
+		
+		List<Store> storesList = storeDao.findStoreByList(query, sort, pageing);
+		if (CollectionUtils.isEmpty(storesList)) {
+			log.warn("查询数据为空.");
+		}
+		return storesList;
+	}
+	
+	public Store findById(Integer id) {
+		return storeDao.findStoreById(id);
+	}
+	
 	// *************************************其他方法**************************************
 	private Criterion setQuery(String params) throws Exception {
 		if (StringUtils.isEmpty(params)) {
@@ -210,7 +299,6 @@ public class StoreBizImpl implements StoreBiz {
 			//查询参数
 			paramValue = p[2];
 		}
-		
 
 		boolean isName = false;
 		for (StoreEnum se : StoreEnum.values()) {
@@ -233,6 +321,11 @@ public class StoreBizImpl implements StoreBiz {
 				return Restrictions.eq(paramName, Integer.valueOf(paramValue));
 			}
 		} else if (op.equals("ge")) {
+			//reviewScores
+			if (paramName.equals("reviewScores")) {
+				return Restrictions.ge(paramName, Double.valueOf(paramValue));
+			}
+			
 			if (paramValue.contains(".")) {
 				return Restrictions.ge(paramName, Double.valueOf(paramValue));
 			} else {
@@ -284,5 +377,5 @@ public class StoreBizImpl implements StoreBiz {
 	public void setSize(int size) {
 		this.size = size;
 	}
-
+	
 }

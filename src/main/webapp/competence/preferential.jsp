@@ -64,7 +64,7 @@
 								<tr>
 									<td>${preferential.id}</td>
 									<td>
-		                              	<a href="#">
+		                              	<a href="/preferential/edit/${preferential.id}">
 		                                  	<span class="label label-primary">编辑</span>
 		                                </a>
 		                                <a href="javascript:;" data-href="/preferential/${preferential.id}" class="entity-delete-${preferential.id}" title="${preferential.name}">

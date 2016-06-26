@@ -24,7 +24,7 @@
     	<div class="col-xs-12">
       	<div class="box">
           	<div class="box-header">
-                  <h3 class="box-title"><a href="add-reptile.html"><span class="label label-primary">新增</span></a></h3>
+                  <h3 class="box-title"><a href="/reptile"><span class="label label-primary">新增</span></a></h3>
                   <div class="box-tools">
                   	<div class="input-group input-group-sm" style="width: 150px;">
                       	<input class="form-control pull-right" type="text" placeholder="Search" name="table_search">

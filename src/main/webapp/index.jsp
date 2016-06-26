@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>简单点</title>
-
-<link href="/css/tengxun.css" rel="stylesheet" type="text/css"  />
+<link href="/css/bootstrap.css?v=${code}" rel="stylesheet" type="text/css"  />
+<link href="/css/tengxun.css?v=${code}" rel="stylesheet" type="text/css"  />
 <style type="text/css">
 	.width-lg .widget-site {
 		width: 660px;
@@ -39,6 +39,34 @@
 	.contentMod.contentMod-height {
 		height:243px;		
 	}
+	.span_1{
+		background:#15be74;
+		padding:2.9em 0;
+	}
+	.logo {
+		display:block;
+		text-align:center;	
+	}
+	.row_2{
+		background: #fff;
+		padding: 34px;
+	}
+	.search{
+		float: left;
+		width:100%;
+		margin-right: 6%;
+	}
+	.search input[type="text"] {
+		padding:15px;
+		outline: none;
+		color:#B6B2AE;
+		background:#fff;
+		border:1px solid #f8d5d1;
+		width:85%;
+		line-height: 1.5em;
+		font: 500 13px/13px 'Raleway', sans-serif;
+		-webkit-appearance: none;
+	}
 </style>
 </head>
 
@@ -46,12 +74,13 @@
 
 <!--logo+搜索 开始-->
 <div class="soso" id="soso">
-	<div class="logo" id="tencentlogo" bosszone="logo">
-		<h1>
-			<a href="http://www.qq.com/" class="qqlogo">
-				<span class="undis">腾讯网</span>
-			</a>
-		</h1>
+	<div class="header_bootm">
+		<div class="col-sm-12 span_1">
+		  <div class="logo">
+			<a href="index.html"><img src="/images/logo.png" alt="" /></a>
+		  </div>
+		</div>
+		<div class="clearfix"></div>
 	</div>
 </div>
 <!--logo+搜索 结束-->
@@ -64,14 +93,16 @@
     	<div id="finance" class="contentMod contentModBig contentMod-height" style="margin-right: 20px;">
         	<div class="hd">
 				<h2>
-                	<a href="http://finance.qq.com/" target="_blank">优惠多多，安全多多</a> 
+                	<a href="http://finance.qq.com/" target="_blank">电话订餐/催单电话</a> 
                 </h2>
 			</div>
             <div class="bd widget-site">
                <div id="box_famoussite_1" class="box-famoussite widget-famoussite">
+                   <c:forEach items="${schoolsList}" var="school">
                    <span>
-                      <a class="famoussite-mainlink" target="_blank"  href="/">美团高评分外卖</a>
-                   </span>	
+                      <a class="famoussite-mainlink" target="_blank"  href="/phone/${school.id}?page=1&size=50&storeName=updateDate">${school.name}</a>
+                   </span>
+                   </c:forEach>	
                </div>
             </div>
         </div>

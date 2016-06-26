@@ -51,4 +51,11 @@ public interface SchoolBiz {
 	 */
 	public abstract List<School> findSchoolList(String sortName, String sortValue);
 	
+	/**
+	 * id 查询学校信息
+	 * @param id
+	 * @return
+	 */
+	public abstract School findSchoolById(Integer id);
+	
 }

@@ -1,8 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
 body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
-body{font:12px "宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%}
-a{color:#172c45;text-decoration:none}
+body{font:12px "宋体","Arial Narrow",HELVETICA;-webkit-text-size-adjust:100%;font-family: 'Raleway', sans-serif;font-size: 100%;}
+a{color:#000000;text-decoration:none}
 a:hover{color:#cd0200;text-decoration:underline}
 em{font-style:normal}
 li{list-style:none}
@@ -23,7 +23,7 @@ p{word-wrap:break-word}
 .fn{font-weight:bold;}
 .layout{width:1000px;margin:0 auto;}
 .leftArea{width:660px;float:left;}
-.rightArea{width:318px;border-top:1px solid #6daaea;background:#fff;float:right;}
+.rightArea{width:318px;border-top:1px solid #15be74;background:#fff;float:right;}
 .mt8{margin-top:8px}
 .mt12{margin-top:12px}
 .mt15{margin-top:15px}
@@ -41,7 +41,7 @@ p{word-wrap:break-word}
 .imgArea img{width:108px;height:70px;}
 .txtArea{width:182px;float:right;padding:5px 15px 0 0;overflow:hidden;}
 .txtArea h3{width:100%;line-height:26px;font-size:14px;float:left;}
-.txtArea h3 a{color:#3b639f;}
+.txtArea h3 a{color:#000000;}
 .txtArea dt{width:100%;line-height:26px;font-size:14px;font-weight:bold;}
 .txtArea dt a{color:#3b639f;}
 .txtArea dd{width:100%;line-height:22px;color:#8c8c8c;display:none;}
@@ -49,8 +49,7 @@ p{word-wrap:break-word}
 .txtArea dd a:hover{color:#cd0200;}
 
 /*搜搜*/
-    .soso{width:1000px;height:48px;margin:0 auto;padding:23px 0 19px;}
-.soso .logo{float:left;display:inline;}
+.soso{width:1000px;height:48px;margin:0 auto;padding:23px 0 19px;}
 .soso .logo .qqlogo{display:block;width:134px;height:44px;background-image:url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_1x.png);background-image:-webkit-image-set(url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_1x.png) 1x,url(http://mat1.gtimg.com/www/images/qq2012/qqlogo_2x.png) 2x);background-repeat:no-repeat;}
 .soso .search{float:left;padding:5px 0 0 42px;}
 .soso .searchTxt{float:left;width:290px;height:35px;border:1px solid #c1c4cb;border-right:0;position:relative;z-index:20;background:#fff;}
@@ -67,7 +66,6 @@ p{word-wrap:break-word}
 .soso .search .searchSmart li.selected{background:#edf3fc;}
 .soso .search .searchSmart li.searchSmartTip{background:#f7f7f7;color:#a9bacd;}
 .soso .search .searchSmart li.searchSmartTip .smartX{width:13px;height:12px;overflow:hidden;float:right;background-position:-700px -210px;float:right;display:inline;margin:8px 10px 0 0;cursor:pointer;}
-.soso .search input{float:left;border:0;background:#fff;color:#333;font-size:14px;line-height:22px;width:175px;height:25px;margin:0;outline:medium none;padding:4px;}
 .soso .search .sosoLogo{float:right;margin:5px 6px 0 0;_margin-right:3px;}
 .soso .searchBtn{float:left;}
 .soso .searchBtn button{background:url(http://mat1.gtimg.com/www/images/qq2012/sogouSearchBtn.png) no-repeat;border:0;color:#fff;cursor:pointer;float:left;font-size:16px;height:37px;text-indent:-9999px;width:90px;}
@@ -560,7 +558,7 @@ p{word-wrap:break-word}
 .txDynamic{height:208px;overflow:hidden;}
 .txDynamic .hd{width:305px;padding:8px 15px 7px 0;float:left;}
 .txDynamic .hd h2{color:#0873c0;font-size:14px;float:left;text-indent:5px;}
-.txDynamic .hd h2 a{color:#0873c0;}
+.txDynamic .hd h2 a{color:#15be74;}
 .txDynamic .hd .more{color:#2d374b;float:right;margin-top:2px;}
 .txDynamic .bd{width:310px;padding:3px 10px 9px 0px;float:left;}
 .txDynamic .bd li{width:100%;height:26px;line-height:26px;font-size:14px;overflow:hidden;}
@@ -798,11 +796,11 @@ p{word-wrap:break-word}
 /*个性化板块*/
 .contentLayout{width:1000px;margin:12px auto 0;}
 .contentLayout:after{content:"";display:table;clear:both;}
-.contentMod{width:320px;height:294px;float:left;border-top:1px solid #6daaea;margin-right:20px;}
+.contentMod{width:320px;height:294px;float:left;border-top:1px solid #15be74;margin-right:20px;}
 .contentModBig{width:660px;}
 .contentMod .hd{width:100%;height:29px;border-top:1px solid #fff;position:relative;z-index:11;}
-.contentMod .hd h2{color:#0873c0;font-size:14px;margin-top:6px;float:left;text-indent:5px;}
-.contentMod .hd h2 a{color:#0873c0;}
+.contentMod .hd h2{color:#15be74;font-size:14px;margin-top:6px;float:left;text-indent:5px;}
+.contentMod .hd h2 a{color:#15be74;}
 .contentMod .hd .orderLayout{position:absolute;top:5px;right:15px;z-index:20;display:none;}
 .contentMod .hd .orderLayout p{float:right;font-size:14px;color:#4697e6;cursor:pointer;padding-right:12px;background:url(http://mat1.gtimg.com/www/images/qq2012/temp/hdHoverIcon.png) no-repeat right center;}
 .contentMod .hd .orderLayout .orderContent{display:none;float:right;margin:20px -176px 0 0;width:244px;height:252px;padding:10px 19px 0;background:url(http://mat1.gtimg.com/www/images/qq2012/temp/orderBg3.png) no-repeat;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=scale,src='http://mat1.gtimg.com/www/images/qq2012/temp/orderBgRight.png');_margin-right:-70px;}

@@ -148,6 +148,7 @@ public class ReptileAction {
 		MeiTuanReptileFactory factory = new MeiTuanReptileFactory();
 		List<Store> stores = factory.startMeituan(reptile.getUrl());
 		for (Store store : stores) {
+			System.out.println("^^^^^^^^^^^^^^^^^id : " + reptile.getSchoolId().getId());
 			storeBiz.saveStore(store, reptile.getSchoolId(), reptile.getSortTypeId());
 		}
 		return view;
