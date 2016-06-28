@@ -115,4 +115,14 @@ public class HomeAction {
 		return view;
 	}
 	
+	/**
+	 * 后台登录
+	 * @return
+	 */
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public ModelAndView loginIndex() {
+		view.setViewName("/competence/index");
+		return view;
+	}
+	
 }

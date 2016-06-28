@@ -22,6 +22,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.springframework.beans.propertyeditors.ZoneIdEditor;
 
+import com.ttm.enums.SortStatuseEnum;
 import com.ttm.orm.School;
 import com.ttm.orm.Store;
 import com.ttm.util.Dumper;
@@ -340,7 +341,7 @@ public class MeiTuanReptile implements PageProcessor {
 		store.setMinusExempt(minusExempt);
 		store.setGive(give);
 		//1 代表 此家点正在运营
-		store.setStatus(1);
+		store.setStatus(SortStatuseEnum.STATUS_ONE.getStatus());
 		store.setSchoolId(schoolId);
 		storesList.add(store);
 		System.out.println("^^^^^^^^^^^^^爬取 " + storesList.size() + " 条数据");

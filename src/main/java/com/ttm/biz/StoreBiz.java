@@ -1,6 +1,9 @@
 package com.ttm.biz;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.ttm.orm.School;
 import com.ttm.orm.Store;
@@ -72,14 +75,14 @@ public interface StoreBiz {
 	public abstract List<Store> findStoreDuoTiaoJian(String p1, String p2, int page, int size, String sort, String sortName);
 	
 	/**
-	 * 学校Id查询优惠数据
+	 * 学校Id + 状态 查询优惠数据
 	 * @param schoolId
 	 * @param page
 	 * @param size
 	 * @param storeName
 	 * @return
 	 */
-	public abstract List<Store> findStoreList(Integer schoolId, Integer page, Integer size, String storeName);
+	public abstract List<Store> findStoreList(Integer schoolId, Integer statusType, Integer page, Integer size, String storeName);
 	
 	/**
 	 * 主键查询 店铺信息
@@ -96,5 +99,11 @@ public interface StoreBiz {
 	 * @return
 	 */
 	public abstract List<Store> search(String sea, Integer schoolId, Integer page, Integer size);
+	
+	/**
+	 * 获取状态的集合
+	 * @return
+	 */
+	public abstract Map<Integer, String[]> fetchSelectStatus(Integer status);
 	
 }

@@ -8,17 +8,24 @@ package com.ttm.enums;
  */
 public enum SortStatuseEnum {
 
-	STATUS_ONE(1),
-	STATUS_TWO(2);
+	STATUS_ONE(1, "运营"),	//正在运营
+	STATUS_TWO(2, "下线");	//店铺下线
 	
 	private int status;
 	
-	private SortStatuseEnum(int status) {
+	private String statusName;
+	
+	private SortStatuseEnum(int status, String statusName) {
 		this.status = status;
+		this.statusName = statusName;
 	}
 
 	public int getStatus() {
 		return status;
+	}
+
+	public String getStatusName() {
+		return statusName;
 	} 
 	
 }

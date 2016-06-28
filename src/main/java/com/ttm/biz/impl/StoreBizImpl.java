@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ttm.biz.StoreBiz;
 import com.ttm.dao.StoreDao;
 import com.ttm.dao.impl.StoreDaoImpl;
+import com.ttm.enums.SortStatuseEnum;
 import com.ttm.enums.StoreEnum;
 import com.ttm.orm.School;
 import com.ttm.orm.Store;
@@ -185,7 +186,7 @@ public class StoreBizImpl implements StoreBiz {
 	}
 
 	public boolean updateStore(Store store) {
-		return false;
+		return storeDao.updateStore(store);
 	}
 
 	private Store findStoreById(Integer storeId, Integer schoolId) {
@@ -235,6 +236,7 @@ public class StoreBizImpl implements StoreBiz {
 		List<Store> storeList = storeDao.findStoreSearch(sea, schoolId, page, size);
 		if (CollectionUtils.isEmpty(storeList)) {
 			log.warn("没有查询出数据..");
+			return null;
 		}
 		return storeList;
 	}
@@ -265,15 +267,17 @@ public class StoreBizImpl implements StoreBiz {
 		return storesList;
 	}
 	
-	public List<Store> findStoreList(Integer schoolId, Integer page, Integer size, String storeName) {
+	public List<Store> findStoreList(Integer schoolId, Integer statusType, Integer page, Integer size, String storeName) {
 		Map<String, Object> query = new HashMap<String, Object>();
 		Map<String, Integer> pageing = ServicePaginationHelper.build(size, page);
-		Map<String, Object> sort = ServiceSorterHelper.build(storeName, ServiceSorterHelper.ASC);
+		Map<String, Object> sort = ServiceSorterHelper.build(storeName, ServiceSorterHelper.DESC);
 		ServiceQueryHelper.and(query, "schoolId.id", schoolId);
+		ServiceQueryHelper.and(query, "status", statusType);
 		
 		List<Store> storesList = storeDao.findStoreByList(query, sort, pageing);
 		if (CollectionUtils.isEmpty(storesList)) {
 			log.warn("查询数据为空.");
+			return null;
 		}
 		return storesList;
 	}
@@ -376,6 +380,21 @@ public class StoreBizImpl implements StoreBiz {
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public Map<Integer, String[]> fetchSelectStatus(Integer status) {
+		Map<Integer, String[]> mSelect = new HashMap<Integer, String[]>();
+		for (SortStatuseEnum mSortStatus : SortStatuseEnum.values()) {
+			String[] arr = new String[2];
+			if (status.intValue() == mSortStatus.getStatus()) {
+				arr[0] = "selected='selected'";
+			} else {
+				arr[0] = "";
+			}
+			arr[1] = mSortStatus.getStatusName();
+			mSelect.put(mSortStatus.getStatus(), arr);
+		}
+		return mSelect;
 	}
 	
 }

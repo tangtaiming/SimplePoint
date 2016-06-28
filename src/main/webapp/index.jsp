@@ -100,7 +100,7 @@
                <div id="box_famoussite_1" class="box-famoussite widget-famoussite">
                    <c:forEach items="${schoolsList}" var="school">
                    <span>
-                      <a class="famoussite-mainlink" target="_blank"  href="/phone/${school.id}?page=1&size=50&storeName=updateDate">${school.name}</a>
+                      <a class="famoussite-mainlink" target="_blank"  href="/phone/${school.id}?page=1&size=50&storeName=recruitment">${school.name}</a>
                    </span>
                    </c:forEach>	
                </div>

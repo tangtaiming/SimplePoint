@@ -17,4 +17,16 @@ public class ParamsUtils {
 	 */
 	public static final Integer NUMBERZERO = 0;
 	
+	/**
+	 * 主页面
+	 */
+	public static final String HOMEPATH = "/home";
+	
+	/**
+	 * 电话页面
+	 */
+	public static final String PHONEPATH = "/phone";
+	
+	
+	
 }

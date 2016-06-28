@@ -82,16 +82,26 @@
                           </tr>
                           <c:forEach items="${storesList}" var="store">
                           <tr>
-                          	<td>
+                          	  <td>
                               	<input type="checkbox" name="sort-${store.id}" />
                               </td>
                               <td>
-                              	<a href="#">
-                                  	<span class="label label-primary">编辑</span>
-                                  </a>
-                                  <a class="store-delete-${store.id}"  title="${store.name}"  href="/store/${store.id}">
-                                  	<span class="label label-danger">删除</span>
-                                  </a>
+                              	  <div class="btn-group" style="width:70px;">
+                                    <button type="button" class="btn btn-info btn-xs">操作</button>
+                                    <button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu dropup" role="menu">
+                                      <li>
+                                      	<a class="store-delete-${store.id}"  title="${store.name}"  href="/store/${store.id}">
+	                                  	  删除
+	                                    </a>
+                                      </li>
+                                      <li><a href="store/${store.id}/status">编辑店铺状态</a></li>
+                                    </ul>
+                                  </div>
+                                  
                               </td>
                               
                               <td>${store.storeId}</td>
@@ -140,7 +150,7 @@
                               
                               <td>
                               	<c:if test="${store.status==1}">正常</c:if>
-                              	<c:if test="${store.status!=1}">其他</c:if>
+                              	<c:if test="${store.status==2}">下线</c:if>
                               </td>
                               <td>
                               	<c:if test="${store.sortTypeId==1}">美团</c:if>

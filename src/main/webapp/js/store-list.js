@@ -13,7 +13,7 @@ function storeSearch() {
 	if ($search_text == "店铺名称") {
 		$search_text = "";
 	}
-	var url = "/store/search?s=" + $search_text + "&schoolId=" + $school_id + "&page=1&size=50"; 
+	var url = "/phone/search?s=" + $search_text + "&schoolId=" + $school_id + "&page=1&size=50"; 
 	$.ajax({
 		url: url,
 		type : "get",
