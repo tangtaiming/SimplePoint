@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ttm.biz.MeiShiBiz;
 import com.ttm.biz.MeiShiJiaBiz;
 import com.ttm.biz.PreferentialBiz;
+import com.ttm.biz.ProblemFeedBackBiz;
 import com.ttm.biz.SafetyBiz;
 import com.ttm.biz.ShiPinBiz;
 import com.ttm.biz.ShuiGuoBiz;
@@ -30,6 +31,7 @@ import com.ttm.biz.StoreBiz;
 import com.ttm.biz.impl.MeiShiBizImpl;
 import com.ttm.biz.impl.MeiShiJiaBizImpl;
 import com.ttm.biz.impl.PreferentialBizImpl;
+import com.ttm.biz.impl.ProblemFeedBackBizImpl;
 import com.ttm.biz.impl.SafetyBizImpl;
 import com.ttm.biz.impl.ShiPinBizImpl;
 import com.ttm.biz.impl.ShuiGuoBizImpl;
@@ -40,6 +42,7 @@ import com.ttm.orm.MeiShi;
 import com.ttm.orm.MeiShiJia;
 import com.ttm.orm.Preferential;
 import com.ttm.orm.PreferentialValue;
+import com.ttm.orm.ProblemFeedBack;
 import com.ttm.orm.Safety;
 import com.ttm.orm.ShiPin;
 import com.ttm.orm.ShuiGuo;
@@ -81,6 +84,66 @@ public class ModuleAction {
 
 	private ShuiGuoBiz shuiGuoBiz = new ShuiGuoBizImpl();
 	
+	private ProblemFeedBackBiz problemFeedBackBiz = new ProblemFeedBackBizImpl();
+	
+	/**
+	 * 保存商品信息
+	 * @return
+	 */
+	@RequestMapping(value = "storeToIn", method = RequestMethod.POST)
+	public String storeToIn(Store store) {
+		Dumper.dump(store);
+		return "/competence/add-starter";
+	}
+	
+	/**
+	 * 进入新增页面
+	 * @return
+	 */
+	@RequestMapping(value = "storeToIn", method = RequestMethod.GET)
+	public ModelAndView storeToIn() {
+		view.addObject("store", new Store());
+		view.setViewName("/competence/add-starter");
+		return view;
+	}
+	
+	/**
+	 * 请求
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "problemFeedBack", method = RequestMethod.POST)
+	public ModelAndView saveProblemFeedBack(HttpServletRequest request) {
+		ProblemFeedBack problemFeedBack = new ProblemFeedBack();
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String theme = request.getParameter("theme");
+		String themeContent = request.getParameter("themeContent");
+		problemFeedBack.setName(name);
+		problemFeedBack.setEmail(email);
+		problemFeedBack.setTheme(theme);
+		problemFeedBack.setThemeContent(themeContent);
+		Dumper.dump(problemFeedBack);
+		ServiceResponse response = new ServiceResponse();
+		String errorMessage = "";
+		if (problemFeedBackBiz.saveOrUpdateProblemFeedBack(problemFeedBack)) {
+			response.setMsg("修改成功");
+			response.setCode(ServiceResponseCode.SUCCESS);
+			response.setData("");
+			view.addObject("requestJson", Json.toJson(response));
+			view.setViewName("/competence/success");
+		} else {
+			errorMessage = ((ProblemFeedBackBizImpl) problemFeedBackBiz).getErrorMessage();
+			response.setMsg(errorMessage);
+			response.setCode(ServiceResponseCode.ERROR);
+			response.setData("");
+			Dumper.dump(response);
+			view.addObject("failure", Json.toJson(response));
+			view.setViewName("/competence/failure");
+		}
+		return view;
+	}
+	
 	/**
 	 * 删除水果数据信息
 	 * 
@@ -111,7 +174,6 @@ public class ModuleAction {
 		String url = request.getParameter("url");
 		String title = request.getParameter("title");
 		String mark = request.getParameter("mark");
-
 		// 上传图片
 		((ShuiGuoBizImpl) shuiGuoBiz).uploadImg((MultipartHttpServletRequest) request);
 		if (!((ShuiGuoBizImpl) shuiGuoBiz).isUpload()) {

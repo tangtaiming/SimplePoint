@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" > 
 <hibernate-mapping package="com.ttm.orm">  
     <!--生成默认为的 安全 数据库表-->
-    <class name ="com.ttm.orm.Safety" table="my_wxy.home_anquan_meishi_shiping_meishijia">  
+    <class name ="com.ttm.orm.Safety" table="bdm247336281_db.home_anquan_meishi_shiping_meishijia">  
         <id name ="id">
             <generator class ="native"></generator>  
         </id > 

@@ -41,7 +41,7 @@ public class StoreAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "store/{id}/status", method = RequestMethod.POST)
+	@RequestMapping(value = "store/{id}", method = RequestMethod.POST)
 	public String editStoreStatus(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		String webType = request.getParameter("webType");
@@ -53,6 +53,9 @@ public class StoreAction {
 				String status = request.getParameter("status");
 				store.setStatus(Integer.valueOf(status));
 				break;
+			case "editRecruitment":
+				String recruitment = request.getParameter("recruitment");
+				store.setRecruitment(Integer.valueOf(recruitment));
 			default:
 				break;
 			}
@@ -67,6 +70,23 @@ public class StoreAction {
 		}
 		
 		return "redirect:/store?page=1&size=25";
+	}
+	
+	/**
+	 * 进入编辑兼职页面
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "store/{id}/recruitment", method = RequestMethod.GET)
+	public ModelAndView editRecruitment(@PathVariable("id") Integer id) {
+		Store store = storeBiz.findById(id);
+		if (store != null) {
+			Map<Integer, String[]> recruitmentSelect = storeBiz.fetchSelectRecruitment(store.getRecruitment());
+			view.addObject("store", store);
+			view.addObject("recruitmentSelect", recruitmentSelect);
+		}
+		view.setViewName("/competence/edit-recruitment-store");
+		return view;
 	}
 	
 	/**
@@ -155,7 +175,7 @@ public class StoreAction {
 	}
 
 	/**
-	 * 删除学校信息
+	 * 删除商品信息
 	 * 
 	 * @param id
 	 *            学校对应ID

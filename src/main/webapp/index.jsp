@@ -67,6 +67,9 @@
 		font: 500 13px/13px 'Raleway', sans-serif;
 		-webkit-appearance: none;
 	}
+	.noContentMod {
+		border-top:0px;
+	}
 </style>
 </head>
 
@@ -76,11 +79,9 @@
 <div class="soso" id="soso">
 	<div class="header_bootm">
 		<div class="col-sm-12 span_1">
-		  <div class="logo">
-			<a href="index.html"><img src="/images/logo.png" alt="" /></a>
-		  </div>
+		  <%@include file="logo.jsp" %>
 		</div>
-		<div class="clearfix"></div>
+		<%@include file="clearfix.jsp" %>
 	</div>
 </div>
 <!--logo+搜索 结束-->
@@ -90,25 +91,25 @@
     <!--个性化通栏1 开始-->
 	<div class="contentLayout" id="contentLayout01">
 	
-    	<div id="finance" class="contentMod contentModBig contentMod-height" style="margin-right: 20px;">
+    	<div id="finance" class="contentMod contentModBig contentMod-height noContentMod" style="margin-right: 20px;">
         	<div class="hd">
 				<h2>
-                	<a href="http://finance.qq.com/" target="_blank">电话订餐/催单电话</a> 
+                	<b>电话订餐/催单电话</b> 
                 </h2>
 			</div>
             <div class="bd widget-site">
                <div id="box_famoussite_1" class="box-famoussite widget-famoussite">
                    <c:forEach items="${schoolsList}" var="school">
                    <span>
-                      <a class="famoussite-mainlink" target="_blank"  href="/phone/${school.id}?page=1&size=50&storeName=recruitment">${school.name}</a>
+                      <a class="famoussite-mainlink" href="/phone/${school.id}?page=1&size=50&storeName=recruitment">${school.name}</a>
                    </span>
                    </c:forEach>	
                </div>
             </div>
         </div>
-        <div id="tech" class="contentMod contentMod-height" style="margin-right: 0px;">
+        <div id="tech" class="contentMod contentMod-height noContentMod" style="margin-right: 0px;">
             <div class="hd">
-                    <h2><a target="_blank" href="http://tech.qq.com/">食物安全</a>·<a target="_blank" href="http://gd.qq.com/food/">外卖</a></h2>
+                    <h2><b>食物安全</b>·<b>外卖</b></h2>
             </div>
             <div class="bd">
                 <div class="contentLeft">
@@ -146,8 +147,7 @@
     	<div id="finance" class="contentMod contentModBig" style="margin-right: 20px;">
         	<div class="hd">
 				<h2>
-                	<a href="http://finance.qq.com/" target="_blank">湖南工学院(店铺)</a> <span class="fn">/</span>
-                    <a href="http://finance.qq.com/" target="_blank">衡阳师范学院(店铺)</a>
+                	<b>湖南工学院(店铺)</b>
                 </h2>
 			</div>
             
@@ -165,7 +165,7 @@
         </div>
         <div id="tech" class="rightArea txDynamic" style="margin-right: 0px;">
             <div class="hd">
-                    <h2><a target="_blank" href="http://tech.qq.com/">水果美颜</a></h2>
+                    <h2><b>水果美颜</b></h2>
             </div>
             <div class="bd">
                 <div class="contentLeft">
@@ -187,10 +187,7 @@
 		
 	<div class="contentMod" id="cul" style="margin-right: 20px;">
 			<div class="hd">
-				<h2><a href="http://cul.qq.com/" target="_blank">美食微博</a></h2>
-				<div class="orderLayout">
-					<p>更换频道</p>
-				</div>
+				<h2><b>美食微博</b></h2>
 			</div>
 			<div class="bd">
 				<div class="contentLeft">
@@ -221,10 +218,7 @@
 		   
 		<div style="margin-right: 20px;" class="contentMod" id="dajia">
 			<div class="hd">
-				<h2><a href="http://dajia.qq.com/" target="_blank">视频</a></h2>
-				<div class="orderLayout">
-					<p>更换频道</p>
-				</div>
+				<h2><b>视频</b></h2>
 			</div>
 			<div class="bd">
 				<div class="contentLeft">
@@ -253,10 +247,7 @@
 			</div>
 		</div><div class="contentMod" id="astro" style="margin-right: 0px;">
 			<div class="hd">
-				<h2><a href="http://astro.fashion.qq.com/" target="_blank">美食家</a></h2>
-				<div class="orderLayout">
-					<p>更换频道</p>
-				</div>
+				<h2><b>美食家</b></h2>
 			</div>
 			<div class="bd">
 				<div class="contentLeft">
@@ -289,20 +280,16 @@
 </div>
 <!--底部广告 开始-->
 <div class="layout mt12">
-	<!--QQ_HP_bottom_Width_div AD begin...."l=QQ_HP_bottom_Width&log=off"-->
-<div display="banner" oid="2598081" adconfig_lview_template="http://l.qq.com/lview?c=www&amp;loc={loc}" adconfig_charset="gbk" adconfig_lview="l.qq.com" id="QQ_HP_bottom_Width" style="width: 1000px; height: 90px; display: block; position: relative;" class="l_qq_com"><a href="http://c.l.qq.com/lclick?oid=2598081&amp;cid=1344155&amp;loc=QQ_HP_bottom_Width&amp;click_data=dXNlcl9pbmZvPXZCXzduanNfRVJHNEZlT2RJem9WQzdvZV9KNDI=&amp;soid=ZCgxtyuFVvypugtxdwn0gkI5AY5x&amp;chl=478&amp;index=1&amp;page_type=1&amp;aver=0&amp;dtype=0" target="_blank" style="display:block;cursor:pointer;width:1000px;height:90px;background-image:url(http://wa.gtimg.com/201603/30/xxsmzg_QHbW_201603301620.jpg);background-size:1000px 90px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://wa.gtimg.com/201603/30/xxsmzg_QHbW_201603301620.jpg',sizingMethod='scale');"></a><a class="absolute a_cover" href="http://c.l.qq.com/lclick?oid=2598081&amp;cid=1344155&amp;loc=QQ_HP_bottom_Width&amp;click_data=dXNlcl9pbmZvPXZCXzduanNfRVJHNEZlT2RJem9WQzdvZV9KNDI=&amp;soid=ZCgxtyuFVvypugtxdwn0gkI5AY5x&amp;chl=478&amp;index=1&amp;page_type=1&amp;aver=0&amp;dtype=0&amp;k=&amp;t=%E8%85%BE%E8%AE%AF%E9%A6%96%E9%A1%B5&amp;r=&amp;s=" target="_blank" rel="nofollow" style="position:absolute;width:1000px;height:90px;left:0px;top:0px;cursor:pointer;z-index:10;background-color:#fff;filter:alpha(opacity=0);opacity:0;"></a><div style="position: absolute; left: 0px; bottom: 0px; width: 26px; height: 16px; z-index: 12; background: transparent url(&quot;http://ra.gtimg.com/web/res/icon/leftbottom_new.png&quot;) no-repeat scroll right top;"></div></div>
-<!--QQ_HP_bottom_Width AD end --><!--[if !IE]>|xGv00|ae5fc9a647cf29b12ee0977b382e9e62<![endif]-->
 </div>
 <!--底部广告 结束-->
 
 <!--底部 开始-->
 <div class="foot" id="footer" bosszone="footer">
 	<div class="footernew" role="contentinfo" style="height:50px;">
-		<span><a href="http://www.tencent.com/law/mo_law.shtml?/law/copyright.htm" target="_blank" rel="nofollow">版权所有</a> <a href="http://www.qq.com/icp1.shtml" target="_blank" rel="nofollow">B2-20090028</a> 违法和不良信息举报电话：0755-83767606</span>
-		<span style="font-family:Arial;">Copyright &#169; 1998 - 2016 Tencent. All Rights Reserved</span>
+		<span><span>版权所有</span> <span>TTM</span> 违法和不良信息举报电话：0755-83767606</span>
+		<span style="font-family:Arial;">Copyright &#169; 2016 <a href="www.look23.com">www.look23.com</a>. All Rights Reserved</span>
 	</div>
 </div>
-<!--[if !IE]>|xGv00|c1943c55c54bd00bb153c873c28434dc<![endif]-->
 <!--底部 结束-->
 
 </body>

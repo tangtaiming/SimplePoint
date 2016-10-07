@@ -22,7 +22,7 @@
 
       <!-- Your Page Content Here -->
 	  <div class="box box-info">
-        <form class="form-horizontal" action="/store/${store.id}/status" method="post">
+        <form class="form-horizontal" action="/store/${store.id}" method="post">
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="title">标题:</label>

@@ -4,10 +4,10 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:forEach var="store" items="${storesList}" varStatus="status">
 	<a target="_blank" href="${store.url}">
-		<li>
+		<li alt="${store.name}">
 			<span class="btn5" data-phone="${store.phone}">
 				<i class="fa fa-fw fa-phone"></i>
-				${fn:substring(store.phone, 0, 11)}
+				${fn:split(store.phone, "/")[0]}
 			</span>
 			<p>
 				${fn:substring(store.name, 0, 10)}

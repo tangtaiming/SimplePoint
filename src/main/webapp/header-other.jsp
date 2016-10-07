@@ -12,10 +12,13 @@
 	content="Lookz Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <title>简单点-欢迎你</title>
- 	<link href="/css/bootstrap.css?v=${code}" rel="stylesheet" type="text/css" />
+ 	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="/css/style.css?v=${code}" rel='stylesheet' type='text/css' />
 	<link
 	href="/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+	<link
+	href="/css/prompt.css?v=${code}"
 	rel="stylesheet" type="text/css" />
 	<!--webfont-->
 	<link
@@ -23,6 +26,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="/js/jQuery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="/js/store-list.js?v=${code}"></script>
+	<script type="text/javascript" src="/js/myAjax.js?v=${code}"></script>
 </head>
 	<body>
 		<div class="wrap">

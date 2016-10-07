@@ -18,7 +18,7 @@
   	        <value>${mysql.driver}</value>
   	    </property>
   	    <property name="jdbcUrl">
-  	        <value>jdbc:mysql://${mysql.localhost}/my_wxy</value>
+  	        <value>jdbc:mysql://${mysql.localhost}/bdm247336281_db</value>
   	    </property>
   	    <property name="user">
   	        <value>${mysql.user}</value>
@@ -47,6 +47,7 @@
 				<value>classpath:preferential.hbm.xml</value>
   	   	    	<value>classpath:safety.hbm.xml</value>
   	   	    	<value>classpath:user.hbm.xml</value>
+  	   	    	<value>classpath:problem-feedback.hbm.xml</value>
   	   	    </list>
   	    </property>
   	</bean>
@@ -62,4 +63,8 @@
   	<bean id="schoolDao" class="com.ttm.dao.impl.SchoolDaoImpl"></bean>
   	
   	<bean id="schoolBiz" class="com.ttm.biz.impl.SchoolBizImpl"></bean>
+
+	<bean id="storeValidator" class="com.ttm.validator.StoreValidator"></bean>
+	
+	<bean name="/storeToIn" class="com.ttm.action.ModuleAction" ></bean>
 </beans>

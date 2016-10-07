@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import com.ttm.biz.StoreBiz;
 import com.ttm.dao.StoreDao;
 import com.ttm.dao.impl.StoreDaoImpl;
+import com.ttm.enums.SortRecruitmentEnum;
 import com.ttm.enums.SortStatuseEnum;
 import com.ttm.enums.StoreEnum;
 import com.ttm.orm.School;
@@ -393,6 +394,21 @@ public class StoreBizImpl implements StoreBiz {
 			}
 			arr[1] = mSortStatus.getStatusName();
 			mSelect.put(mSortStatus.getStatus(), arr);
+		}
+		return mSelect;
+	}
+
+	public Map<Integer, String[]> fetchSelectRecruitment(Integer recruitment) {
+		Map<Integer, String[]> mSelect = new HashMap<Integer, String[]>();
+		for (SortRecruitmentEnum mSortRecruitmentEnum : SortRecruitmentEnum.values()) {
+			String[] arr = new String[2];
+			if (recruitment.intValue() == mSortRecruitmentEnum.getRecruitment()) {
+				arr[0] = "selected='selected'";
+			} else {
+				arr[0] = "";
+			}
+			arr[1] = mSortRecruitmentEnum.getRecruitmentName();
+			mSelect.put(mSortRecruitmentEnum.getRecruitment(), arr);
 		}
 		return mSelect;
 	}

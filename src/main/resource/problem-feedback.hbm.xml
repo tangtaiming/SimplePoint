@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding= "UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" > 
+<hibernate-mapping>  
+    <!--生成默认为user的数据库表-->  
+    <class name ="com.ttm.orm.ProblemFeedBack" table="bdm247336281_db.problem_feedback">  
+        <id name ="id">
+            <generator class ="native"></generator>  
+        </id > 
+        <property name ="name" type="string"></property>  
+        <property name ="email" type="string"></property>  
+        <property name ="theme" type="string"></property> 
+        <property name ="themeContent" type="string"></property> 
+        <property name ="createdDate" type="string"></property> 
+        <property name ="solve" type="int"></property>  
+    </class > 
+</hibernate-mapping>

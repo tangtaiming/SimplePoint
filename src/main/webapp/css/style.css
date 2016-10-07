@@ -812,7 +812,7 @@ h1.contact_head{
   padding: 10px;
   resize: none;
 }
-.contact_form input[type="submit"] {
+.contact_form input[id="submit"] {
   color: #FFF;
   text-align: center;
   font-size: 0.95em;
@@ -830,7 +830,7 @@ h1.contact_head{
   border: none;
   cursor: pointer;
 }
-.contact_form input[type="submit"]:hover{
+.contact_form input[id="submit"]:hover{
   background:#15be74;
 }
 /*--cart--*/

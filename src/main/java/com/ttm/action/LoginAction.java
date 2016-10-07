@@ -40,6 +40,16 @@ public class LoginAction {
 	private UserBiz userBiz = new UserBizImpl();
 
 	/**
+	 * 注册功能
+	 * @return
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register() {
+		view.setViewName("/competence/register");
+		return view;
+	}
+	
+	/**
 	 * 登录
 	 * @param user
 	 * @return
@@ -50,16 +60,16 @@ public class LoginAction {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		User user = userBiz.login(account, password);
-		System.out.println("^^^^^^^^^^^^^^^^^^");
 		if (user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			System.out.println("获取数据成功");
+			view.setViewName("/competence/index");
 		} else {
 			System.out.println("获取数据失败");
+			view.setViewName("/competence/login");
 		}
 		Dumper.dump(user);
-		view.setViewName("/competence/index");
 		return view;
 	}
 
@@ -69,8 +79,14 @@ public class LoginAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login() {
-		view.setViewName("/competence/login");
+	public ModelAndView loginIn(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			view.setViewName("/competence/login");
+		} else {
+			view.setViewName("/competence/index");
+		}
 		return view;
 	}
 

@@ -27,6 +27,19 @@ public class ParamsUtils {
 	 */
 	public static final String PHONEPATH = "/phone";
 	
+	/**
+	 * 默认时间格式
+	 */
+	public static final String DATEDEFAULT = "yyyy-MM-dd HH:mm:ss";
+	
+	public static final String NAME = "名字";
+	
+	public static final String EMAIL = "邮箱";
+	
+	public static final String THEME = "主题";
+	
+	public static final String PROBLEM = "问题:";
+	
 	
 	
 }

@@ -6,8 +6,9 @@
 <%-- 内容开始 --%>
 <%@include file="header_bootm-2.jsp"%>
 
+	<%@include file="/competence/prompt.jsp" %>
 	<%@include file="contact-main.jsp" %>
 
-<%@include file="footer_top_1.jsp" %>
+<%@include file="footer_top_2.jsp" %>
 <%-- 内容结束 --%>
 <%@include file="footer.jsp"%>

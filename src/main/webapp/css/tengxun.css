@@ -557,7 +557,7 @@ p{word-wrap:break-word}
 /*腾讯动态*/
 .txDynamic{height:208px;overflow:hidden;}
 .txDynamic .hd{width:305px;padding:8px 15px 7px 0;float:left;}
-.txDynamic .hd h2{color:#0873c0;font-size:14px;float:left;text-indent:5px;}
+.txDynamic .hd h2{color:#15be74;font-size:14px;float:left;text-indent:5px;}
 .txDynamic .hd h2 a{color:#15be74;}
 .txDynamic .hd .more{color:#2d374b;float:right;margin-top:2px;}
 .txDynamic .bd{width:310px;padding:3px 10px 9px 0px;float:left;}

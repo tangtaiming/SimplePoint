@@ -24,7 +24,7 @@
     	<div class="col-xs-12">
       	<div class="box">
           	<div class="box-header">
-                  <h3 class="box-title"><a href="add-starter.html"><span class="label label-primary">新增</span></a></h3>
+                  <h3 class="box-title"><a href="/storeToIn"><span class="label label-primary">新增</span></a></h3>
                   <div class="box-tools">
                   	<div class="input-group input-group-sm" style="width: 150px;">
                       	<input class="form-control pull-right" type="text" placeholder="Search" name="table_search">
@@ -99,6 +99,7 @@
 	                                    </a>
                                       </li>
                                       <li><a href="store/${store.id}/status">编辑店铺状态</a></li>
+                                      <li><a href="store/${store.id}/recruitment">编辑兼职状态</a></li>
                                     </ul>
                                   </div>
                                   

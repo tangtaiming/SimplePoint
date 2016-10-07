@@ -106,4 +106,11 @@ public interface StoreBiz {
 	 */
 	public abstract Map<Integer, String[]> fetchSelectStatus(Integer status);
 	
+	/**
+	 * 获取兼职集合
+	 * @param recruitment
+	 * @return
+	 */
+	public abstract Map<Integer, String[]> fetchSelectRecruitment(Integer recruitment);
+	
 }

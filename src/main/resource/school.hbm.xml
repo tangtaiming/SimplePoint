@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" > 
 <hibernate-mapping>  
     <!--生成默认为user的数据库表-->  
-    <class name ="com.ttm.orm.School" table="my_wxy.school">  
+    <class name ="com.ttm.orm.School" table="bdm247336281_db.school">  
         <id name ="id">
             <generator class ="native"></generator>  
         </id > 
